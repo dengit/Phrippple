@@ -1,7 +1,5 @@
 package com.dengit.phrippple.api;
 
-import com.dengit.phrippple.model.GithubRepo;
-import com.dengit.phrippple.model.GithubUser;
 import com.dengit.phrippple.model.RequestTokenBody;
 import com.dengit.phrippple.model.Shot;
 import com.dengit.phrippple.model.TokenInfo;
@@ -27,27 +25,9 @@ public interface DribbbleAPI {
     String AUTHORIZE_URL = "https://dribbble.com/oauth/authorize?client_id=%s";
     String TOKEN_URL = "https://dribbble.com/oauth/token";
 
-//    String API_BASE_URL = "https://api.github.com";
-
-//    https://api.github.com/users/dengit/repos?type=owner
-
-    @GET("/users/{username}/repos")
-    Observable<List<GithubRepo>> getRepos(@Path("username") String username, @Query("type") String type);
-
-    @GET("/users/{username}/repos")
-    Call<List<GithubRepo>> getReposNormal(@Path("username") String username, @Query("type") String type);
-
-    @GET("/users/{username}")
-    Observable<GithubUser> getUser(@Path("username") String username);
-
-    @GET("/users/{username}")
-    Call<GithubUser> getUserNormal(@Path("username") String username);
 
     @GET("/v1/shots")
     Observable<List<Shot>> getShots(@Query("access_token") String accessToken);
-
-    @GET("/v1/shots")
-    Call<List<Shot>> getShotsNormal(@Query("access_token") String accessToken);
 
     @POST(TOKEN_URL)
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
