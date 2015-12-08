@@ -6,8 +6,7 @@ import java.util.List;
 /**
  * Created by dengit on 15/12/7.
  */
-public class Shot {
-
+public class Shot implements Serializable {
 
     /**
      * id : 471756
@@ -134,13 +133,13 @@ public class Shot {
     public TeamEntity team;
     public List<String> tags;
 
-    public static class ImagesEntity {
+    public static class ImagesEntity implements Serializable {
         public String hidpi;
         public String normal;
         public String teaser;
     }
 
-    public static class UserEntity {
+    public static class UserEntity implements Serializable {
         public int id;
         public String name;
         public String username;
@@ -176,13 +175,13 @@ public class Shot {
         public String created_at;
         public String updated_at;
 
-        public static class LinksEntity {
+        public static class LinksEntity implements Serializable {
             public String web;
             public String twitter;
         }
     }
 
-    public static class TeamEntity {
+    public static class TeamEntity implements Serializable {
         public int id;
         public String name;
         public String username;
@@ -219,7 +218,7 @@ public class Shot {
         public String created_at;
         public String updated_at;
 
-        public static class LinksEntity {
+        public static class LinksEntity implements Serializable {
             public String web;
             public String twitter;
         }

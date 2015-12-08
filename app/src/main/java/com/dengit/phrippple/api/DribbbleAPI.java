@@ -27,7 +27,7 @@ public interface DribbbleAPI {
 
 
     @GET("/v1/shots")
-    Observable<List<Shot>> getShots(@Query("access_token") String accessToken);
+    Observable<List<Shot>> getShots(@Query("access_token") String accessToken, @Query("page") int page);
 
     @POST(TOKEN_URL)
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
