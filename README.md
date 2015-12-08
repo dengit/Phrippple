@@ -1,7 +1,17 @@
 # Phrippple
 An Open Source Dribbble Android Client
 
-
+## Technology Stack
+- MVP
+- Dagger2
+- RxJava
+- Retrofit
+- Otto
+- Timber
+- Fresco
+- Gson
+- ButterKnife
+- Oauth
 
 ## License
     Copyright 2015 dengit
