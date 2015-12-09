@@ -1,16 +1,14 @@
 package com.dengit.phrippple.api;
 
-import com.dengit.phrippple.model.RequestTokenBody;
-import com.dengit.phrippple.model.Shot;
-import com.dengit.phrippple.model.TokenInfo;
+import com.dengit.phrippple.data.RequestTokenBody;
+import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.TokenInfo;
 
 import java.util.List;
 
-import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
 

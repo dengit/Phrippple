@@ -1,4 +1,4 @@
-package com.dengit.phrippple.model;
+package com.dengit.phrippple.data;
 
 import java.io.Serializable;
 import java.util.List;

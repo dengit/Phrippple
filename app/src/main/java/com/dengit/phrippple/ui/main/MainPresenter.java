@@ -1,10 +1,8 @@
 package com.dengit.phrippple.ui.main;
 
-import android.view.View;
-
-import com.dengit.phrippple.model.AuthorizeInfo;
-import com.dengit.phrippple.model.Shot;
-import com.dengit.phrippple.model.TokenInfo;
+import com.dengit.phrippple.data.AuthorizeInfo;
+import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.TokenInfo;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.dengit.phrippple;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -20,6 +19,13 @@ public class APP extends Application {
         mInstance = this;
         Timber.plant(new Timber.DebugTree());
         Fresco.initialize(getApplicationContext());
+        setupComponent();
+    }
+
+    private void setupComponent() {
+        DaggerAPPComponent.builder()
+                .aPPModule(new APPModule(this))
+                .build();
     }
 
     public static APP getInstance() {

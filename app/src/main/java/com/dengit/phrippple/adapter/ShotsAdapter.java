@@ -1,24 +1,18 @@
 package com.dengit.phrippple.adapter;
 
 import android.net.Uri;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
-import com.dengit.phrippple.model.Shot;
+import com.dengit.phrippple.data.Shot;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.zip.Inflater;
-
-import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/8.

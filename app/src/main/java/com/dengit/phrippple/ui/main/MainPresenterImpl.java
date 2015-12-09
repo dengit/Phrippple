@@ -1,8 +1,8 @@
 package com.dengit.phrippple.ui.main;
 
-import com.dengit.phrippple.model.AuthorizeInfo;
-import com.dengit.phrippple.model.Shot;
-import com.dengit.phrippple.model.TokenInfo;
+import com.dengit.phrippple.data.AuthorizeInfo;
+import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.TokenInfo;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     public MainPresenterImpl(MainView mainView) {
         mMainView = mainView;
-        mMainModel = new MainModelImpl(this);
+        mMainModel = new MainModelImpl(this); //todo use DI?
     }
 
     @Override

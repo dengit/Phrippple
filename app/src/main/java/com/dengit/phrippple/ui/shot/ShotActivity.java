@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
-import com.dengit.phrippple.model.Shot;
+import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 

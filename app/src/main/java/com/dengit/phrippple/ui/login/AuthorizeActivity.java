@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.api.DribbbleAPI;
-import com.dengit.phrippple.model.AuthorizeInfo;
+import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.utils.EventBus;
 

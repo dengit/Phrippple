@@ -1,6 +1,6 @@
 package com.dengit.phrippple.ui.main;
 
-import com.dengit.phrippple.model.Shot;
+import com.dengit.phrippple.data.Shot;
 
 import java.util.List;
 

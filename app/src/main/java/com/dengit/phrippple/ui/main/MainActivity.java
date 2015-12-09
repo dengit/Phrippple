@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.ShotsAdapter;
-import com.dengit.phrippple.model.AuthorizeInfo;
-import com.dengit.phrippple.model.Shot;
-import com.dengit.phrippple.model.TokenInfo;
+import com.dengit.phrippple.data.AuthorizeInfo;
+import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
@@ -24,13 +24,16 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements MainView, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, View.OnClickListener {
 
-    private MainPresenter mMainPresenter;
+    @Inject
+    MainPresenter mMainPresenter;
 
     @Bind(R.id.listview_main)
     ListView mListView;
@@ -59,8 +62,7 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
     }
 
     private void initSetup() {
-        mMainPresenter = new MainPresenterImpl(this);
-
+        setupComponent();
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mListView.setAdapter(mShotsAdapter);
         mListView.setOnItemClickListener(this);
@@ -75,6 +77,13 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
 
         startLoginActivity();
         EventBus.getInstance().register(this);
+    }
+
+    private void setupComponent() {
+        DaggerMainComponent.builder()
+                .mainModule(new MainModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
