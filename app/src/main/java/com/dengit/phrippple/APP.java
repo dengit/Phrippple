@@ -3,6 +3,7 @@ package com.dengit.phrippple;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
@@ -20,6 +21,7 @@ public class APP extends Application {
         Timber.plant(new Timber.DebugTree());
         Fresco.initialize(getApplicationContext());
         setupComponent();
+        LeakCanary.install(this);
     }
 
     private void setupComponent() {
