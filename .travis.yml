@@ -1,27 +1,20 @@
 language: android
-#jdk: openjdk7
 android:
   components:
-    - build-tools-23.0.1
-    - android-23
-    - extra-android-m2repository
-    - extra-android-support
-#git:
-#  submodules: false
+  - build-tools-23.0.1
+  - android-23
+  - extra-android-m2repository
+  - extra-android-support
 before_install:
-  - chmod +x gradlew
-#  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-#  - git submodule init && git submodule update
+- chmod +x gradlew
 script:
-  - ./gradlew assembleRelease
+- "./gradlew assembleRelease"
 before_deploy:
-  - mv app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/phrippple.apk
+- mv app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/phrippple.apk
 deploy:
   provider: releases
-
   api_key:
-    secure: pyBU/Ua334Kx1JsRwWul8oEcTcu73NE9BNKET+ptHNPK9KADBXU/tT5VrUWHytr+FLxv7SEsJOd165dZ2RQPeG8XzsNUYoLERqdpZ+r0+P+nnqqbMt+fSy+OjN86f+Lrd9jm7r1u4/gaeXHLB+AD+Yb9Ar9VycChFEH49zcgSidzJEWzOWBRnlEFEYa0298AnKAd0+0P4UEaVwnwklIy7+cMmQHZj6QMfSz1vrJu+VroteGA3XI6sXCA/BDPqIKbSfjVpg8MNUTKsae48gGUqIydFHECDXQs6ARv1M/tJGiLcR4fOlYvzsWJ8Ftz4q7T/kJndJ1uUdnfY/4udbiNeXFQcbeP/0kJOnvnv5p3eweFQU9SH5STUVE4e0+EMPiZweD5cbPq+7VFCz80FCvr6U0RMTxvJ2iLP/T77dldfyb0t4smFcIysKLIyKuhsUFnrsEctkIWE/PLfTnZLOploSA0ADJT5/Udq5+8xU6xTpLFwfAWWbs71Le0wPenUQCqYmtxjM8/vjXJzBVWqs7iD5qi5aTVtZ1R2GUSH1lyhYHSX1xgQAPahlwIA09iMu0AMg4EgtcHb1xFGaDYLiYGVJHjrSEYJTG9C52Jz/334Cki+mIDvy4OEDeTZ2GbvZrCtXLJldptYc1fuWJrBbZAPpfaNypJ79pdZawpeEgHlX8=
+    secure: YAY1LN6t0iXKxEKL+B3FX9VrrUHYUJn5UbH3/t9WVC0+sNxLh+mMnwCo47Ufe+OoF9iuGC9tXKZ/E65P9u4kLNGTBXmtzSSlDBSGSIlamAqCIDNhZ7sHhDfWxGo7zRtNsCX2uf+MX/z1QoL63+dNu5TTYYpBc0CdK48dBVBPoj+dzdz7nl4zzXT8hs/1kSIhr6+WM21Tp0wy6FsoUCnscpvlT7yBr/UeP8FRslhTyKg6tYkrPTn/VRgQmJH9BRdA4OcwGH05ocq4nG+ZVnjsJwIrpUZbIIxe5Pzyj5FZo/p/x144YWEAjgcJwfCXWAzrEuDmQwvJDWxOpmVIhIIhecMBGJsgfqsAiajxfZCLTVyAVhUgtEdoz8a4bn8XjrrJqjHHPYNb1CqM3nkqNBDoySIsmHSAyi8HDFL/GMbaNDX/iYWVsoissPq7kFbTW8jor9YP+qTPHjK1UEcHOA+UQjVvz8iDXXEs34BF4nMFkJeveKrbD4baFgB6ByRBxWeZ6aLEjr/M3Bnqe/aBtNpARMAIW5TfbwwSI+wXD2vUqdUwcjk1u1i3qE00dTRcYSU05s2d69dJPdIHc+TOq9F1AmWEryMuifcR2h6j6yxkF/EUM5Ut1c5HRZiOGT60ey51DN11zfGqYW/3PC1eZzuXliCSqtncB8opWf6+NnqNN4Q=
   file: app/build/outputs/apk/phrippple.apk
-  skip_cleanup: true
   on:
-    tags: false
+    repo: dengit/Phrippple
