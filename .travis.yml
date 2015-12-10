@@ -19,7 +19,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: 6d935431cd8c8731fa6893285ce497c4206349bc
+    secure: 1b466fefb6c299b13c56884367064ed8b5595301
   file: app/build/outputs/apk/phrippple.apk
   skip_cleanup: true
   on:
