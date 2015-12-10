@@ -19,7 +19,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: [Github Token]
+    secure: VhtvXbQQ/R1ACMwybQV4mysqJ/7XwXj1gu3ipiSAh8PZL88H0ve2qVWiXbiuSFJL55R4Ch5/amt1123jiZzhKOnbPcTTA7izOMWOzfnuvUKp3KFmtA8LtiepK9W8U3SSQPkTY92fchMcPHEwJFlC+hXBUOs6qpNDAKf/OSUH+pxw+vIEIyDz343AQGHZ8bu+YAq8V+5//RtpTnS9raZiStUVkmG/nexknUcRXRXNZ1BMi4zqomfDFVwE/U4XKWMZbXs8Dykipbm0J0cQdRybNjL99Vv6fXns0sks/dCvU1ZuMGjQG+8pfgLraBYt8rLzWvNlWAzoz7uIXsCaGXicZx9uZu6RcgtlI8fforMtsC8LHvxMkomEV+N+ZudN2gqn3apmjPB1AAGWCuJrwdNVR2mTP112b4OirL9McFzcXdk+smYyeWTsRWUk9VvVOsjyT6kUkBIIeGWGgVbrBjcXiA9a0ZTrIzM9x5t9/PKELOkDX0pISKLm551DR9s8NyfK3cYfT7yH6gsYpI3Sus+Wpg/4Q3qEZrBkFmeJeJ9sryOL9mNo9UnjrfP1GMMoTEOxkPyswq/QVHCPOB2owKwqhAy6/KdBpq7v2Z0Qyti7zy6oRLzYzIt+1SQ7w3DlOavMgkw+M6AF8xCUwOQRYpSFK7wK4fm2CO4VA27yOtu5XbE=
   file: app/build/outputs/apk/phrippple.apk
   skip_cleanup: true
   on:
