@@ -18,6 +18,7 @@ before_deploy:
   - mv app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/phrippple.apk
 deploy:
   provider: releases
+
   api_key: 1b466fefb6c299b13c56884367064ed8b5595301
 #    secure: 1b466fefb6c299b13c56884367064ed8b5595301
   file: app/build/outputs/apk/phrippple.apk
