@@ -19,8 +19,8 @@ before_deploy:
 deploy:
   provider: releases
 
-  api_key: 1b466fefb6c299b13c56884367064ed8b5595301
-#    secure: 1b466fefb6c299b13c56884367064ed8b5595301
+  api_key:
+    secure: pyBU/Ua334Kx1JsRwWul8oEcTcu73NE9BNKET+ptHNPK9KADBXU/tT5VrUWHytr+FLxv7SEsJOd165dZ2RQPeG8XzsNUYoLERqdpZ+r0+P+nnqqbMt+fSy+OjN86f+Lrd9jm7r1u4/gaeXHLB+AD+Yb9Ar9VycChFEH49zcgSidzJEWzOWBRnlEFEYa0298AnKAd0+0P4UEaVwnwklIy7+cMmQHZj6QMfSz1vrJu+VroteGA3XI6sXCA/BDPqIKbSfjVpg8MNUTKsae48gGUqIydFHECDXQs6ARv1M/tJGiLcR4fOlYvzsWJ8Ftz4q7T/kJndJ1uUdnfY/4udbiNeXFQcbeP/0kJOnvnv5p3eweFQU9SH5STUVE4e0+EMPiZweD5cbPq+7VFCz80FCvr6U0RMTxvJ2iLP/T77dldfyb0t4smFcIysKLIyKuhsUFnrsEctkIWE/PLfTnZLOploSA0ADJT5/Udq5+8xU6xTpLFwfAWWbs71Le0wPenUQCqYmtxjM8/vjXJzBVWqs7iD5qi5aTVtZ1R2GUSH1lyhYHSX1xgQAPahlwIA09iMu0AMg4EgtcHb1xFGaDYLiYGVJHjrSEYJTG9C52Jz/334Cki+mIDvy4OEDeTZ2GbvZrCtXLJldptYc1fuWJrBbZAPpfaNypJ79pdZawpeEgHlX8=
   file: app/build/outputs/apk/phrippple.apk
   skip_cleanup: true
   on:
