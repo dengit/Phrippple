@@ -23,4 +23,4 @@ deploy:
   file: app/build/outputs/apk/phrippple.apk
   skip_cleanup: true
   on:
-    tags: false
+    tags: true
