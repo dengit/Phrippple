@@ -5,6 +5,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--umeng begin-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!--umeng end-->
+
     <application
         android:name=".APP"
         android:allowBackup="true"
@@ -37,5 +43,11 @@
         <activity android:name=".ui.shot.ShotActivity">
         </activity>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f37655580f6d27d8f108567ba6744f1c0465c058" />
+
+        <meta-data android:value="5668fe12e0f55ac20b0013f2" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="TEST" android:name="UMENG_CHANNEL"/>
     </application>
 </manifest>

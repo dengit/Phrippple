@@ -3,6 +3,7 @@ package com.dengit.phrippple.ui.shot;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
@@ -36,6 +37,11 @@ public class ShotActivity extends BaseActivity {
 
         initSetup();
     }
+
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
+
 
     private void initSetup() {
         mShot = (Shot) getIntent().getSerializableExtra("shot");
