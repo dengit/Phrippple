@@ -17,5 +17,4 @@ deploy:
     secure: YAY1LN6t0iXKxEKL+B3FX9VrrUHYUJn5UbH3/t9WVC0+sNxLh+mMnwCo47Ufe+OoF9iuGC9tXKZ/E65P9u4kLNGTBXmtzSSlDBSGSIlamAqCIDNhZ7sHhDfWxGo7zRtNsCX2uf+MX/z1QoL63+dNu5TTYYpBc0CdK48dBVBPoj+dzdz7nl4zzXT8hs/1kSIhr6+WM21Tp0wy6FsoUCnscpvlT7yBr/UeP8FRslhTyKg6tYkrPTn/VRgQmJH9BRdA4OcwGH05ocq4nG+ZVnjsJwIrpUZbIIxe5Pzyj5FZo/p/x144YWEAjgcJwfCXWAzrEuDmQwvJDWxOpmVIhIIhecMBGJsgfqsAiajxfZCLTVyAVhUgtEdoz8a4bn8XjrrJqjHHPYNb1CqM3nkqNBDoySIsmHSAyi8HDFL/GMbaNDX/iYWVsoissPq7kFbTW8jor9YP+qTPHjK1UEcHOA+UQjVvz8iDXXEs34BF4nMFkJeveKrbD4baFgB6ByRBxWeZ6aLEjr/M3Bnqe/aBtNpARMAIW5TfbwwSI+wXD2vUqdUwcjk1u1i3qE00dTRcYSU05s2d69dJPdIHc+TOq9F1AmWEryMuifcR2h6j6yxkF/EUM5Ut1c5HRZiOGT60ey51DN11zfGqYW/3PC1eZzuXliCSqtncB8opWf6+NnqNN4Q=
   file: app/build/outputs/apk/phrippple.apk
   on:
-    repo: dengit/Phrippple
-
+    tags: true
