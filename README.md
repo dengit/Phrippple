@@ -1,4 +1,6 @@
 # Phrippple
+[![Build Status](https://travis-ci.org/dengit/Phrippple.svg?branch=master)](https://travis-ci.org/dengit/Phrippple)
+
 An Open Source Dribbble Android Client
 
 ## Technology Stack
