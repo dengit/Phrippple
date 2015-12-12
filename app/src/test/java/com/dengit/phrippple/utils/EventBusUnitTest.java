@@ -1,10 +1,8 @@
 package com.dengit.phrippple.utils;
 
-import com.dengit.phrippple.utils.EventBus;
-
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.

@@ -10,7 +10,7 @@ before_install:
 script:
 - "./gradlew assembleRelease"
 before_deploy:
-- mv app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/phrippple.apk
+- mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/phrippple.apk
 deploy:
   provider: releases
   api_key:
