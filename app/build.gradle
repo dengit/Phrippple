@@ -86,5 +86,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     compile 'org.mockito:mockito-core:2.0.31-beta'
     testCompile 'org.robolectric:robolectric:3.0'
-    compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+    compile ('org.hamcrest:hamcrest-junit:2.0.0.0'){
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
 }

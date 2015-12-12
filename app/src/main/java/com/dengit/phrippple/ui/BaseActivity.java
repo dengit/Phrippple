@@ -2,6 +2,8 @@ package com.dengit.phrippple.ui;
 
 import android.support.v7.app.AppCompatActivity;
 
+import com.umeng.analytics.MobclickAgent;
+
 /**
  * Created by dengit on 15/12/7.
  */

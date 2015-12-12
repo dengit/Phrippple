@@ -2,8 +2,12 @@ package com.dengit.phrippple;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.squareup.leakcanary.LeakCanary;
+import com.umeng.analytics.MobclickAgent;
 
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
