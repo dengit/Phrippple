@@ -90,5 +90,4 @@ dependencies {
 //    compile ('org.hamcrest:hamcrest-junit:2.0.0.0'){
 //        exclude group: 'org.hamcrest', module: 'hamcrest-core'
 //    }
-    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }
