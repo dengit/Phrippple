@@ -5,17 +5,17 @@ import com.squareup.otto.Bus;
 /**
  * Created by dengit on 15/12/7.
  */
-public class EventBus {
+public class EventBusUtil {
 
     private static Bus mBus;
 
-    private EventBus() {
+    private EventBusUtil() {
 
     }
 
     public static Bus getInstance() {
         if (mBus == null) {
-            synchronized (EventBus.class) {
+            synchronized (EventBusUtil.class) {
                 if (mBus == null) {
                     mBus = new Bus();
                 }
