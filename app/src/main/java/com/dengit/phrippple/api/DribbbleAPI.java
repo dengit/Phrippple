@@ -1,14 +1,18 @@
 package com.dengit.phrippple.api;
 
+import com.dengit.phrippple.data.Comment;
+import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import retrofit.http.Query;
 import rx.Observable;
 
@@ -31,4 +35,10 @@ public interface DribbbleAPI {
 
     @POST(TOKEN_URL)
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
+
+    @GET("/v1/shots/{shotId}/comments")
+    Observable<ArrayList<Comment>> getComments(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+
+    @GET("/v1/users/{userId}/likes")
+    Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("access_token") String accessToken);
 }

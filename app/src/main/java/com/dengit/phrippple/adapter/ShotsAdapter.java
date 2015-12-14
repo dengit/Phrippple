@@ -54,7 +54,7 @@ public class ShotsAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.shot_item, parent, false);
 
             holder = new ViewHolder();
-            holder.tasterImage = (SimpleDraweeView) convertView.findViewById(R.id.shot_item_taster_image);
+            holder.shotImage = (SimpleDraweeView) convertView.findViewById(R.id.shot_item_image);
             holder.authorImage = (SimpleDraweeView) convertView.findViewById(R.id.shot_item_author_image);
             holder.likeTV = (TextView) convertView.findViewById(R.id.shot_item_like);
             holder.msgTV = (TextView) convertView.findViewById(R.id.shot_item_msg);
@@ -74,7 +74,7 @@ public class ShotsAdapter extends BaseAdapter{
 
     private void setUpShotItem(ViewHolder holder, int position) {
         Shot shot = (Shot) getItem(position);
-        holder.tasterImage.setImageURI(Uri.parse(shot.images.teaser));
+        holder.shotImage.setImageURI(Uri.parse(shot.images.normal));
         holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
         holder.likeTV.setText(String.valueOf(shot.views_count));
         holder.msgTV.setText(String.valueOf(shot.comments_count));
@@ -94,7 +94,7 @@ public class ShotsAdapter extends BaseAdapter{
     }
 
     private static class ViewHolder {
-        public SimpleDraweeView tasterImage;
+        public SimpleDraweeView shotImage;
         public SimpleDraweeView authorImage;
         public TextView likeTV;
         public TextView msgTV;

@@ -18,7 +18,7 @@ import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
-import com.dengit.phrippple.utils.EventBus;
+import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
         mRefreshLayout.setOnRefreshListener(this);
 
         startLoginActivity();
-        EventBus.getInstance().register(this);
+        EventBusUtil.getInstance().register(this);
     }
 
     private void setupComponent() {
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getInstance().unregister(this);
+        EventBusUtil.getInstance().unregister(this);
     }
 
     @Override

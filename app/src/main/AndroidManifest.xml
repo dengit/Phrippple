@@ -40,8 +40,10 @@
             android:name=".ui.login.AuthorizeActivity"
             android:theme="@style/AuthorizeDialogStyle" />
 
-        <activity android:name=".ui.shot.ShotActivity">
-        </activity>
+        <activity android:name=".ui.shot.ShotActivity"/>
+        <activity android:name=".ui.comment.CommentActivity"/>
+        <activity android:name=".ui.profile.ProfileActivity"/>
+        <activity android:name=".ui.like.LikeActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

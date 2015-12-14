@@ -15,7 +15,7 @@
     </style>
 
     <style name="AppTheme.TextAppearance" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
 </resources>

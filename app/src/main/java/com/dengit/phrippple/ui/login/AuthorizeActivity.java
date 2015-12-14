@@ -12,7 +12,7 @@ import com.dengit.phrippple.R;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.ui.BaseActivity;
-import com.dengit.phrippple.utils.EventBus;
+import com.dengit.phrippple.utils.EventBusUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -59,8 +59,14 @@ public class AuthorizeActivity extends BaseActivity {
 
             String code = uri.getQueryParameter("code");
             //todo use scheme
-            EventBus.getInstance().post(new AuthorizeInfo(code));
-            finish();
+            EventBusUtil.getInstance().post(new AuthorizeInfo(code));
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            });
 
             return true;
         }

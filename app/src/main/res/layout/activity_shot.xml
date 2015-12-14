@@ -12,12 +12,101 @@
             android:id="@+id/shot_normal_image"
             android:layout_width="match_parent"
             android:layout_height="300dp" />
-
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/shot_color"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorPrimaryDark"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorA"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorB"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorC"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@color/colorAccent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="forceCrash"
-            android:text="Force Crash!" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/shot_author_portrait"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
+            <TextView
+                android:id="@+id/shot_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="name"
+                />
+            <TextView
+                android:id="@+id/shot_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="2015-12-12"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/shot_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100 likes"
+                    android:padding="5dp"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/shot_bucket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="100 buckets"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/shot_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="100 views"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/shot_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="100 comments"
+                    android:textColor="@color/colorAccent"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/shot_descrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="this is description\nthis is description\nthis is description\nthis is description"/>
     </LinearLayout>
 </ScrollView>

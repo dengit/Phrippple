@@ -3,11 +3,12 @@ package com.dengit.phrippple.ui.main;
 import android.text.TextUtils;
 
 import com.dengit.phrippple.api.DribbbleAPI;
+import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
-import com.dengit.phrippple.utils.EventBus;
+import com.dengit.phrippple.utils.EventBusUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,7 @@ public class MainModelImpl implements MainModel {
 
     public MainModelImpl(MainPresenter mainPresenter) {
         mMainPresenter = mainPresenter;
-        mDribbbleAPI = new Retrofit.Builder()
-                .baseUrl(DribbbleAPI.API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build()
-                .create(DribbbleAPI.class);
+        mDribbbleAPI = DribbbleAPIHelper.getInstance().getDribbbleAPI();
     }
 
     @Override
@@ -74,7 +70,7 @@ public class MainModelImpl implements MainModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Shot>() {
                     @Override
-                    public void onCompleted() {
+                    public void onCompleted() { //todo use eventbus
                         Timber.d("**onCompleted");
 
                         if (page == 1) {//todo maybe not refreshing
@@ -121,7 +117,7 @@ public class MainModelImpl implements MainModel {
                     @Override
                     public void onNext(TokenInfo tokenInfo) {
                         Timber.d("**token:%s", tokenInfo.access_token);
-                        EventBus.getInstance().post(tokenInfo);
+                        EventBusUtil.getInstance().post(tokenInfo);
                     }
                 });
     }
@@ -129,5 +125,6 @@ public class MainModelImpl implements MainModel {
     @Override
     public void setToken(TokenInfo tokenInfo) {
         mAccessToken = tokenInfo.access_token;
+        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
     }
 }
