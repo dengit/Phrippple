@@ -89,12 +89,12 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void visibleOtherInfo(User mUser) {
-        if (mUser.links != null && !TextUtils.isEmpty(mUser.links.web.trim())) {
+        if (mUser.links != null && mUser.links.web != null && !TextUtils.isEmpty(mUser.links.web.trim())) {
             mUserLinkWeb.setVisibility(View.VISIBLE);
             mUserLinkWeb.setText("web " + mUser.links.web);
         }
 
-        if (mUser.links != null && !TextUtils.isEmpty(mUser.links.twitter.trim())) {
+        if (mUser.links != null && mUser.links.twitter != null &&  !TextUtils.isEmpty(mUser.links.twitter.trim())) {
             mUserLinkTwitter.setVisibility(View.VISIBLE);
             mUserLinkTwitter.setText("twitter " + mUser.links.twitter);
         }
