@@ -16,6 +16,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by dengit on 15/12/14.
  */
@@ -47,14 +50,7 @@ public class CommentsAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.comment_item, parent, false);
-
-            holder = new ViewHolder();
-            holder.userPortrait = (SimpleDraweeView) convertView.findViewById(R.id.user_portrait);
-            holder.userName = (TextView) convertView.findViewById(R.id.user_name);
-            holder.commentContent = (TextView) convertView.findViewById(R.id.comment_content);
-            holder.commentTime = (TextView) convertView.findViewById(R.id.comment_time);
-            holder.commentLikeCount = (TextView) convertView.findViewById(R.id.comment_like_count);
-
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -87,11 +83,20 @@ public class CommentsAdapter extends BaseAdapter {
     }
 
 
-    private static class ViewHolder {
-        public SimpleDraweeView userPortrait;
-        public TextView userName;
-        public TextView commentContent;
-        public TextView commentTime;
-        public TextView commentLikeCount;
+    static class ViewHolder {
+        @Bind(R.id.user_portrait)
+        SimpleDraweeView userPortrait;
+        @Bind(R.id.user_name)
+        TextView userName;
+        @Bind(R.id.comment_content)
+        TextView commentContent;
+        @Bind(R.id.comment_time)
+        TextView commentTime;
+        @Bind(R.id.comment_like_count)
+        TextView commentLikeCount;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

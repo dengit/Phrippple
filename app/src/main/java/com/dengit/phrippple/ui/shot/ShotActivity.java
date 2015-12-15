@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
+import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
+import com.dengit.phrippple.ui.fan.FanActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -38,16 +41,16 @@ public class ShotActivity extends BaseActivity implements ShotView {
     @Bind(R.id.shot_time)
     TextView mShotTime;
 
-    @Bind(R.id.shot_liked)
+    @Bind(R.id.shot_fan)
     TextView mShotLiked;
 
-    @Bind(R.id.shot_bucketed)
+    @Bind(R.id.shot_bucket)
     TextView mShotBucketed;
 
     @Bind(R.id.shot_view)
     TextView mShotView;
 
-    @Bind(R.id.shot_commented)
+    @Bind(R.id.shot_comment)
     TextView mShotCommented;
 
     @Bind(R.id.shot_descrip)
@@ -98,28 +101,28 @@ public class ShotActivity extends BaseActivity implements ShotView {
     }
 
 
-    @OnClick(R.id.shot_commented)
-    public void onClickCommented(View v) {
+    @OnClick(R.id.shot_comment)
+    public void onClickShotComment(View v) {
         startActivity(CommentActivity.createIntent(mShot.id, mShot.comments_count));
     }
 
     @OnClick(R.id.shot_author_portrait)
-    public void onClickAuthorPortrait(View v) {
+    public void onClickShotAuthorPortrait(View v) {
         startActivity(ProfileActivity.createIntent(mShot.user));
     }
 
     @OnClick(R.id.shot_author_name)
-    public void onClickAuthorName(View v) {
+    public void onClickShotAuthorName(View v) {
         startActivity(ProfileActivity.createIntent(mShot.user));
     }
 
-    @OnClick(R.id.shot_liked)
-    public void onClickShotLiked(View v) {
-//        startActivity(LikedActivity.createIntent(mShot.user.id, mShot.user.likes_count));
+    @OnClick(R.id.shot_fan)
+    public void onClickShotFan(View v) {
+        startActivity(FanActivity.createIntent(mShot.id, mShot.likes_count));
     }
 
-    @OnClick(R.id.shot_bucketed)
-    public void onClickShotBucketed(View v) {
-//        startActivity(BuckedtActivity.createIntent(mShot.user.id, mShot.buckets_count));
+    @OnClick(R.id.shot_bucket)
+    public void onClickShotBucket(View v) {
+        startActivity(BucketActivity.createIntent(BucketType.Others, mShot.id, mShot.buckets_count));
     }
 }

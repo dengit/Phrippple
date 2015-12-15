@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
-import com.dengit.phrippple.data.Bucket;
-import com.dengit.phrippple.utils.Util;
+import com.dengit.phrippple.data.Fan;
+import com.dengit.phrippple.data.Fan;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -21,22 +21,21 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketsAdapter extends BaseAdapter {
+public class FansAdapter extends BaseAdapter {
 
-    private List<Bucket> mBuckets;
-
-    public BucketsAdapter(List<Bucket> buckets) {
-        mBuckets = buckets;
+    private List<Fan> mFans;
+    public FansAdapter(List<Fan> fans) {
+        mFans = fans;
     }
 
     @Override
     public int getCount() {
-        return mBuckets.size();
+        return mFans.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mBuckets.get(position);
+        return mFans.get(position);
     }
 
     @Override
@@ -48,43 +47,40 @@ public class BucketsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.bucket_item, parent, false);
+            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.fan_item, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        setUpBucketItem(holder, position);
-
+        setUpFanItem(holder, position);
         return convertView;
     }
 
-    private void setUpBucketItem(ViewHolder holder, int position) {
-        Bucket bucket = (Bucket) getItem(position);
-        holder.bucketName.setText(bucket.name);
-        holder.shotCount.setText(bucket.shots_count + " shots");
-        holder.createTime.setText(bucket.created_at);
+    private void setUpFanItem(ViewHolder holder, int position) {
+        Fan fan = (Fan) getItem(position);
+        holder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));
+        holder.fanName.setText(fan.user.name);
     }
 
-    public void setData(List<Bucket> newShots) {
-        mBuckets.clear();
+    public void setData(List<Fan> newShots) {
+        mFans.clear();
         appendData(newShots);
     }
 
-    public void appendData(List<Bucket> newShots) {
-        mBuckets.addAll(newShots);
+    public void appendData(List<Fan> newShots) {
+        mFans.addAll(newShots);
         notifyDataSetChanged();
     }
 
 
     static class ViewHolder {
-        @Bind(R.id.bucket_name)
-        TextView bucketName;
-        @Bind(R.id.shot_count)
-        TextView shotCount;
-        @Bind(R.id.create_time)
-        TextView createTime;
+        @Bind(R.id.fan_portrait)
+        SimpleDraweeView fanPortrait;
+
+        @Bind(R.id.fan_name)
+        TextView fanName;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

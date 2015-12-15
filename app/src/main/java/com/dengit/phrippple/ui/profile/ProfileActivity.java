@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
+import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
@@ -136,7 +137,7 @@ public class ProfileActivity extends BaseActivity {
 
     @OnClick(R.id.user_buckets_count)
     public void onClickBucketsCount(View v) {
-        startActivity(BucketActivity.createIntent(mUser.id, mUser.buckets_count));
+        startActivity(BucketActivity.createIntent(BucketType.Mine, mUser.id, mUser.buckets_count));
     }
 
     @OnClick(R.id.user_followers_count)

@@ -16,6 +16,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by dengit on 15/12/8.
  */
@@ -54,16 +57,7 @@ public class ShotsAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.shot_item, parent, false);
-
-            holder = new ViewHolder();
-            holder.shotImage = (SimpleDraweeView) convertView.findViewById(R.id.shot_item_image);
-            holder.authorImage = (SimpleDraweeView) convertView.findViewById(R.id.shot_item_author_image);
-            holder.likeTV = (TextView) convertView.findViewById(R.id.shot_item_like);
-            holder.msgTV = (TextView) convertView.findViewById(R.id.shot_item_msg);
-            holder.viewTV = (TextView) convertView.findViewById(R.id.shot_item_view);
-            holder.authorNameTV = (TextView) convertView.findViewById(R.id.shot_item_author_name);
-            holder.titleTV = (TextView) convertView.findViewById(R.id.shot_item_title);
-
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -107,13 +101,24 @@ public class ShotsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private static class ViewHolder {
-        public SimpleDraweeView shotImage;
-        public SimpleDraweeView authorImage;
-        public TextView likeTV;
-        public TextView msgTV;
-        public TextView viewTV;
-        public TextView authorNameTV;
-        public TextView titleTV;
+    static class ViewHolder {
+        @Bind(R.id.shot_item_image)
+        SimpleDraweeView shotImage;
+        @Bind(R.id.shot_item_author_image)
+        SimpleDraweeView authorImage;
+        @Bind(R.id.shot_item_like)
+        TextView likeTV;
+        @Bind(R.id.shot_item_msg)
+        TextView msgTV;
+        @Bind(R.id.shot_item_view)
+        TextView viewTV;
+        @Bind(R.id.shot_item_author_name)
+        TextView authorNameTV;
+        @Bind(R.id.shot_item_title)
+        TextView titleTV;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

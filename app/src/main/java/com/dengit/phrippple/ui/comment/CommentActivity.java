@@ -54,19 +54,24 @@ public class CommentActivity extends BaseActivity implements CommentView {
         mCommentPresenter = new CommentPresenterImpl(this);
         mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
         mCommentList.setAdapter(mCommentsAdapter);
-        EventBusUtil.getInstance().register(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        EventBusUtil.getInstance().register(this);
         mCommentPresenter.onResume(shotId);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBusUtil.getInstance().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBusUtil.getInstance().unregister(this);
     }
 
     @Subscribe

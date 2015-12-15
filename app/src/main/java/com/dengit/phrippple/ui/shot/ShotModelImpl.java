@@ -38,7 +38,7 @@ public class ShotModelImpl implements ShotModel {
         mDribbbleAPI.getComments(shotId, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ArrayList<Comment>>() {
+                .subscribe(new Subscriber<List<Comment>>() {
                     @Override
                     public void onCompleted() {
                         EventBusUtil.getInstance().post(tmpComments);
@@ -50,7 +50,7 @@ public class ShotModelImpl implements ShotModel {
                     }
 
                     @Override
-                    public void onNext(ArrayList<Comment> comments) {
+                    public void onNext(List<Comment> comments) {
                         tmpComments.addAll(comments);
                     }
                 });

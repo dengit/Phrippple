@@ -6,6 +6,7 @@ import com.dengit.phrippple.data.Comment;
 import com.dengit.phrippple.utils.EventBusUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,15 +28,15 @@ public class CommentModelImpl implements CommentModel {
     @Override
     public void fetchShotComments(int shotId) {
 
-        final ArrayList<Comment> tmpComments = new ArrayList<>();
+        final ArrayList<Comment> newItems = new ArrayList<>();
 
         mDribbbleAPI.getComments(shotId, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ArrayList<Comment>>() {
+                .subscribe(new Subscriber<List<Comment>>() {
                     @Override
                     public void onCompleted() {
-                        EventBusUtil.getInstance().post(tmpComments);
+                        EventBusUtil.getInstance().post(newItems);
                     }
 
                     @Override
@@ -44,8 +45,8 @@ public class CommentModelImpl implements CommentModel {
                     }
 
                     @Override
-                    public void onNext(ArrayList<Comment> comments) {
-                        tmpComments.addAll(comments);
+                    public void onNext(List<Comment> comments) {
+                        newItems.addAll(comments);
                     }
                 });
     }

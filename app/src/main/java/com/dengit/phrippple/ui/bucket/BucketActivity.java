@@ -8,10 +8,12 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.BucketsAdapter;
 import com.dengit.phrippple.data.Bucket;
+import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -26,12 +28,14 @@ public class BucketActivity extends BaseActivity implements BucketView {
     ListView mBucketList;
 
     private BucketsAdapter mBucketsAdapter;
-    private int mUserId;
+    private int mId;
+    private BucketType mBucketType;
     private BucketPresenter mBucketPresenter;
 
-    public static Intent createIntent(int userId, int bucketCount) {
+    public static Intent createIntent(BucketType bucketType, int id, int bucketCount) {
         Intent intent = new Intent(APP.getInstance(), BucketActivity.class);
-        intent.putExtra("userId", userId);
+        intent.putExtra("type", bucketType);
+        intent.putExtra("id", id);
         intent.putExtra("bucketCount", bucketCount);
         return intent;
     }
@@ -48,26 +52,32 @@ public class BucketActivity extends BaseActivity implements BucketView {
 
     private void initSetup() {
         mBucketPresenter = new BucketPresenterImpl(this);
-        mUserId = getIntent().getIntExtra("userId", 0);
+        mBucketType = (BucketType) getIntent().getSerializableExtra("type");
+        mId = getIntent().getIntExtra("id", 0);
         int bucketCount = getIntent().getIntExtra("bucketCount", 0);
         setTitle(bucketCount + " buckets");
         mBucketsAdapter = new BucketsAdapter(new ArrayList<Bucket>());
         mBucketList.setAdapter(mBucketsAdapter);
 
-        EventBusUtil.getInstance().register(this);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mBucketPresenter.onResume(mUserId);
+        EventBusUtil.getInstance().register(this);
+        mBucketPresenter.onResume(mBucketType, mId);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBusUtil.getInstance().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBusUtil.getInstance().unregister(this);
     }
 
 

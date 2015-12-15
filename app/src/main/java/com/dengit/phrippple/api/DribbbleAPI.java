@@ -3,11 +3,11 @@ package com.dengit.phrippple.api;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.Comment;
 import com.dengit.phrippple.data.LikeShot;
+import com.dengit.phrippple.data.Fan;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.http.Body;
@@ -38,11 +38,17 @@ public interface DribbbleAPI {
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
 
     @GET("/v1/shots/{shotId}/comments")
-    Observable<ArrayList<Comment>> getComments(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+    Observable<List<Comment>> getComments(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+
+    @GET("/v1/shots/{shotId}/likes")
+    Observable<List<Fan>> getFans(@Path("shotId") int shotId, @Query("access_token") String accessToken);
 
     @GET("/v1/users/{userId}/likes")
     Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("access_token") String accessToken);
 
     @GET("/v1/users/{userId}/buckets")
-    Observable<List<Bucket>> getBuckets(@Path("userId")int userId, @Query("access_token") String accessToken);
+    Observable<List<Bucket>> getMineBuckets(@Path("userId")int userId, @Query("access_token") String accessToken);
+
+    @GET("/v1/shots/{shotId}/buckets")
+    Observable<List<Bucket>> getOthersBuckets(@Path("shotId")int shotId, @Query("access_token") String accessToken);
 }

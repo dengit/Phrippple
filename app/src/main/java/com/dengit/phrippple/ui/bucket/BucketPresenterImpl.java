@@ -1,5 +1,7 @@
 package com.dengit.phrippple.ui.bucket;
 
+import com.dengit.phrippple.data.BucketType;
+
 /**
  * Created by dengit on 15/12/14.
  */
@@ -13,7 +15,7 @@ public class BucketPresenterImpl implements BucketPresenter {
     }
 
     @Override
-    public void onResume(int userId) {
-        mBucketModel.fetchBuckets(userId);
+    public void onResume(BucketType bucketType, int id) {
+        mBucketModel.fetchBuckets(bucketType, id);
     }
 }

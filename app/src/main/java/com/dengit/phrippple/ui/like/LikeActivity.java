@@ -26,8 +26,8 @@ public class LikeActivity extends BaseActivity implements LikeView {
     @Bind(R.id.like_list_view)
     ListView mLikeList;
 
-    private ShotsAdapter mShotsAdapter;
     private int mUserId;
+    private ShotsAdapter mShotsAdapter;
     private LikePresenter mLikePresenter;
 
     @Override
@@ -47,7 +47,6 @@ public class LikeActivity extends BaseActivity implements LikeView {
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mLikeList.setAdapter(mShotsAdapter);
 
-        EventBusUtil.getInstance().register(this);
 
     }
 
@@ -61,13 +60,19 @@ public class LikeActivity extends BaseActivity implements LikeView {
     @Override
     protected void onResume() {
         super.onResume();
+        EventBusUtil.getInstance().register(this);
         mLikePresenter.onResume(mUserId);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBusUtil.getInstance().unregister(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBusUtil.getInstance().unregister(this);
     }
 
 
