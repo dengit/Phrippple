@@ -16,7 +16,14 @@ import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.Util;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -77,7 +84,7 @@ public class ShotActivity extends BaseActivity implements ShotView {
         mShotPresenter = new ShotPresenterImpl(this);
         mShot = (Shot) getIntent().getSerializableExtra("shot");
         setTitle(mShot.title);
-        mShotNormalImage.setImageURI(Uri.parse(mShot.images.normal));
+        tryToSetGifImage(mShotNormalImage, mShot);
         mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
         mAuthorName.setText(mShot.user.name);
         mShotTime.setText(mShot.updated_at);
@@ -87,6 +94,24 @@ public class ShotActivity extends BaseActivity implements ShotView {
         mShotCommented.setText(mShot.comments_count + " comments");
 
         mShotDescrip.setText(Util.textToHtml(mShot.description));
+    }
+
+    private void tryToSetGifImage(SimpleDraweeView shotNormalImage, Shot shot) {
+        GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(getResources())
+                .setProgressBarImage(new ProgressBarDrawable())
+                .build();
+        String url = mShot.images.hidpi != null ? mShot.images.hidpi : mShot.images.normal;
+        if (shot.animated) {
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(Uri.parse(url))
+                    .setAutoPlayAnimations(true)
+                    .build();
+            shotNormalImage.setController(controller);
+            shotNormalImage.setHierarchy(gdh);
+        } else {
+            shotNormalImage.setImageURI(Uri.parse(url));
+            shotNormalImage.setHierarchy(gdh);
+        }
     }
 
     @Override

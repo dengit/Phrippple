@@ -78,6 +78,13 @@ public class ShotsAdapter extends BaseAdapter {
         holder.authorNameTV.setText(String.valueOf(shot.user.name));
         holder.titleTV.setText(String.valueOf(shot.title));
 
+        if (shot.animated) {
+            holder.gifTag.setVisibility(View.VISIBLE);
+        } else {
+            holder.gifTag.setVisibility(View.GONE);
+        }
+
+
         //todo new listener every time
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -116,6 +123,8 @@ public class ShotsAdapter extends BaseAdapter {
         TextView authorNameTV;
         @Bind(R.id.shot_item_title)
         TextView titleTV;
+        @Bind(R.id.shot_item_gif_tag)
+        TextView gifTag;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
