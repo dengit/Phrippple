@@ -1,5 +1,6 @@
 package com.dengit.phrippple.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotsAdapter extends BaseAdapter{
+public class ShotsAdapter extends BaseAdapter {
 
     private List<Shot> mShots;
 
@@ -73,7 +75,7 @@ public class ShotsAdapter extends BaseAdapter{
     }
 
     private void setUpShotItem(ViewHolder holder, int position) {
-        Shot shot = (Shot) getItem(position);
+        final Shot shot = (Shot) getItem(position);
         holder.shotImage.setImageURI(Uri.parse(shot.images.normal));
         holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
         holder.likeTV.setText(String.valueOf(shot.views_count));
@@ -81,6 +83,18 @@ public class ShotsAdapter extends BaseAdapter{
         holder.viewTV.setText(String.valueOf(shot.likes_count));
         holder.authorNameTV.setText(String.valueOf(shot.user.name));
         holder.titleTV.setText(String.valueOf(shot.title));
+
+        //todo new listener every time
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ProfileActivity.createIntent(shot.user);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                APP.getInstance().startActivity(intent); //todo use activity context without flag?
+            }
+        };
+        holder.authorImage.setOnClickListener(listener);
+        holder.authorNameTV.setOnClickListener(listener);
     }
 
     public void setData(List<Shot> newShots) {

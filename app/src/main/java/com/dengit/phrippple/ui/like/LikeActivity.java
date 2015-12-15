@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class LikeActivity extends BaseActivity implements LikeView{
+public class LikeActivity extends BaseActivity implements LikeView {
 
     @Bind(R.id.like_list_view)
     ListView mLikeList;
@@ -42,6 +42,8 @@ public class LikeActivity extends BaseActivity implements LikeView{
     private void initSetup() {
         mLikePresenter = new LikePresenterImpl(this);
         mUserId = getIntent().getIntExtra("userId", 0);
+        int likeCount = getIntent().getIntExtra("likeCount", 0);
+        setTitle(likeCount + " likes");
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mLikeList.setAdapter(mShotsAdapter);
 
@@ -49,9 +51,10 @@ public class LikeActivity extends BaseActivity implements LikeView{
 
     }
 
-    public static Intent createIntent(int userId) {
+    public static Intent createIntent(int userId, int likeCount) {
         Intent intent = new Intent(APP.getInstance(), LikeActivity.class);
         intent.putExtra("userId", userId);
+        intent.putExtra("likeCount", likeCount);
         return intent;
     }
 

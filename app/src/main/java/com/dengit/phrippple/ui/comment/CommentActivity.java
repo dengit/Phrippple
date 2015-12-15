@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
-import com.dengit.phrippple.adapter.CommentAdapter;
+import com.dengit.phrippple.adapter.CommentsAdapter;
 import com.dengit.phrippple.data.Comment;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
@@ -27,13 +27,14 @@ public class CommentActivity extends BaseActivity implements CommentView {
     @Bind(R.id.comment_list)
     ListView mCommentList;
 
-    private CommentAdapter mCommentAdapter;
+    private CommentsAdapter mCommentsAdapter;
     private int shotId;
 
-    public static Intent createIntent(int shotId) {
+    public static Intent createIntent(int shotId, int commentCount) {
 
         Intent intent = new Intent(APP.getInstance(), CommentActivity.class);
         intent.putExtra("shotId", shotId);
+        intent.putExtra("commentCount", commentCount);
         return intent;
     }
 
@@ -48,9 +49,11 @@ public class CommentActivity extends BaseActivity implements CommentView {
 
     private void initSetup() {
         shotId = getIntent().getIntExtra("shotId", 0);
+        int commentCount = getIntent().getIntExtra("commentCount", 0);
+        setTitle(commentCount + " comments");
         mCommentPresenter = new CommentPresenterImpl(this);
-        mCommentAdapter = new CommentAdapter(new ArrayList<Comment>());
-        mCommentList.setAdapter(mCommentAdapter);
+        mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
+        mCommentList.setAdapter(mCommentsAdapter);
         EventBusUtil.getInstance().register(this);
     }
 
@@ -68,6 +71,6 @@ public class CommentActivity extends BaseActivity implements CommentView {
 
     @Subscribe
     public void addItems(ArrayList<Comment> comments) {
-        mCommentAdapter.appendData(comments);
+        mCommentsAdapter.appendData(comments);
     }
 }

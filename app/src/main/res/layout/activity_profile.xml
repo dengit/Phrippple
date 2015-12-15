@@ -53,11 +53,72 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/user_other_info_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/user_link_web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="link_web"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/user_link_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="link_twitter"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/user_buckets_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="buckets_count"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/user_followers_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="followers_count"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/user_followings_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="followings_count"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/user_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="likes_count"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/user_projects_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="projects_count"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/user_shots_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="shots_count"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/user_created_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="created_at"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

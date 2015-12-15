@@ -14,11 +14,4 @@ public class ShotPresenterImpl implements ShotPresenter {
         mShotView = shotView;
         mShotModel = new ShotModelImpl();
     }
-
-    @Override
-    public void startActivity(Intent intent) {
-        mShotView.onStartActivity(intent);
-    }
-
-
 }

@@ -44,6 +44,7 @@
         <activity android:name=".ui.comment.CommentActivity"/>
         <activity android:name=".ui.profile.ProfileActivity"/>
         <activity android:name=".ui.like.LikeActivity"/>
+        <activity android:name=".ui.bucket.BucketActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

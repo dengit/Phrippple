@@ -1,5 +1,6 @@
 package com.dengit.phrippple.api;
 
+import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.Comment;
 import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.RequestTokenBody;
@@ -41,4 +42,7 @@ public interface DribbbleAPI {
 
     @GET("/v1/users/{userId}/likes")
     Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("access_token") String accessToken);
+
+    @GET("/v1/users/{userId}/buckets")
+    Observable<List<Bucket>> getBuckets(@Path("userId")int userId, @Query("access_token") String accessToken);
 }

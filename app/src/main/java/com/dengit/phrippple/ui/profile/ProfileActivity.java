@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,10 +13,14 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.bucket.BucketActivity;
+import com.dengit.phrippple.ui.like.LikeActivity;
+import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dengit on 15/12/14.
@@ -34,8 +39,32 @@ public class ProfileActivity extends BaseActivity {
     @Bind(R.id.user_bio)
     TextView mUserBio;
 
-    @Bind(R.id.user_other_info_list)
-    ViewGroup mOtherInfoLayout;
+    @Bind(R.id.user_link_web)
+    TextView mUserLinkWeb;
+
+    @Bind(R.id.user_link_twitter)
+    TextView mUserLinkTwitter;
+
+    @Bind(R.id.user_buckets_count)
+    TextView mUserBucketsCount;
+
+    @Bind(R.id.user_followers_count)
+    TextView mUserFollowersCount;
+
+    @Bind(R.id.user_followings_count)
+    TextView mUserFollowingsCount;
+
+    @Bind(R.id.user_likes_count)
+    TextView mUserLikesCount;
+
+    @Bind(R.id.user_projects_count)
+    TextView mUserProjectsCount;
+
+    @Bind(R.id.user_shots_count)
+    TextView mUserShotsCount;
+
+    @Bind(R.id.user_created_at)
+    TextView mUserCreateTime;
 
     private User mUser;
 
@@ -49,62 +78,85 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void initSetup() {
-
         mUser = (User) getIntent().getSerializableExtra("user");
+        setTitle(mUser.name);
         mUserPortrait.setImageURI(Uri.parse(mUser.avatar_url));
         mUserName.setText(mUser.name);
         mUserLocation.setText(mUser.location);
-        mUserBio.setText(mUser.bio);
-        flatOtherInfo(mUser);
+        mUserBio.setText(Util.textToHtml(mUser.bio));
+        visibleOtherInfo(mUser);
     }
 
-    private void flatOtherInfo(User mUser) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int padding = getResources().getDimensionPixelSize(R.dimen.text_padding);
+    private void visibleOtherInfo(User mUser) {
+        if (mUser.links != null && !TextUtils.isEmpty(mUser.links.web.trim())) {
+            mUserLinkWeb.setVisibility(View.VISIBLE);
+            mUserLinkWeb.setText("web " + mUser.links.web);
+        }
 
-        if (mUser.links != null && !TextUtils.isEmpty(mUser.links.twitter)) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.links.twitter, params, padding);
+        if (mUser.links != null && !TextUtils.isEmpty(mUser.links.twitter.trim())) {
+            mUserLinkTwitter.setVisibility(View.VISIBLE);
+            mUserLinkTwitter.setText("twitter " + mUser.links.twitter);
         }
 
         if (mUser.shots_count > 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.shots_count + " shots", params, padding);
+            mUserShotsCount.setVisibility(View.VISIBLE);
+            mUserShotsCount.setText("shots " + mUser.shots_count);
         }
 
-        if (mUser.projects_count> 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.projects_count + " projects", params, padding);
+        if (mUser.projects_count > 0) {
+            mUserProjectsCount.setVisibility(View.VISIBLE);
+            mUserProjectsCount.setText("projects " + mUser.projects_count);
         }
 
         if (mUser.followers_count > 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.followers_count + " followers", params, padding);
+            mUserFollowersCount.setVisibility(View.VISIBLE);
+            mUserFollowersCount.setText("followers " + mUser.followers_count);
         }
 
-        if (mUser.followings_count> 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.followings_count + " followings", params, padding);
+        if (mUser.followings_count > 0) {
+            mUserFollowingsCount.setVisibility(View.VISIBLE);
+            mUserFollowingsCount.setText("followings " + mUser.followings_count);
         }
-        if (mUser.buckets_count> 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.buckets_count + " buckets", params, padding);
-        }
-
-        if (mUser.likes_count> 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.likes_count + " likes", params, padding);
+        if (mUser.buckets_count > 0) {
+            mUserBucketsCount.setVisibility(View.VISIBLE);
+            mUserBucketsCount.setText("buckets " + mUser.buckets_count);
         }
 
-        if (mUser.teams_count> 0) {
-            addTextViewToLayout(mOtherInfoLayout, mUser.teams_count + " teams", params, padding);
+        if (mUser.likes_count > 0) {
+            mUserLikesCount.setVisibility(View.VISIBLE);
+            mUserLikesCount.setText("likes " + mUser.likes_count);
         }
     }
-
-    private void addTextViewToLayout(ViewGroup headerLayout, String text, LinearLayout.LayoutParams params, int padding) {
-        TextView textView = new TextView(this);
-        textView.setPadding(padding, padding, padding, padding);
-        textView.setText(text);
-        headerLayout.addView(textView, params);
-    }
-
 
     public static Intent createIntent(User user) {
         Intent intent = new Intent(APP.getInstance(), ProfileActivity.class);
         intent.putExtra("user", user);
         return intent;
+    }
+
+    @OnClick(R.id.user_buckets_count)
+    public void onClickBucketsCount(View v) {
+        startActivity(BucketActivity.createIntent(mUser.id, mUser.buckets_count));
+    }
+
+    @OnClick(R.id.user_followers_count)
+    public void onClickFollowersCount(View v) {
+    }
+
+    @OnClick(R.id.user_followings_count)
+    public void onClickFollowingsCount(View v) {
+    }
+
+    @OnClick(R.id.user_likes_count)
+    public void onClickLikesCount(View v) {
+        startActivity(LikeActivity.createIntent(mUser.id, mUser.likes_count));
+    }
+
+    @OnClick(R.id.user_projects_count)
+    public void onClickProjectsCount(View v) {
+    }
+
+    @OnClick(R.id.user_shots_count)
+    public void onClickShotsCount(View v) {
     }
 }

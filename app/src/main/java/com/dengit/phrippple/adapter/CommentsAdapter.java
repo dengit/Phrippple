@@ -19,11 +19,11 @@ import java.util.List;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentAdapter extends BaseAdapter {
+public class CommentsAdapter extends BaseAdapter {
     
     private List<Comment> mComments;
 
-    public CommentAdapter(List<Comment> comments) {
+    public CommentsAdapter(List<Comment> comments) {
         mComments = comments;
     }
 
