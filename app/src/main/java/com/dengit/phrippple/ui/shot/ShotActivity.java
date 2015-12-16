@@ -11,6 +11,7 @@ import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
@@ -32,7 +33,7 @@ import butterknife.OnClick;
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotActivity extends BaseActivity implements ShotView {
+public class ShotActivity extends SuperBaseActivity {
 
     private Shot mShot;
 
@@ -63,8 +64,6 @@ public class ShotActivity extends BaseActivity implements ShotView {
     @Bind(R.id.shot_descrip)
     TextView mShotDescrip;
 
-    private ShotPresenter mShotPresenter;
-
     public static Intent createIntent(Shot shot) {
         Intent intent = new Intent(APP.getInstance(), ShotActivity.class);
         intent.putExtra("shot", shot);
@@ -81,7 +80,6 @@ public class ShotActivity extends BaseActivity implements ShotView {
     }
 
     private void initSetup() {
-        mShotPresenter = new ShotPresenterImpl(this);
         mShot = (Shot) getIntent().getSerializableExtra("shot");
         setTitle(mShot.title);
         tryToSetGifImage(mShotNormalImage, mShot);
@@ -113,12 +111,6 @@ public class ShotActivity extends BaseActivity implements ShotView {
             shotNormalImage.setHierarchy(gdh);
         }
     }
-
-    @Override
-    public void onStartActivity(Intent intent) {
-        startActivity(intent);
-    }
-
 
     @Override
     protected void onDestroy() {

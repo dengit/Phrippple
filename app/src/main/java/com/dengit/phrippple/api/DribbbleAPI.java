@@ -42,15 +42,14 @@ public interface DribbbleAPI {
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
 
     @GET("/v1/shots/{shotId}/comments")
-    Observable<List<Comment>> getComments(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+    Observable<List<Comment>> getComments(@Path("shotId") int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
     @GET("/v1/shots/{shotId}/likes")
-    Observable<List<Fan>> getFans(@Path("shotId") int shotId, @Query("access_token") String accessToken);
-
+    Observable<List<Fan>> getFans(@Path("shotId") int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
     @GET("/v1/users/{userId}/buckets")
-    Observable<List<Bucket>> getMineBuckets(@Path("userId")int userId, @Query("access_token") String accessToken);
+    Observable<List<Bucket>> getMineBuckets(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
     @GET("/v1/shots/{shotId}/buckets")
-    Observable<List<Bucket>> getOthersBuckets(@Path("shotId")int shotId, @Query("access_token") String accessToken);
+    Observable<List<Bucket>> getOthersBuckets(@Path("shotId")int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 }

@@ -37,6 +37,7 @@ public class DribbbleAPIHelper {
     }
 
     public void setAccessTokenInfo(TokenInfo tokenInfo) {
+        Timber.d("**setAccessTokenInfo");
         mTokenInfo = new TokenInfo();
         mTokenInfo.access_token = tokenInfo.access_token;
         mTokenInfo.scope = tokenInfo.scope;
@@ -44,6 +45,7 @@ public class DribbbleAPIHelper {
     }
 
     public String getAccessToken() {
+        Timber.d("**getAccessToken");
         if (mTokenInfo == null) {
             Timber.d("**mTokenInfo == null");
             return "";

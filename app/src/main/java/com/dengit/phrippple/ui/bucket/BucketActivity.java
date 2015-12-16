@@ -15,6 +15,7 @@ import com.squareup.otto.Subscribe;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,15 +23,12 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketActivity extends BaseActivity implements BucketView {
-
-    @Bind(R.id.bucket_list_view)
-    ListView mBucketList;
+public class BucketActivity extends BaseActivity<Bucket> implements BucketView<Bucket> {
 
     private BucketsAdapter mBucketsAdapter;
     private int mId;
     private BucketType mBucketType;
-    private BucketPresenter mBucketPresenter;
+    private BucketPresenter<Bucket> mBucketPresenter;
 
     public static Intent createIntent(BucketType bucketType, int id, int bucketCount) {
         Intent intent = new Intent(APP.getInstance(), BucketActivity.class);
@@ -51,38 +49,36 @@ public class BucketActivity extends BaseActivity implements BucketView {
     }
 
     private void initSetup() {
-        mBucketPresenter = new BucketPresenterImpl(this);
+        mBucketPresenter = new BucketPresenterImpl<>(this);
+        setBasePresenter(mBucketPresenter);
         mBucketType = (BucketType) getIntent().getSerializableExtra("type");
         mId = getIntent().getIntExtra("id", 0);
         int bucketCount = getIntent().getIntExtra("bucketCount", 0);
         setTitle(bucketCount + " buckets");
         mBucketsAdapter = new BucketsAdapter(new ArrayList<Bucket>());
-        mBucketList.setAdapter(mBucketsAdapter);
+        mListView.setAdapter(mBucketsAdapter);
 
 
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        EventBusUtil.getInstance().register(this);
-        mBucketPresenter.onResume(mBucketType, mId);
+    protected void appendAdapterData(List<Bucket> newItems) {
+        mBucketsAdapter.appendData(newItems);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        EventBusUtil.getInstance().unregister(this);
+    protected void setAdapterData(List<Bucket> newItems) {
+        mBucketsAdapter.setData(newItems);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public BucketType getBucketType() {
+        return mBucketType;
     }
 
-
-    @Subscribe
-    public void appendData(ArrayList<Bucket> buckets) {
-        mBucketsAdapter.appendData(buckets);
+    @Override
+    public int getId() {
+        return mId;
     }
+
 }

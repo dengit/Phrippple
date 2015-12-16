@@ -1,18 +1,12 @@
 package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.BaseView;
 
 import java.util.List;
 
 /**
  * Created by dengit on 15/12/9.
  */
-public interface MainView {
-    void switchLoadMore(boolean isOpen, boolean isEnd);
-
-    void setItems(List<Shot> newShots);
-
-    void appendItems(List<Shot> newShots);
-
-    void switchRefresh(boolean isOpen);
+public interface MainView<T> extends BaseView<T> {
 }

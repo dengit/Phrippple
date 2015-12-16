@@ -13,6 +13,7 @@ import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,14 +21,11 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanActivity extends BaseActivity implements FanView {
-
-    @Bind(R.id.fan_list_view)
-    ListView mFanList;
+public class FanActivity extends BaseActivity<Fan> implements FanView<Fan> {
 
     private int mShotId;
     private FansAdapter mFansAdapter;
-    private FanPresenter mFanPresenter;
+    private FanPresenter<Fan> mFanPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +37,16 @@ public class FanActivity extends BaseActivity implements FanView {
     }
 
     private void initSetup() {
-        mFanPresenter = new FanPresenterImpl(this);
+        mFanPresenter = new FanPresenterImpl<>(this);
+        setBasePresenter(mFanPresenter);
         mShotId = getIntent().getIntExtra("shotId", 0);
         int fanCount = getIntent().getIntExtra("fanCount", 0);
         setTitle(fanCount + " fans");
         mFansAdapter = new FansAdapter(new ArrayList<Fan>());
-        mFanList.setAdapter(mFansAdapter);
+        mListView.setAdapter(mFansAdapter);
 
-
+        initBase();
+        mFanPresenter.firstFetchItems();
     }
 
     public static Intent createIntent(int shotId, int fanCount) {
@@ -57,26 +57,17 @@ public class FanActivity extends BaseActivity implements FanView {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        EventBusUtil.getInstance().register(this);
-        mFanPresenter.onResume(mShotId);
+    protected void appendAdapterData(List<Fan> newItems) {
+        mFansAdapter.appendData(newItems);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        EventBusUtil.getInstance().unregister(this);
+    protected void setAdapterData(List<Fan> newItems) {
+        mFansAdapter.setData(newItems);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-
-    @Subscribe
-    public void appendData(ArrayList<Fan> fans) {
-        mFansAdapter.appendData(fans);
+    public int getShotId() {
+        return mShotId;
     }
 }

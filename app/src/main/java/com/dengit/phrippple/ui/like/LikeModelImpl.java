@@ -6,6 +6,7 @@ import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.BaseModelImpl;
 import com.dengit.phrippple.utils.EventBusUtil;
 
 import java.util.ArrayList;
@@ -20,33 +21,14 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class LikeModelImpl implements LikeModel {
+public class LikeModelImpl<T> extends BaseModelImpl<T> implements LikeModel<T> {
 
-    private LikePresenter mPresenter;
-    private DribbbleAPI mDribbbleAPI;
-    private String mAccessToken;
-    private int mCurrPage = 0;
+    private LikePresenter<T> mPresenter;
     private int mUserId;
 
-    public LikeModelImpl(LikePresenter presenter) {
-        mDribbbleAPI = DribbbleAPIHelper.getInstance().getDribbbleAPI();
-        mAccessToken = DribbbleAPIHelper.getInstance().getAccessToken();
+    public LikeModelImpl(LikePresenter<T> presenter) {
+        super(presenter);
         mPresenter = presenter;
-    }
-
-    @Override
-    public void loadMore() {
-        fetchLikeShots(mCurrPage + 1);
-    }
-
-    @Override
-    public boolean checkIfCanRefresh() {
-        return !TextUtils.isEmpty(mAccessToken);
-    }
-
-    @Override
-    public void loadNewest() {
-        fetchLikeShots(1);
     }
 
     @Override
@@ -54,9 +36,10 @@ public class LikeModelImpl implements LikeModel {
         mUserId = userId;
     }
 
-    private void fetchLikeShots(final int page) {
+    @Override
+    protected void fetchItems(final int page) {
 
-        final ArrayList<Shot> newShots = new ArrayList<>();
+        final ArrayList<T> newShots = new ArrayList<>();
 
         mDribbbleAPI.getLikeShots(mUserId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
@@ -83,10 +66,11 @@ public class LikeModelImpl implements LikeModel {
                     }
 
                     @Override
+                    @SuppressWarnings("unchecked")
                     public void onNext(List<LikeShot> likeShots) {
                         Timber.d("**likeShots.size(): %d", likeShots.size());
                         for (LikeShot likeShot : likeShots) {
-                            newShots.add(likeShot.shot);
+                            newShots.add((T)likeShot.shot);
                         }
                     }
                 });

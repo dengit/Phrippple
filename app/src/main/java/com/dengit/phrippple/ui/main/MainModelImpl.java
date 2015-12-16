@@ -8,6 +8,8 @@ import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
+import com.dengit.phrippple.ui.BaseModel;
+import com.dengit.phrippple.ui.BaseModelImpl;
 import com.dengit.phrippple.utils.EventBusUtil;
 
 import java.util.ArrayList;
@@ -23,37 +25,17 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/9.
  */
-public class MainModelImpl implements MainModel {
-    private MainPresenter mMainPresenter;
-    private int mCurrPage = 0;
-    private DribbbleAPI mDribbbleAPI;
-    private String mAccessToken;
+public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
+    private MainPresenter<T> mMainPresenter;
 
-
-    public MainModelImpl(MainPresenter mainPresenter) {
+    public MainModelImpl(MainPresenter<T> mainPresenter) {
+        super(mainPresenter);
         mMainPresenter = mainPresenter;
-        mDribbbleAPI = DribbbleAPIHelper.getInstance().getDribbbleAPI();
     }
 
     @Override
-    public void loadMore() {
-        fetchShots(mCurrPage + 1);
-    }
-
-    @Override
-    public boolean checkIfCanRefresh() {
-        return !TextUtils.isEmpty(mAccessToken);
-    }
-
-    @Override
-    public void loadNewest() {
-        fetchShots(1);
-    }
-
-    private void fetchShots(final int page) {
-
-        final ArrayList<Shot> newShots = new ArrayList<>();
-
+    protected void fetchItems(final int page) {
+        final ArrayList<T> newItems = new ArrayList<>();
         mDribbbleAPI.getShots(page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,9 +45,9 @@ public class MainModelImpl implements MainModel {
                         Timber.d("**onCompleted");
                         mCurrPage = page;
                         if (page == 1) {
-                            mMainPresenter.onLoadNewestFinished(newShots);
+                            mMainPresenter.onLoadNewestFinished(newItems);
                         } else {
-                            mMainPresenter.onLoadMoreFinished(newShots);
+                            mMainPresenter.onLoadMoreFinished(newItems);
                         }
 
                     }
@@ -79,9 +61,10 @@ public class MainModelImpl implements MainModel {
                     }
 
                     @Override
+                    @SuppressWarnings("unchecked")
                     public void onNext(List<Shot> shots) {
-                        Timber.d("**shots.size(): %d", shots.size());
-                        newShots.addAll(shots);
+                        Timber.d("**Shots.size(): %d", shots.size());
+                        newItems.addAll((List<T>)shots);
                     }
                 });
     }
@@ -109,11 +92,5 @@ public class MainModelImpl implements MainModel {
                         EventBusUtil.getInstance().post(tokenInfo);
                     }
                 });
-    }
-
-    @Override
-    public void setToken(TokenInfo tokenInfo) {
-        mAccessToken = tokenInfo.access_token;
-        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
     }
 }

@@ -1,20 +1,13 @@
 package com.dengit.phrippple.ui.like;
 
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.BaseView;
 
 import java.util.List;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public interface LikeView {
+public interface LikeView<T> extends BaseView<T> {
     int getUserId();
-
-    void switchRefresh(boolean isOpen);
-
-    void switchLoadMore(boolean isOpen, boolean isEnd);
-
-    void setItems(List<Shot> newShots);
-
-    void appendItems(List<Shot> newShots);
 }

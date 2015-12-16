@@ -13,6 +13,7 @@ import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,15 +21,11 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentActivity extends BaseActivity implements CommentView {
+public class CommentActivity extends BaseActivity<Comment> implements CommentView<Comment> {
 
-    private CommentPresenter mCommentPresenter;
-
-    @Bind(R.id.comment_list)
-    ListView mCommentList;
-
+    private CommentPresenter<Comment> mCommentPresenter;
     private CommentsAdapter mCommentsAdapter;
-    private int shotId;
+    private int mShotId;
 
     public static Intent createIntent(int shotId, int commentCount) {
 
@@ -48,34 +45,31 @@ public class CommentActivity extends BaseActivity implements CommentView {
     }
 
     private void initSetup() {
-        shotId = getIntent().getIntExtra("shotId", 0);
+        mShotId = getIntent().getIntExtra("shotId", 0);
         int commentCount = getIntent().getIntExtra("commentCount", 0);
         setTitle(commentCount + " comments");
-        mCommentPresenter = new CommentPresenterImpl(this);
+        mCommentPresenter = new CommentPresenterImpl<>(this);
+        setBasePresenter(mCommentPresenter);
         mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
-        mCommentList.setAdapter(mCommentsAdapter);
+        mListView.setAdapter(mCommentsAdapter);
+
+        initBase();
+        mCommentPresenter.firstFetchItems();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        EventBusUtil.getInstance().register(this);
-        mCommentPresenter.onResume(shotId);
+    public int getShotId() {
+        return mShotId;
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        EventBusUtil.getInstance().unregister(this);
+    protected void appendAdapterData(List<Comment> newItems) {
+        mCommentsAdapter.appendData(newItems);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void setAdapterData(List<Comment> newItems) {
+        mCommentsAdapter.setData(newItems);
     }
 
-    @Subscribe
-    public void addItems(ArrayList<Comment> comments) {
-        mCommentsAdapter.appendData(comments);
-    }
 }

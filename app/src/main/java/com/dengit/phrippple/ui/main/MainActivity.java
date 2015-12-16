@@ -2,16 +2,12 @@ package com.dengit.phrippple.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.ShotsAdapter;
+import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
@@ -26,27 +22,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends BaseActivity implements MainView, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, View.OnClickListener {
+public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>,  AdapterView.OnItemClickListener {
 
     @Inject
-    MainPresenter mMainPresenter;
-
-    @Bind(R.id.listview_main)
-    ListView mListView;
-
-    @Bind(R.id.main_refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
-
+    MainPresenter<Shot> mMainPresenter0;
+    MainPresenter<Shot> mMainPresenter;
     private ShotsAdapter mShotsAdapter;
-    private View mFooter;
-    private ProgressBar mFooterProgressBar;
-    private TextView mLoadMoreTV;
-    private View mFooterLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +47,13 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
 
     private void initSetup() {
         setupComponent();
+        mMainPresenter = new MainPresenterImpl<>(this);
+        setBasePresenter(mMainPresenter);
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mListView.setAdapter(mShotsAdapter);
         mListView.setOnItemClickListener(this);
 
-        mFooterLayout = LayoutInflater.from(this).inflate(R.layout.list_footer, null);
-        mFooter = mFooterLayout.findViewById(R.id.footer);
-        mFooterProgressBar = (ProgressBar) mFooterLayout.findViewById(R.id.footer_progressbar);
-        mLoadMoreTV = (TextView) mFooterLayout.findViewById(R.id.footer_loadmore);
-
-        mFooter.setOnClickListener(this);
-        mRefreshLayout.setOnRefreshListener(this);
+        initBase();
 
         startLoginActivity();
         EventBusUtil.getInstance().register(this);
@@ -92,40 +72,16 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
         EventBusUtil.getInstance().unregister(this);
     }
 
-
     @Override
-    public void switchLoadMore(boolean isOpen, boolean isEnd) {
-        if (isOpen) {
-            mFooter.setClickable(false);
-            mFooterProgressBar.setVisibility(View.VISIBLE);
-            mLoadMoreTV.setText("loading");
-        } else {
-            mFooterProgressBar.setVisibility(View.GONE);
-            if (isEnd) {
-                mFooter.setClickable(false);
-                mLoadMoreTV.setText("no more data");
-            } else {
-                mFooter.setClickable(true);
-                mLoadMoreTV.setText("click to load more");
-            }
-        }
-    }
-    @Override
-    public void setItems(List<Shot> newShots) {
-        mShotsAdapter.setData(newShots);
-        mListView.removeFooterView(mFooterLayout); //todo add progressbar
-        mListView.addFooterView(mFooterLayout);
+    protected void setAdapterData(List<Shot> newItems) {
+        mShotsAdapter.setData(newItems);
     }
 
     @Override
-    public void appendItems(List<Shot> newShots) {
-        mShotsAdapter.appendData(newShots);
+    protected void appendAdapterData(List<Shot> newItems) {
+        mShotsAdapter.appendData(newItems);
     }
 
-    @Override
-    public void switchRefresh(boolean isOpen) {
-        mRefreshLayout.setRefreshing(isOpen);
-    }
 
     private void startLoginActivity() {
         startActivity(AuthorizeActivity.createIntent());
@@ -133,25 +89,14 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
 
 
     @Subscribe
-    public void onFirstFetchShots(TokenInfo tokenInfo) {
-        mMainPresenter.onFirstFetchShots(tokenInfo);
+    public void firstFetchShots(TokenInfo tokenInfo) {
+        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
+        mMainPresenter.firstFetchItems();
     }
-
 
     @Subscribe
     public void requestToken(AuthorizeInfo info) {
         mMainPresenter.requestToken(info);
-    }
-
-
-    @Override
-    public void onRefresh() {
-        mMainPresenter.fetchNewestShots(true);
-    }
-
-    @Override
-    public void onClick(View v) {
-        mMainPresenter.onFooterClick();
     }
 
     @Override

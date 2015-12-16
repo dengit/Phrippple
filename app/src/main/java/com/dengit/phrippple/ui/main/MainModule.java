@@ -1,5 +1,7 @@
 package com.dengit.phrippple.ui.main;
 
+import com.dengit.phrippple.data.Shot;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -7,15 +9,8 @@ import dagger.Provides;
  * Created by dengit on 15/12/9.
  */
 @Module
-public class MainModule {
-    private MainView mMainView;
-
-    public MainModule(MainView mMainView) {
-        this.mMainView = mMainView;
-    }
-
-    @Provides
-    public MainPresenter providePresenter() {
-        return new MainPresenterImpl(mMainView);
+public class MainModule extends AbstractMainModule<Shot> {
+    public MainModule(MainView<Shot> mMainView) {
+        super(mMainView);
     }
 }

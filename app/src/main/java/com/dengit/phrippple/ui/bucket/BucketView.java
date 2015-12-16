@@ -1,7 +1,12 @@
 package com.dengit.phrippple.ui.bucket;
 
+import com.dengit.phrippple.data.BucketType;
+import com.dengit.phrippple.ui.BaseView;
+
 /**
  * Created by dengit on 15/12/14.
  */
-public interface BucketView {
+public interface BucketView<T> extends BaseView<T> {
+    BucketType getBucketType();
+    int getId();
 }

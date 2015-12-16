@@ -14,6 +14,7 @@ import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.like.LikeActivity;
 import com.dengit.phrippple.utils.Util;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends SuperBaseActivity {
 
     @Bind(R.id.user_portrait)
     SimpleDraweeView mUserPortrait;

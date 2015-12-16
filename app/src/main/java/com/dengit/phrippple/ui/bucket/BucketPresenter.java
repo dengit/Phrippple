@@ -1,10 +1,10 @@
 package com.dengit.phrippple.ui.bucket;
 
 import com.dengit.phrippple.data.BucketType;
+import com.dengit.phrippple.ui.BasePresenter;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public interface BucketPresenter {
-    void onResume(BucketType bucketType, int id);
+public interface BucketPresenter<T> extends BasePresenter<T> {
 }

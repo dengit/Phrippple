@@ -2,19 +2,11 @@ package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.TokenInfo;
+import com.dengit.phrippple.ui.BaseModel;
 
 /**
  * Created by dengit on 15/12/9.
  */
-public interface MainModel {
-
-    void loadMore();
-
-    boolean checkIfCanRefresh();
-
-    void loadNewest();
-
+public interface MainModel<T> extends BaseModel<T> {
     void requestToken(AuthorizeInfo info);
-
-    void setToken(TokenInfo tokenInfo);
 }
