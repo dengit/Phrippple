@@ -8,11 +8,11 @@ import java.util.List;
  * Created by dengit on 15/12/9.
  */
 public interface MainView {
-    void switchLoadMore(boolean more);
+    void switchLoadMore(boolean isOpen, boolean isEnd);
 
     void setItems(List<Shot> newShots);
 
     void appendItems(List<Shot> newShots);
 
-    void switchRefresh(boolean refresh);
+    void switchRefresh(boolean isOpen);
 }

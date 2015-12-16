@@ -1,5 +1,6 @@
 package com.dengit.phrippple.ui.main;
 
+import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
@@ -20,19 +21,19 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onFooterClick() {
-        mMainView.switchLoadMore(true);
+        mMainView.switchLoadMore(true, false);
         mMainModel.loadMore();
     }
 
     @Override
-    public void onRefreshFinished(List<Shot> newShots) {
+    public void onLoadNewestFinished(List<Shot> newShots) {
         mMainView.switchRefresh(false);
         mMainView.setItems(newShots);
     }
 
     @Override
     public void onLoadMoreFinished(List<Shot> newShots) {
-        mMainView.switchLoadMore(false);
+        mMainView.switchLoadMore(false, newShots.size() < DribbbleAPI.LIMIT_PER_PAGE);
         mMainView.appendItems(newShots);
     }
 

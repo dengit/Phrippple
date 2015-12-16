@@ -12,7 +12,7 @@ import java.util.List;
 public interface MainPresenter {
     void onFooterClick();
 
-    void onRefreshFinished(List<Shot> newShots);
+    void onLoadNewestFinished(List<Shot> newShots);
 
     void onLoadMoreFinished(List<Shot> newShots);
 

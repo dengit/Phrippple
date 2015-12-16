@@ -29,10 +29,14 @@ public interface DribbbleAPI {
     String TOKEN_URL = "https://dribbble.com/oauth/token";
     String CALLBACK_SCHEME = "phrippple";
     String CALLBACK_HOST = "phone-callback";
+    int LIMIT_PER_PAGE = 30;
 
 
     @GET("/v1/shots")
-    Observable<List<Shot>> getShots(@Query("access_token") String accessToken, @Query("page") int page);
+    Observable<List<Shot>> getShots(@Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
+
+    @GET("/v1/users/{userId}/likes")
+    Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
     @POST(TOKEN_URL)
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
@@ -43,8 +47,6 @@ public interface DribbbleAPI {
     @GET("/v1/shots/{shotId}/likes")
     Observable<List<Fan>> getFans(@Path("shotId") int shotId, @Query("access_token") String accessToken);
 
-    @GET("/v1/users/{userId}/likes")
-    Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("access_token") String accessToken);
 
     @GET("/v1/users/{userId}/buckets")
     Observable<List<Bucket>> getMineBuckets(@Path("userId")int userId, @Query("access_token") String accessToken);

@@ -13,9 +13,6 @@ import com.dengit.phrippple.utils.EventBusUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,8 +37,7 @@ public class MainModelImpl implements MainModel {
 
     @Override
     public void loadMore() {
-        ++mCurrPage;
-        fetchShots(mAccessToken, mCurrPage);
+        fetchShots(mCurrPage + 1);
     }
 
     @Override
@@ -51,30 +47,23 @@ public class MainModelImpl implements MainModel {
 
     @Override
     public void loadNewest() {
-        mCurrPage = 1;
-        fetchShots(mAccessToken, mCurrPage);
+        fetchShots(1);
     }
 
-    private void fetchShots(String accessToken, final int page) {
+    private void fetchShots(final int page) {
 
-        final List<Shot> newShots = new ArrayList<>();
+        final ArrayList<Shot> newShots = new ArrayList<>();
 
-        mDribbbleAPI.getShots(accessToken, page)
-                .flatMap(new Func1<List<Shot>, Observable<Shot>>() {
-                    @Override
-                    public Observable<Shot> call(List<Shot> shots) {
-                        return Observable.from(shots);
-                    }
-                })
+        mDribbbleAPI.getShots(page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Shot>() {
+                .subscribe(new Subscriber<List<Shot>>() {
                     @Override
                     public void onCompleted() { //todo use eventbus
                         Timber.d("**onCompleted");
-
-                        if (page == 1) {//todo maybe not refreshing
-                            mMainPresenter.onRefreshFinished(newShots);
+                        mCurrPage = page;
+                        if (page == 1) {
+                            mMainPresenter.onLoadNewestFinished(newShots);
                         } else {
                             mMainPresenter.onLoadMoreFinished(newShots);
                         }
@@ -90,9 +79,9 @@ public class MainModelImpl implements MainModel {
                     }
 
                     @Override
-                    public void onNext(Shot shot) {
-                        Timber.d(shot.title);
-                        newShots.add(shot);
+                    public void onNext(List<Shot> shots) {
+                        Timber.d("**shots.size(): %d", shots.size());
+                        newShots.addAll(shots);
                     }
                 });
     }

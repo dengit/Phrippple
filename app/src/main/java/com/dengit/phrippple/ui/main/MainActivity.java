@@ -92,19 +92,24 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
         EventBusUtil.getInstance().unregister(this);
     }
 
+
     @Override
-    public void switchLoadMore(boolean more) {
-        if (more) {
+    public void switchLoadMore(boolean isOpen, boolean isEnd) {
+        if (isOpen) {
             mFooter.setClickable(false);
             mFooterProgressBar.setVisibility(View.VISIBLE);
             mLoadMoreTV.setText("loading");
         } else {
-            mFooter.setClickable(true);
             mFooterProgressBar.setVisibility(View.GONE);
-            mLoadMoreTV.setText("click to load more");
+            if (isEnd) {
+                mFooter.setClickable(false);
+                mLoadMoreTV.setText("no more data");
+            } else {
+                mFooter.setClickable(true);
+                mLoadMoreTV.setText("click to load more");
+            }
         }
     }
-
     @Override
     public void setItems(List<Shot> newShots) {
         mShotsAdapter.setData(newShots);
@@ -118,8 +123,8 @@ public class MainActivity extends BaseActivity implements MainView, SwipeRefresh
     }
 
     @Override
-    public void switchRefresh(boolean refresh) {
-        mRefreshLayout.setRefreshing(refresh);
+    public void switchRefresh(boolean isOpen) {
+        mRefreshLayout.setRefreshing(isOpen);
     }
 
     private void startLoginActivity() {
