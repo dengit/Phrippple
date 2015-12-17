@@ -1,5 +1,10 @@
 package com.dengit.phrippple.api;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+
+import com.dengit.phrippple.APP;
 import com.dengit.phrippple.data.TokenInfo;
 
 import retrofit.GsonConverterFactory;
@@ -17,6 +22,7 @@ public class DribbbleAPIHelper {
     private TokenInfo mTokenInfo;
 
     private DribbbleAPIHelper() {
+        mTokenInfo = new TokenInfo();
         mDribbbleAPI = new Retrofit.Builder()
             .baseUrl(DribbbleAPI.API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,19 +44,55 @@ public class DribbbleAPIHelper {
 
     public void setAccessTokenInfo(TokenInfo tokenInfo) {
         Timber.d("**setAccessTokenInfo");
-        mTokenInfo = new TokenInfo();
+        if (TextUtils.isEmpty(tokenInfo.access_token)) {
+            Timber.d("**tokenInfo.access_token is Empty");
+            return;
+        }
+
         mTokenInfo.access_token = tokenInfo.access_token;
         mTokenInfo.scope = tokenInfo.scope;
         mTokenInfo.token_type = tokenInfo.token_type;
+
+        save(tokenInfo);
+    }
+
+    private void save(TokenInfo tokenInfo) {
+        SharedPreferences prefs = APP.getInstance().getSharedPreferences(
+                APP.getInstance().getPackageName(), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("access_token", tokenInfo.access_token);
+        editor.putString("scope", tokenInfo.scope);
+        editor.putString("token_type", tokenInfo.token_type);
+        editor.commit();
+    }
+
+    public boolean hasAccessToken() {
+        return !TextUtils.isEmpty(getAccessToken());
     }
 
     public String getAccessToken() {
         Timber.d("**getAccessToken");
-        if (mTokenInfo == null) {
-            Timber.d("**mTokenInfo == null");
+        if (TextUtils.isEmpty(mTokenInfo.access_token)) {
+            load(mTokenInfo);
+        }
+
+        if (TextUtils.isEmpty(mTokenInfo.access_token)) {
+            Timber.d("**mTokenInfo.access_token is Empty");
             return "";
         }
 
         return mTokenInfo.access_token;
+    }
+
+    private void load(TokenInfo tokenInfo) {
+        SharedPreferences prefs = APP.getInstance().getSharedPreferences(
+                APP.getInstance().getPackageName(), Context.MODE_PRIVATE);
+        if (!prefs.contains("access_token")) {
+            return;
+        }
+
+        tokenInfo.access_token = prefs.getString("access_token", "");
+        tokenInfo.scope = prefs.getString("scope", "");
+        tokenInfo.token_type = prefs.getString("token_type", "");
     }
 }

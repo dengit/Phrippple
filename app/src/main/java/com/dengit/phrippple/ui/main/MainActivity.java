@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 
         initBase();
 
-        startLoginActivity();
+        tryToStartLoginActivity();
         EventBusUtil.getInstance().register(this);
     }
 
@@ -83,10 +83,13 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
     }
 
 
-    private void startLoginActivity() {
-        startActivity(AuthorizeActivity.createIntent());
+    private void tryToStartLoginActivity() {
+        if (!DribbbleAPIHelper.getInstance().hasAccessToken()) {
+            startActivity(AuthorizeActivity.createIntent());
+        } else {
+            mMainPresenter.firstFetchItems();
+        }
     }
-
 
     @Subscribe
     public void firstFetchShots(TokenInfo tokenInfo) {
