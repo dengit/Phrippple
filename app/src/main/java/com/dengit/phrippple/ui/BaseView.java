@@ -9,7 +9,7 @@ public interface BaseView<T> {
 
     void switchLoadMore(boolean isOpen, boolean isEnd);
 
-    void setItems(List<T> newItems);
+    void setItems(List<T> newItems, boolean isEnd);
 
     void appendItems(List<T> newItems);
 

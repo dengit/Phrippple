@@ -37,7 +37,7 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mBasePresenter = new BasePresenterImpl<T>(this);
+        //        mBasePresenter = new BasePresenterImpl<T>(this);
     }
 
     protected void setBasePresenter(BasePresenter<T> basePresenter) {
@@ -76,28 +76,32 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
             mFooterProgressBar.setVisibility(View.VISIBLE);
             mLoadMoreTV.setText("loading");
         } else {
-            mFooterProgressBar.setVisibility(View.GONE);
-            if (isEnd) {
-                mFooter.setClickable(false);
-                mLoadMoreTV.setText("no more data");
-            } else {
-                mFooter.setClickable(true);
-                mLoadMoreTV.setText("click to load more");
-            }
+            setFooterStatus(isEnd);
         }
     }
 
     @Override
-    public void setItems(List<T> newItems) {
+    public void setItems(List<T> newItems, boolean isEnd) {
         setAdapterData(newItems);
 
         if (mFooterLayout == null) {
             Timber.d("mFooterLayout == null");
             return;
         }
-
-        mListView.removeFooterView(mFooterLayout); //todo add progressbar
+        setFooterStatus(isEnd);
+        mListView.removeFooterView(mFooterLayout);
         mListView.addFooterView(mFooterLayout);
+    }
+
+    private void setFooterStatus(boolean isEnd) {
+        mFooterProgressBar.setVisibility(View.GONE);
+        if (isEnd) {
+            mFooter.setClickable(false);
+            mLoadMoreTV.setText("no more data");
+        } else {
+            mFooter.setClickable(true);
+            mLoadMoreTV.setText("click to load more");
+        }
     }
 
     protected abstract void setAdapterData(List<T> newItems);

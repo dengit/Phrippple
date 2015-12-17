@@ -32,13 +32,17 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
     @Override
     public void onLoadNewestFinished(List<T> newItems) {
         mBaseView.switchRefresh(false);
-        mBaseView.setItems(newItems);
+        mBaseView.setItems(newItems, isEnd(newItems));
     }
 
     @Override
     public void onLoadMoreFinished(List<T> newItems) {
-        mBaseView.switchLoadMore(false, newItems.size() < DribbbleAPI.LIMIT_PER_PAGE);
+        mBaseView.switchLoadMore(false, isEnd(newItems));
         mBaseView.appendItems(newItems);
+    }
+
+    private boolean isEnd(List<T> newItems) {
+        return newItems.size() < DribbbleAPI.LIMIT_PER_PAGE;
     }
 
     @Override
