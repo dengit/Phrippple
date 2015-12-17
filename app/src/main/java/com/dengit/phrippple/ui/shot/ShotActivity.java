@@ -10,7 +10,6 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
-import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
@@ -23,8 +22,6 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,10 +47,10 @@ public class ShotActivity extends SuperBaseActivity {
     TextView mShotTime;
 
     @Bind(R.id.shot_fan)
-    TextView mShotLiked;
+    TextView mShotLike;
 
     @Bind(R.id.shot_bucket)
-    TextView mShotBucketed;
+    TextView mShotBucket;
 
     @Bind(R.id.shot_view)
     TextView mShotView;
@@ -86,8 +83,8 @@ public class ShotActivity extends SuperBaseActivity {
         mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
         mAuthorName.setText(mShot.user.name);
         mShotTime.setText(mShot.updated_at);
-        mShotLiked.setText(mShot.likes_count + " likes");
-        mShotBucketed.setText(mShot.buckets_count + " buckets");
+        mShotLike.setText(mShot.likes_count + " likes");
+        mShotBucket.setText(mShot.buckets_count + " buckets");
         mShotView.setText(mShot.views_count + " views");
         mShotCommented.setText(mShot.comments_count + " comments");
 

@@ -78,6 +78,7 @@ public class BucketModelImpl<T> extends BaseModelImpl<T> implements BucketModel<
                     @Override
                     @SuppressWarnings("unchecked")
                     public void onNext(List<Bucket> buckets) {
+                        Timber.d("**buckets.size(): %d", buckets.size());
                         newItems.addAll((List<T>)buckets);
                     }
                 });

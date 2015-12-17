@@ -28,8 +28,8 @@ import timber.log.Timber;
 public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>,  AdapterView.OnItemClickListener {
 
     @Inject
-    MainPresenter<Shot> mMainPresenter0;
     MainPresenter<Shot> mMainPresenter;
+//    MainPresenter<Shot> mMainPresenter;
     private ShotsAdapter mShotsAdapter;
 
     @Override
@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 
     private void initSetup() {
         setupComponent();
-        mMainPresenter = new MainPresenterImpl<>(this);
+//        mMainPresenter = new MainPresenterImpl<>(this);
         setBasePresenter(mMainPresenter);
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mListView.setAdapter(mShotsAdapter);

@@ -58,7 +58,8 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
         mBucketsAdapter = new BucketsAdapter(new ArrayList<Bucket>());
         mListView.setAdapter(mBucketsAdapter);
 
-
+        initBase();
+        mBucketPresenter.firstFetchItems();
     }
 
     @Override

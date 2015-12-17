@@ -13,6 +13,7 @@ import com.dengit.phrippple.R;
 import java.util.List;
 
 import butterknife.Bind;
+import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/7.
@@ -89,6 +90,12 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
     @Override
     public void setItems(List<T> newItems) {
         setAdapterData(newItems);
+
+        if (mFooterLayout == null) {
+            Timber.d("mFooterLayout == null");
+            return;
+        }
+
         mListView.removeFooterView(mFooterLayout); //todo add progressbar
         mListView.addFooterView(mFooterLayout);
     }

@@ -63,6 +63,7 @@ public class CommentModelImpl<T> extends BaseModelImpl<T> implements CommentMode
                     @Override
                     @SuppressWarnings("unchecked")
                     public void onNext(List<Comment> comments) {
+                        Timber.d("**comments.size(): %d", comments.size());
                         newItems.addAll((List<T>)comments);
                     }
                 });

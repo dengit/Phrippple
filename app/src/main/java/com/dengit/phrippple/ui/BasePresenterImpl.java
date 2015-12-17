@@ -23,11 +23,6 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
         mBaseModel = baseModel;
     }
 
-
-    public BaseModel<T> getBaseModel() {
-        return mBaseModel;
-    }
-
     @Override
     public void onFooterClick() {
         mBaseView.switchLoadMore(true, false);
