@@ -7,6 +7,7 @@ An Open Source Dribbble Android Client
 - MVP
 - Dagger2
 - RxJava
+- RxAndroid
 - Retrofit
 - Otto
 - Timber
