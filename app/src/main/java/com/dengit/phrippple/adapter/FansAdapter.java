@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.data.Fan;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class FansAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.fan_item, parent, false);
+            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_fan, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

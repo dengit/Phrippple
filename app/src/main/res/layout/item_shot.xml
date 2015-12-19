@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/shot_item_author_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/shot_item_pretty_time"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="1分钟"
+            android:textAppearance="@style/AppTheme.TextAppearance" />
+
+        <LinearLayout
+            android:layout_toRightOf="@id/shot_item_author_image"
+            android:layout_toLeftOf="@id/shot_item_pretty_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:id="@+id/shot_item_author_name"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:text="author name"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textAppearance="@style/AppTheme.Author.TextAppearance" />
+
+            <TextView
+                android:id="@+id/shot_item_title"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="title"
+                android:textAppearance="@style/AppTheme.Title.TextAppearance" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/shot_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+        <TextView
+            android:id="@+id/shot_item_gif_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="4dp"
+            android:text="GIF"
+            android:background="@drawable/gif_shape"
+            android:textAppearance="@style/AppTheme.TextAppearance"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/shot_item_like"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/feed_button_like"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/shot_item_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="100"
+            android:textAppearance="@style/AppTheme.TextAppearance" />
+
+        <ImageView
+            android:id="@+id/shot_item_comment"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/feed_button_comment"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/shot_item_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="100"
+            android:textAppearance="@style/AppTheme.TextAppearance" />
+
+        <ImageView
+            android:id="@+id/shot_item_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/feed_view"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            android:id="@+id/shot_item_view_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textAppearance="@style/AppTheme.TextAppearance" />
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorText"/>
+</LinearLayout>

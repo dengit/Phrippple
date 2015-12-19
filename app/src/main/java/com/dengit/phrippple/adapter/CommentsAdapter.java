@@ -13,7 +13,6 @@ import com.dengit.phrippple.data.Comment;
 import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -49,7 +48,7 @@ public class CommentsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.comment_item, parent, false);
+            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_comment, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

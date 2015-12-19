@@ -14,8 +14,26 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.TextAppearance" parent="TextAppearance.AppCompat.Medium">
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance" parent="TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/colorText</item>
     </style>
+
+    <style name="AppTheme.Author.TextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorAuthor</item>
+    </style>
+
+    <style name="AppTheme.Title.TextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorTitle</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
 </resources>

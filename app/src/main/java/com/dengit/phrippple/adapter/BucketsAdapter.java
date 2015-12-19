@@ -1,6 +1,5 @@
 package com.dengit.phrippple.adapter;
 
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Bucket;
-import com.dengit.phrippple.utils.Util;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -48,7 +45,7 @@ public class BucketsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.bucket_item, parent, false);
+            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_bucket, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

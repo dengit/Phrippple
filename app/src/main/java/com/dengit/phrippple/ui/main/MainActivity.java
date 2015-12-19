@@ -2,6 +2,8 @@ package com.dengit.phrippple.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -22,6 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
@@ -32,8 +35,12 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 //    MainPresenter<Shot> mMainPresenter;
     private ShotsAdapter mShotsAdapter;
 
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -45,7 +52,9 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 
     }
 
+
     private void initSetup() {
+        setupToolbar();
         setupComponent();
 //        mMainPresenter = new MainPresenterImpl<>(this);
         setBasePresenter(mMainPresenter);
@@ -58,6 +67,16 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
         tryToStartLoginActivity();
         EventBusUtil.getInstance().register(this);
     }
+
+    private void setupToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(getTitle());
+        setSupportActionBar(mToolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
 
     private void setupComponent() {
         DaggerMainComponent.builder()

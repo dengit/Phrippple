@@ -63,7 +63,7 @@ public class DribbbleAPIHelper {
         editor.putString("access_token", tokenInfo.access_token);
         editor.putString("scope", tokenInfo.scope);
         editor.putString("token_type", tokenInfo.token_type);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean hasAccessToken() {

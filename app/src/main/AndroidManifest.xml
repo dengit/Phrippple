@@ -18,7 +18,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +41,8 @@
             android:name=".ui.login.AuthorizeActivity"
             android:theme="@style/AuthorizeDialogStyle" />
 
-        <activity android:name=".ui.shot.ShotActivity"/>
+        <activity android:name=".ui.shot.ShotActivity"
+                  android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.comment.CommentActivity"/>
         <activity android:name=".ui.profile.ProfileActivity"/>
         <activity android:name=".ui.like.LikeActivity"/>

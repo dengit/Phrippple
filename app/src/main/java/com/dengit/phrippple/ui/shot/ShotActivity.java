@@ -3,6 +3,9 @@ package com.dengit.phrippple.ui.shot;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,6 +36,9 @@ import butterknife.OnClick;
 public class ShotActivity extends SuperBaseActivity {
 
     private Shot mShot;
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Bind(R.id.shot_normal_image)
     SimpleDraweeView mShotNormalImage;
@@ -77,6 +83,7 @@ public class ShotActivity extends SuperBaseActivity {
     }
 
     private void initSetup() {
+        setupToolbar();
         mShot = (Shot) getIntent().getSerializableExtra("shot");
         setTitle(mShot.title);
         tryToSetGifImage(mShotNormalImage, mShot);
@@ -89,6 +96,14 @@ public class ShotActivity extends SuperBaseActivity {
         mShotCommented.setText(mShot.comments_count + " comments");
 
         mShotDescrip.setText(Util.textToHtml(mShot.description));
+    }
+
+
+    private void setupToolbar() {
+//        mToolbar.setTitle(getTitle());
+        setSupportActionBar(mToolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void tryToSetGifImage(SimpleDraweeView shotNormalImage, Shot shot) {
@@ -138,5 +153,15 @@ public class ShotActivity extends SuperBaseActivity {
     @OnClick(R.id.shot_bucket)
     public void onClickShotBucket(View v) {
         startActivity(BucketActivity.createIntent(BucketType.Others, mShot.id, mShot.buckets_count));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

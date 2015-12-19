@@ -56,7 +56,7 @@ public class ShotsAdapter extends BaseAdapter {
 
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.shot_item, parent, false);
+            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_shot, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -113,11 +113,11 @@ public class ShotsAdapter extends BaseAdapter {
         SimpleDraweeView shotImage;
         @Bind(R.id.shot_item_author_image)
         SimpleDraweeView authorImage;
-        @Bind(R.id.shot_item_like)
+        @Bind(R.id.shot_item_like_count)
         TextView likeTV;
-        @Bind(R.id.shot_item_msg)
+        @Bind(R.id.shot_item_comment_count)
         TextView msgTV;
-        @Bind(R.id.shot_item_view)
+        @Bind(R.id.shot_item_view_count)
         TextView viewTV;
         @Bind(R.id.shot_item_author_name)
         TextView authorNameTV;
