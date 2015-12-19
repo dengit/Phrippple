@@ -1,5 +1,5 @@
 # Phrippple
-[![Build Status](https://travis-ci.org/dengit/Phrippple.svg?branch=master)](https://travis-ci.org/dengit/Phrippple)
+[![Build Status](https://travis-ci.org/dengit/Phrippple.svg?branch=master)](https://travis-ci.org/dengit/Phrippple) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 An Open Source Dribbble Android Client
 
@@ -7,6 +7,7 @@ An Open Source Dribbble Android Client
 - MVP
 - Dagger2
 - RxJava
+- RxAndroid
 - Retrofit
 - Otto
 - Timber
