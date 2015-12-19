@@ -37,8 +37,8 @@ public class ShotActivity extends SuperBaseActivity {
 
     private Shot mShot;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+//    @Bind(R.id.toolbar)
+//    Toolbar mToolbar;
 
     @Bind(R.id.shot_normal_image)
     SimpleDraweeView mShotNormalImage;
@@ -101,9 +101,9 @@ public class ShotActivity extends SuperBaseActivity {
 
     private void setupToolbar() {
 //        mToolbar.setTitle(getTitle());
-        setSupportActionBar(mToolbar);
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+//        setSupportActionBar(mToolbar);
+//        final ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void tryToSetGifImage(SimpleDraweeView shotNormalImage, Shot shot) {
@@ -153,15 +153,5 @@ public class ShotActivity extends SuperBaseActivity {
     @OnClick(R.id.shot_bucket)
     public void onClickShotBucket(View v) {
         startActivity(BucketActivity.createIntent(BucketType.Others, mShot.id, mShot.buckets_count));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

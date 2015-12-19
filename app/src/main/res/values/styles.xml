@@ -19,8 +19,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.TextAppearance" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textColor">@color/colorText</item>
+    <style name="AppTheme.TextAppearance.Light" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorLight</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Dark" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorDark</item>
     </style>
 
     <style name="AppTheme.Author.TextAppearance" parent="TextAppearance.AppCompat.Small">

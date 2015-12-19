@@ -16,6 +16,7 @@
             android:id="@+id/fan_portrait"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            fresco:placeholderImage="@drawable/profile_place_holder"
             fresco:roundAsCircle="true"/>
 
         <TextView
@@ -23,6 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"
-            android:textAppearance="@style/AppTheme.TextAppearance"/>
+            android:textAppearance="@style/AppTheme.Author.TextAppearance"/>
     </LinearLayout>
 </LinearLayout>

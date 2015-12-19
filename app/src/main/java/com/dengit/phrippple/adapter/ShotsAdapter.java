@@ -30,12 +30,6 @@ public class ShotsAdapter extends BaseAdapter {
         this.mShots = mShots;
     }
 
-
-    public void addItem(Shot shot) {
-        mShots.add(shot);
-    }
-
-
     @Override
     public int getCount() {
         return mShots.size();
@@ -72,9 +66,9 @@ public class ShotsAdapter extends BaseAdapter {
         final Shot shot = (Shot) getItem(position);
         holder.shotImage.setImageURI(Uri.parse(shot.images.normal));
         holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
-        holder.likeTV.setText(String.valueOf(shot.views_count));
+        holder.likeTV.setText(String.valueOf(shot.likes_count));
         holder.msgTV.setText(String.valueOf(shot.comments_count));
-        holder.viewTV.setText(String.valueOf(shot.likes_count));
+        holder.viewTV.setText(String.valueOf(shot.views_count));
         holder.authorNameTV.setText(String.valueOf(shot.user.name));
         holder.titleTV.setText(String.valueOf(shot.title));
 

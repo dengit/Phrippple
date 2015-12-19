@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +21,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 fresco:roundAsCircle="true"
+                fresco:placeholderImage="@drawable/profile_place_holder"
                 android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"/>
 

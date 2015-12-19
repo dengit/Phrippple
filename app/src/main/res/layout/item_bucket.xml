@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="bucket_name"
         android:padding="5dp"
-        android:textAppearance="@style/AppTheme.TextAppearance"/>
+        android:textAppearance="@style/AppTheme.TextAppearance.Dark"/>
 
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="1 shots"
-            android:textAppearance="@style/AppTheme.TextAppearance"/>
+            android:textAppearance="@style/AppTheme.TextAppearance.Dark"/>
 
         <TextView
             android:id="@+id/create_time"
@@ -36,7 +36,7 @@
             android:padding="5dp"
             android:text="create_time"
             android:ellipsize="end"
-            android:textAppearance="@style/AppTheme.TextAppearance"/>
+            android:textAppearance="@style/AppTheme.TextAppearance.Light"/>
     </LinearLayout>
 
 

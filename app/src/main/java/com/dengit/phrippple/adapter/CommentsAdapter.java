@@ -89,7 +89,7 @@ public class CommentsAdapter extends BaseAdapter {
         TextView userName;
         @Bind(R.id.comment_content)
         TextView commentContent;
-        @Bind(R.id.comment_time)
+        @Bind(R.id.comment_pretty_time)
         TextView commentTime;
         @Bind(R.id.comment_like_count)
         TextView commentLikeCount;

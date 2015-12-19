@@ -35,8 +35,8 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 //    MainPresenter<Shot> mMainPresenter;
     private ShotsAdapter mShotsAdapter;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+//    @Bind(R.id.toolbar)
+//    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +69,14 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
     }
 
     private void setupToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(getTitle());
-        setSupportActionBar(mToolbar);
+//        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        mToolbar.setTitle(getTitle());
+//        setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
     }
 
 

@@ -8,7 +8,8 @@
     <color name="colorB">#00FFFF</color>
     <color name="colorC">#FFFF00</color>
     <color name="colorD">#121244</color>
-    <color name="colorText">#b3b1b1</color>
+    <color name="colorLight">#b3b1b1</color>
+    <color name="colorDark">#6c6b6b</color>
     <color name="colorAuthor">#356F9A</color>
     <color name="colorTitle">#89BBE8</color>
 </resources>

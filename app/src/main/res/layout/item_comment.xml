@@ -3,61 +3,66 @@
               xmlns:fresco="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:paddingTop="10dp"
+              android:paddingBottom="10dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:orientation="horizontal">
 
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/user_portrait"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        fresco:placeholderImage="@drawable/profile_place_holder"
+        fresco:roundAsCircle="true" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/user_portrait"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            fresco:roundAsCircle="true" />
-
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"
-            android:textAppearance="@style/AppTheme.TextAppearance"/>
+            android:textAppearance="@style/AppTheme.Author.TextAppearance"/>
+        <TextView
+            android:id="@+id/comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="comment content"
+            android:textAppearance="@style/AppTheme.TextAppearance.Dark"/>
+
+
+        <RelativeLayout
+            android:id="@+id/comment_like"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/comment_pretty_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="comment time"
+                android:textAppearance="@style/AppTheme.TextAppearance.Light" />
+            <TextView
+                android:id="@+id/comment_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="100"
+                android:textAppearance="@style/AppTheme.TextAppearance.Dark" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/comment_like_count"
+                android:src="@drawable/comment_like" />
+        </RelativeLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/comment_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="comment content"
-        android:textAppearance="@style/AppTheme.TextAppearance"/>
-
-    <RelativeLayout
-        android:id="@+id/comment_like"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/comment_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="comment time"
-            android:textAppearance="@style/AppTheme.TextAppearance" />
-
-        <TextView
-            android:id="@+id/comment_like_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="100"
-            android:textAppearance="@style/AppTheme.TextAppearance" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_toLeftOf="@id/comment_like_count"
-            android:src="@color/colorAccent" />
-    </RelativeLayout>
 </LinearLayout>
