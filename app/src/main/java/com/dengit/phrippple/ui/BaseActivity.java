@@ -10,23 +10,25 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dengit.phrippple.R;
+import com.dengit.phrippple.utils.Util;
 
 import java.util.List;
 
 import butterknife.Bind;
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/7.
  */
-public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseView<T>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseView<T>, View.OnClickListener, WaveSwipeRefreshLayout.OnRefreshListener {
 
 
     @Bind(R.id.list_view)
     protected ListView mListView;
 
     @Bind(R.id.refresh_layout)
-    protected SwipeRefreshLayout mRefreshLayout;
+    protected WaveSwipeRefreshLayout mRefreshLayout;
 
     protected View mFooter;
     protected ProgressBar mFooterProgressBar;
@@ -53,6 +55,10 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
 
         mFooter.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setWaveColor(Util.getColor(R.color.colorPrimary));
+
+        //todo setMaxDropHeight noneffective
+        mRefreshLayout.setMaxDropHeight(getResources().getDimensionPixelSize(R.dimen.dropMaxHeight));
     }
 
     @Override

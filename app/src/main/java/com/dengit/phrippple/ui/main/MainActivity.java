@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(false);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -91,6 +92,15 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
     protected void onDestroy() {
         super.onDestroy();
         EventBusUtil.getInstance().unregister(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

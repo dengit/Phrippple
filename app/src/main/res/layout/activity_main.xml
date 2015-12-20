@@ -14,7 +14,7 @@
         <!--android:theme="@style/AppTheme.AppBarOverlay"-->
         <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,5 +26,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 </RelativeLayout>
