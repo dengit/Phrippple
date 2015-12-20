@@ -14,4 +14,6 @@ public interface BaseView<T> {
     void appendItems(List<T> newItems);
 
     void switchRefresh(boolean isOpen);
+
+    void handleError();
 }

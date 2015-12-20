@@ -99,8 +99,8 @@
 
         <ImageView
             android:id="@+id/shot_item_like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/feed_button_like"
             android:layout_marginRight="5dp"/>
 
@@ -114,8 +114,8 @@
 
         <ImageView
             android:id="@+id/shot_item_comment"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/feed_button_comment"
             android:layout_marginRight="5dp"/>
 
@@ -129,8 +129,8 @@
 
         <ImageView
             android:id="@+id/shot_item_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/feed_view"
             android:layout_marginRight="5dp"/>
 
@@ -145,7 +145,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/colorLight"/>

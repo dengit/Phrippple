@@ -1,24 +1,32 @@
 package com.dengit.phrippple.ui.profile;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.like.LikeActivity;
 import com.dengit.phrippple.utils.Util;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.BasePostprocessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.imagepipeline.request.Postprocessor;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +36,13 @@ import butterknife.OnClick;
  * Created by dengit on 15/12/14.
  */
 public class ProfileActivity extends SuperBaseActivity {
+
+    private static final String DEFAULT_HEADER_IMAGE = "https://d13yacurqjgara.cloudfront.net/users/995516/avatars/normal/195f0357fb7fca71c46f4d3e1a733a5f.jpg?1447156390";
+    @Bind(R.id.header_layout)
+    View mProfileHeader;
+
+    @Bind(R.id.header_blur_image)
+    SimpleDraweeView mHeaderBlur;
 
     @Bind(R.id.user_portrait)
     SimpleDraweeView mUserPortrait;
@@ -82,11 +97,66 @@ public class ProfileActivity extends SuperBaseActivity {
     private void initSetup() {
         mUser = (User) getIntent().getSerializableExtra("user");
         setTitle(mUser.name);
-        mUserPortrait.setImageURI(Uri.parse(mUser.avatar_url));
+        setHeaderBlurImageURI(Uri.parse(mUser.avatar_url));
+        setPortraitImageURI(Uri.parse(mUser.avatar_url));
+
         mUserName.setText(mUser.name);
         mUserLocation.setText(mUser.location);
         mUserBio.setText(Util.textToHtml(mUser.bio));
         visibleOtherInfo(mUser);
+    }
+
+    private void setPortraitImageURI(Uri uri) {
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .build();
+
+        PipelineDraweeController controller = (PipelineDraweeController)
+                Fresco.newDraweeControllerBuilder()
+                        .setImageRequest(request)
+                        .setOldController(mUserPortrait.getController())
+                                // other setters as you need
+                        .build();
+        mUserPortrait.setController(controller);
+    }
+
+    private void setHeaderBlurImageURI(Uri uri) {
+
+        if (mUser.avatar_url.contains(".gif")) {
+            uri = Uri.parse(DEFAULT_HEADER_IMAGE);
+        }
+
+        Postprocessor blurPostprocessor = new BasePostprocessor() {
+            @Override
+            public String getName() {
+                return "BlurPostprocessor";
+            }
+
+            @Override
+            public void process(Bitmap bitmap) {
+                // >= level 17
+                final RenderScript rs = RenderScript.create(ProfileActivity.this);
+                final Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                        Allocation.USAGE_SCRIPT);
+                final Allocation output = Allocation.createTyped(rs, input.getType());
+                final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+                script.setRadius(22);
+                script.setInput(input);
+                script.forEach(output);
+                output.copyTo(bitmap);
+            }
+        };
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setPostprocessor(blurPostprocessor)
+                .build();
+
+        PipelineDraweeController controller = (PipelineDraweeController)
+                Fresco.newDraweeControllerBuilder()
+                        .setImageRequest(request)
+                        .setOldController(mHeaderBlur.getController())
+                                // other setters as you need
+                        .build();
+        mHeaderBlur.setController(controller);
     }
 
     private void visibleOtherInfo(User mUser) {
@@ -95,7 +165,7 @@ public class ProfileActivity extends SuperBaseActivity {
             mUserLinkWeb.setText("web " + mUser.links.web);
         }
 
-        if (mUser.links != null && mUser.links.twitter != null &&  !TextUtils.isEmpty(mUser.links.twitter.trim())) {
+        if (mUser.links != null && mUser.links.twitter != null && !TextUtils.isEmpty(mUser.links.twitter.trim())) {
             mUserLinkTwitter.setVisibility(View.VISIBLE);
             mUserLinkTwitter.setText("twitter " + mUser.links.twitter);
         }
@@ -161,4 +231,6 @@ public class ProfileActivity extends SuperBaseActivity {
     @OnClick(R.id.user_shots_count)
     public void onClickShotsCount(View v) {
     }
+
+
 }

@@ -48,6 +48,7 @@ public class LikeActivity extends BaseActivity<Shot> implements LikeView<Shot>, 
         setTitle(likeCount + " likes");
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mListView.setAdapter(mShotsAdapter);
+        mListView.setOnItemClickListener(this);
 
         initBase();
         mLikePresenter.firstFetchItems();

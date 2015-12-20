@@ -34,7 +34,7 @@ public class FansAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return mFans.get(position);
+        return mFans.get(position).user;
     }
 
     @Override

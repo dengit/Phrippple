@@ -47,7 +47,7 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
 
     @Override
     public void onError() {
-        mBaseView.switchRefresh(false);
+        mBaseView.handleError();
     }
 
     @Override

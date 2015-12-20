@@ -1,13 +1,13 @@
 package com.dengit.phrippple.ui;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.utils.Util;
@@ -23,6 +23,8 @@ import timber.log.Timber;
  */
 public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseView<T>, View.OnClickListener, WaveSwipeRefreshLayout.OnRefreshListener {
 
+    @Bind(R.id.initial_progress_bar)
+    protected ProgressBar mInitialProgressBar;
 
     @Bind(R.id.list_view)
     protected ListView mListView;
@@ -33,7 +35,7 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
     protected View mFooter;
     protected ProgressBar mFooterProgressBar;
     protected TextView mLoadMoreTV;
-    protected View mFooterLayout;
+    protected LinearLayout mFooterLayout;
 
     private BasePresenter<T> mBasePresenter;
 
@@ -48,7 +50,7 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
     }
 
     protected void initBase() {
-        mFooterLayout = LayoutInflater.from(this).inflate(R.layout.list_footer, null);
+        mFooterLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.list_footer, null);
         mFooter = mFooterLayout.findViewById(R.id.footer);
         mFooterProgressBar = (ProgressBar) mFooterLayout.findViewById(R.id.footer_progressbar);
         mLoadMoreTV = (TextView) mFooterLayout.findViewById(R.id.footer_loadmore);
@@ -88,7 +90,16 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
     }
 
     @Override
+    public void handleError() {
+        tryToGoneInitialProgressBar();
+        switchRefresh(false);
+        switchLoadMore(false, false);
+        Toast.makeText(this, "error! try it again!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void setItems(List<T> newItems, boolean isEnd) {
+        tryToGoneInitialProgressBar();
         setAdapterData(newItems);
 
         if (mFooterLayout == null) {
@@ -98,6 +109,12 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
         setFooterStatus(isEnd);
         mListView.removeFooterView(mFooterLayout);
         mListView.addFooterView(mFooterLayout);
+    }
+
+    private void tryToGoneInitialProgressBar() {
+        if (mInitialProgressBar.getVisibility() == View.VISIBLE) {
+            mInitialProgressBar.setVisibility(View.GONE);
+        }
     }
 
     private void setFooterStatus(boolean isEnd) {

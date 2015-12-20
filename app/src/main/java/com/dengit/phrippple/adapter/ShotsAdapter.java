@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/8.
@@ -64,6 +65,10 @@ public class ShotsAdapter extends BaseAdapter {
 
     private void setUpShotItem(ViewHolder holder, int position) {
         final Shot shot = (Shot) getItem(position);
+        if (shot.user.avatar_url.contains("gif")) {
+            Timber.d("**avatar url: %s", shot.user.avatar_url);
+            Timber.d("**avatar name: %s", shot.user.name);
+        }
         holder.shotImage.setImageURI(Uri.parse(shot.images.normal));
         holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
         holder.likeTV.setText(String.valueOf(shot.likes_count));

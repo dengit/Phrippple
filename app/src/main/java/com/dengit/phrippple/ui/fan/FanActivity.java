@@ -2,13 +2,18 @@ package com.dengit.phrippple.ui.fan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.FansAdapter;
 import com.dengit.phrippple.data.Fan;
+import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
@@ -21,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanActivity extends BaseActivity<Fan> implements FanView<Fan> {
+public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, AdapterView.OnItemClickListener {
 
     private int mShotId;
     private FansAdapter mFansAdapter;
@@ -44,6 +49,7 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan> {
         setTitle(fanCount + " fans");
         mFansAdapter = new FansAdapter(new ArrayList<Fan>());
         mListView.setAdapter(mFansAdapter);
+        mListView.setOnItemClickListener(this);
 
         initBase();
         mFanPresenter.firstFetchItems();
@@ -69,5 +75,10 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan> {
     @Override
     public int getShotId() {
         return mShotId;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(ProfileActivity.createIntent((User) mFansAdapter.getItem(position)));
     }
 }

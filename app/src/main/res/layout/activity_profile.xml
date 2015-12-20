@@ -12,9 +12,12 @@
         <RelativeLayout
             android:id="@+id/header_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp">
+            android:layout_height="300dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/header_blur_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_portrait"
@@ -22,6 +25,7 @@
                 android:layout_height="60dp"
                 fresco:roundAsCircle="true"
                 fresco:placeholderImage="@drawable/profile_place_holder"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"/>
 
@@ -32,6 +36,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:layout_below="@id/user_portrait"
+                android:textColor="@android:color/white"
                 android:text="name" />
 
             <TextView
@@ -41,6 +46,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:layout_below="@id/user_name"
+                android:textColor="@android:color/white"
                 android:text="location" />
 
             <TextView
@@ -53,6 +59,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:layout_below="@id/user_location"
+                android:textColor="@android:color/white"
                 android:text="bio" />
         </RelativeLayout>
 
