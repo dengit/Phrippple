@@ -79,6 +79,6 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(ProfileActivity.createIntent((User) mFansAdapter.getItem(position)));
+        startActivity(ProfileActivity.createIntent((User)((Fan)mFansAdapter.getItem(position)).user));
     }
 }
