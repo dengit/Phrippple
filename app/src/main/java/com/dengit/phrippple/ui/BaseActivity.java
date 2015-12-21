@@ -65,7 +65,10 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
 
     @Override
     public void onClick(View v) {
-        mBasePresenter.onFooterClick();
+        int id = v.getId();
+        if (id == R.id.footer) {
+            mBasePresenter.onFooterClick();
+        }
     }
 
     @Override
