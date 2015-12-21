@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +34,7 @@ import butterknife.OnClick;
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotActivity extends SuperBaseActivity {
+public class ShotActivity extends SuperBaseActivity implements ShotView {
 
     private Shot mShot;
 
@@ -74,6 +71,9 @@ public class ShotActivity extends SuperBaseActivity {
     @Bind(R.id.shot_fab_menu)
     FloatingActionMenu mShotFabMenu;
 
+    private ShotPresenter mShotPresenter;
+    private boolean hasLiked;
+
     public static Intent createIntent(Shot shot) {
         Intent intent = new Intent(APP.getInstance(), ShotActivity.class);
         intent.putExtra("shot", shot);
@@ -90,6 +90,7 @@ public class ShotActivity extends SuperBaseActivity {
     }
 
     private void initSetup() {
+        mShotPresenter = new ShotPresenterImpl(this);
         setupToolbar();
         setupFab();
         mShot = (Shot) getIntent().getSerializableExtra("shot");
@@ -104,6 +105,12 @@ public class ShotActivity extends SuperBaseActivity {
         mShotCommented.setText(mShot.comments_count + " comments");
 
         mShotDescrip.setText(Util.textToHtml(mShot.description));
+
+        checkLikeStatus();
+    }
+
+    private void checkLikeStatus() {
+        mShotPresenter.checkLikeStatus();
     }
 
     private void setupFab() {
@@ -129,6 +136,9 @@ public class ShotActivity extends SuperBaseActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ShotActivity.this, "like this shot", Toast.LENGTH_SHORT).show();
+                mShotPresenter.setLikeStatus(!hasLiked);
+                ShotActivity.this.updateLike(!hasLiked);
+                mShotFabMenu.toggle(true);
             }
         });
     }
@@ -188,5 +198,26 @@ public class ShotActivity extends SuperBaseActivity {
     @OnClick(R.id.shot_bucket)
     public void onClickShotBucket(View v) {
         startActivity(BucketActivity.createIntent(BucketType.Others, mShot.id, mShot.buckets_count));
+    }
+
+    @Override
+    public int getShotId() {
+        return mShot.id;
+    }
+
+    @Override
+    public void lightenLike() {
+        updateLike(true);
+    }
+
+    private void updateLike(boolean like) {
+        hasLiked = like;
+        if (like) {
+            mShotLike.setText((mShot.likes_count + 1) + " likes");
+            mShotLike.setTextColor(Util.getColor(R.color.colorPrimary));
+        } else {
+            mShotLike.setText(mShot.likes_count + " likes");
+            mShotLike.setTextColor(Util.getColor(R.color.colorDark));
+        }
     }
 }

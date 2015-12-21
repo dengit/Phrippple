@@ -105,7 +105,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="100 likes" />
+                    android:text="100 likes"
+                    android:textColor="@color/colorDark"/>
 
                 <TextView
                     android:id="@+id/shot_bucket"
@@ -113,7 +114,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="100 buckets" />
+                    android:text="100 buckets"
+                    android:textColor="@color/colorDark" />
 
                 <TextView
                     android:id="@+id/shot_view"
@@ -121,7 +123,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="5dp"
-                    android:text="100 views" />
+                    android:text="100 views"
+                    android:textColor="@color/colorLight" />
 
                 <TextView
                     android:id="@+id/shot_comment"
@@ -130,7 +133,7 @@
                     android:layout_gravity="center"
                     android:padding="5dp"
                     android:text="100 comments"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorDark" />
             </LinearLayout>
 
             <TextView

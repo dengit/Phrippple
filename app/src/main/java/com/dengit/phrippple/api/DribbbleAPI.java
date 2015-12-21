@@ -12,6 +12,7 @@ import com.dengit.phrippple.data.TokenInfo;
 import java.util.List;
 
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -55,6 +56,12 @@ public interface DribbbleAPI {
     @GET("/v1/shots/{shotId}/buckets")
     Observable<List<Bucket>> getOthersBuckets(@Path("shotId")int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
+    @GET("/v1/shots/{shotId}/like")
+    Observable<LikeShotResponse> checkLikeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+
     @POST("/v1/shots/{shotId}/like")
     Observable<LikeShotResponse> likeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+
+    @DELETE("/v1/shots/{shotId}/like")
+    Observable<Void> unlikeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
 }
