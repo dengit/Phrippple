@@ -2,6 +2,7 @@ package com.dengit.phrippple.ui.profile;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.renderscript.Allocation;
@@ -10,6 +11,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
@@ -22,7 +24,10 @@ import com.dengit.phrippple.ui.like.LikeActivity;
 import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -31,6 +36,8 @@ import com.facebook.imagepipeline.request.Postprocessor;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.blurry.Blurry;
+import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/14.
@@ -107,6 +114,22 @@ public class ProfileActivity extends SuperBaseActivity {
     }
 
     private void setPortraitImageURI(Uri uri) {
+
+        ControllerListener<ImageInfo> listener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                super.onFinalImageSet(id, imageInfo, animatable);
+//                Blurry.with(ProfileActivity.this)
+//                        .radius(10)
+//                        .sampling(8)
+//                        .async()
+//                        .capture(mUserPortrait)
+//                        .into(mHeaderBlur);
+                Timber.d("**onFinalImageSet**");
+            }
+
+        };
+
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
                 .build();
 
@@ -114,6 +137,7 @@ public class ProfileActivity extends SuperBaseActivity {
                 Fresco.newDraweeControllerBuilder()
                         .setImageRequest(request)
                         .setOldController(mUserPortrait.getController())
+                        .setControllerListener(listener)
                                 // other setters as you need
                         .build();
         mUserPortrait.setController(controller);

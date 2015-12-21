@@ -141,4 +141,30 @@
                 android:text="this is description\nthis is description\nthis is description\nthis is description" />
         </LinearLayout>
     </ScrollView>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/shot_fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        app:menu_labels_ellipsize="end"
+        app:menu_labels_singleLine="true">
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_send_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fab_send_comment"
+        app:fab_size="mini" />
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fab_like"
+        app:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>
+
 </RelativeLayout>

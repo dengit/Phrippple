@@ -3,11 +3,13 @@ package com.dengit.phrippple.ui.shot;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
@@ -25,6 +27,8 @@ import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,6 +71,9 @@ public class ShotActivity extends SuperBaseActivity {
     @Bind(R.id.shot_descrip)
     TextView mShotDescrip;
 
+    @Bind(R.id.shot_fab_menu)
+    FloatingActionMenu mShotFabMenu;
+
     public static Intent createIntent(Shot shot) {
         Intent intent = new Intent(APP.getInstance(), ShotActivity.class);
         intent.putExtra("shot", shot);
@@ -84,6 +91,7 @@ public class ShotActivity extends SuperBaseActivity {
 
     private void initSetup() {
         setupToolbar();
+        setupFab();
         mShot = (Shot) getIntent().getSerializableExtra("shot");
         setTitle(mShot.title);
         tryToSetGifImage(mShotNormalImage, mShot);
@@ -96,6 +104,33 @@ public class ShotActivity extends SuperBaseActivity {
         mShotCommented.setText(mShot.comments_count + " comments");
 
         mShotDescrip.setText(Util.textToHtml(mShot.description));
+    }
+
+    private void setupFab() {
+        mShotFabMenu.setClosedOnTouchOutside(true);
+        mShotFabMenu.hideMenuButton(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mShotFabMenu.showMenuButton(true);
+            }
+        }, 400);
+
+        FloatingActionButton sendCommentFab = (FloatingActionButton) findViewById(R.id.fab_send_comment);
+        sendCommentFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShotActivity.this, "send comment", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        FloatingActionButton likeFab = (FloatingActionButton) findViewById(R.id.fab_like);
+        likeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShotActivity.this, "like this shot", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

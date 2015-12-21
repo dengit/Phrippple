@@ -15,6 +15,10 @@ android {
 
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // Warning:Renderscript support mode is not currently supported with renderscript target 21+
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
     }
 
     signingConfigs {
@@ -59,6 +63,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.4'
+    compile 'com.github.clans:fab:1.6.2'
+    compile 'jp.wasabeef:blurry:1.0.5'
 
     //dagger2
     compile 'com.google.dagger:dagger:2.0'
