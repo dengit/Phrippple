@@ -65,6 +65,9 @@ public class DetailActivityL extends AbstractDetailActivity {
 
 //                findViewById(R.id.info_button).animate().alpha(1.0f);
 //                findViewById(R.id.star_button).animate().alpha(1.0f);
+                mShotNormalImage.setBackground(hero.getDrawable());
+                mShotNormalImage.setVisibility(View.VISIBLE);
+                hero.setVisibility(View.GONE);
 
                 getWindow().getEnterTransition().removeListener(this);
             }
@@ -86,6 +89,10 @@ public class DetailActivityL extends AbstractDetailActivity {
 
 //        findViewById(R.id.info_button).animate().alpha(0.0f);
 //        findViewById(R.id.star_button).animate().alpha(0.0f);
+
+//        mShotNormalImage.setBackground(hero.getDrawable());
+        mShotNormalImage.setVisibility(View.GONE);
+        hero.setVisibility(View.VISIBLE);
     }
 
     private static class TintListener implements ValueAnimator.AnimatorUpdateListener {

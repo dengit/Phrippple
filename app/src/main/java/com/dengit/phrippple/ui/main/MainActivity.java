@@ -263,33 +263,40 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
         final Shot shot = (Shot) mShotsAdapter.getItem(position);
         final SimpleDraweeView shotImage = (SimpleDraweeView) view.findViewById(R.id.shot_item_image);
 
-        ImageRequest imageRequest = ImageRequest.fromUri(shot.images.normal);
-        ImagePipeline imagePipeline = Fresco.getImagePipeline();
-        DataSource<CloseableReference<CloseableImage>> dataSource =
-                imagePipeline.fetchImageFromBitmapCache(imageRequest, null);
-        dataSource.subscribe(new BaseBitmapDataSubscriber() {
-                                 @Override
-                                 protected void onNewResultImpl(Bitmap bitmap) {
-                                     intent.putExtra("shot", shot)
-                                             .putExtra("photo", Bitmap.createBitmap(bitmap));
-                                     runOnUiThread(new Runnable() {
-                                         @Override
-                                         public void run() {
-                                             if (Utils.hasLollipop()) {
-                                                 startActivityLollipop(shotImage, intent);
-                                             } else {
-                                                 startActivityGingerBread(shotImage, intent);
-                                             }
-                                         }
-                                     });
-                                 }
+        intent.putExtra("shot", shot);
+        if (Utils.hasLollipop()) {
+            startActivityLollipop(shotImage, intent);
+        } else {
+            startActivityGingerBread(shotImage, intent);
+        }
 
-                                 @Override
-                                 protected void onFailureImpl(
-                                         DataSource<CloseableReference<CloseableImage>> dataSource) {
-
-                                 }
-                             }, Executors.newSingleThreadExecutor());
+//        ImageRequest imageRequest = ImageRequest.fromUri(shot.images.normal);
+//        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+//        DataSource<CloseableReference<CloseableImage>> dataSource =
+//                imagePipeline.fetchImageFromBitmapCache(imageRequest, null);
+//        dataSource.subscribe(new BaseBitmapDataSubscriber() {
+//                                 @Override
+//                                 protected void onNewResultImpl(Bitmap bitmap) {
+//                                     intent.putExtra("shot", shot)
+//                                             .putExtra("photo", Bitmap.createBitmap(bitmap));
+//                                     runOnUiThread(new Runnable() {
+//                                         @Override
+//                                         public void run() {
+//                                             if (Utils.hasLollipop()) {
+//                                                 startActivityLollipop(shotImage, intent);
+//                                             } else {
+//                                                 startActivityGingerBread(shotImage, intent);
+//                                             }
+//                                         }
+//                                     });
+//                                 }
+//
+//                                 @Override
+//                                 protected void onFailureImpl(
+//                                         DataSource<CloseableReference<CloseableImage>> dataSource) {
+//
+//                                 }
+//                             }, Executors.newSingleThreadExecutor());
 
 
     }

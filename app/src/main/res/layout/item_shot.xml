@@ -74,7 +74,7 @@
             android:id="@+id/shot_item_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            fresco:placeholderImage="@drawable/shot_place_holder"/>
+            fresco:backgroundImage="@drawable/shot_place_holder"/>
         <TextView
             android:id="@+id/shot_item_gif_tag"
             android:layout_width="wrap_content"

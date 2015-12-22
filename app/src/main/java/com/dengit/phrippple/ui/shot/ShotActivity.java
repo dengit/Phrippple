@@ -47,9 +47,6 @@ public class ShotActivity extends DetailActivityL implements ShotView {
     //    @Bind(R.id.toolbar)
     //    Toolbar mToolbar;
 
-    @Bind(R.id.shot_normal_image)
-    SimpleDraweeView mShotNormalImage;
-
     @Bind(R.id.shot_author_portrait)
     SimpleDraweeView mAuthorPortrait;
 
@@ -92,7 +89,8 @@ public class ShotActivity extends DetailActivityL implements ShotView {
         setContentView(R.layout.activity_shot);
         ButterKnife.bind(this);
 
-        initDetailActivity();
+        mShot = (Shot) getIntent().getSerializableExtra("shot");
+        initDetailActivity(mShot.images.normal);
         initSetup();
     }
 
@@ -100,9 +98,9 @@ public class ShotActivity extends DetailActivityL implements ShotView {
         mShotPresenter = new ShotPresenterImpl(this);
         setupToolbar();
         setupFab();
-        mShot = (Shot) getIntent().getSerializableExtra("shot");
+
         setTitle(mShot.title);
-//        tryToSetGifImage(mShotNormalImage, mShot);
+        tryToSetGifImage(mShotNormalImage, mShot);
         mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
         mAuthorName.setText(mShot.user.name);
         mShotTime.setText(mShot.updated_at);
