@@ -102,6 +102,7 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
 
     @Override
     public void setItems(List<T> newItems, boolean isEnd) {
+
         tryToGoneInitialProgressBar();
         setAdapterData(newItems);
 
