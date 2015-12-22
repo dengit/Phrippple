@@ -1,45 +1,51 @@
 package com.dengit.phrippple.ui.shot;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dengit.phrippple.APP;
+import com.dengit.phrippple.DetailActivityL;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
-import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotActivity extends SuperBaseActivity implements ShotView {
+public class ShotActivity extends DetailActivityL implements ShotView {
 
     private Shot mShot;
 
-//    @Bind(R.id.toolbar)
-//    Toolbar mToolbar;
+    //    @Bind(R.id.toolbar)
+    //    Toolbar mToolbar;
 
     @Bind(R.id.shot_normal_image)
     SimpleDraweeView mShotNormalImage;
@@ -86,6 +92,7 @@ public class ShotActivity extends SuperBaseActivity implements ShotView {
         setContentView(R.layout.activity_shot);
         ButterKnife.bind(this);
 
+        initDetailActivity();
         initSetup();
     }
 
@@ -95,7 +102,7 @@ public class ShotActivity extends SuperBaseActivity implements ShotView {
         setupFab();
         mShot = (Shot) getIntent().getSerializableExtra("shot");
         setTitle(mShot.title);
-        tryToSetGifImage(mShotNormalImage, mShot);
+//        tryToSetGifImage(mShotNormalImage, mShot);
         mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
         mAuthorName.setText(mShot.user.name);
         mShotTime.setText(mShot.updated_at);
@@ -106,7 +113,7 @@ public class ShotActivity extends SuperBaseActivity implements ShotView {
 
         mShotDescrip.setText(Util.textToHtml(mShot.description));
 
-        checkLikeStatus();
+//        checkLikeStatus();
     }
 
     private void checkLikeStatus() {
@@ -145,10 +152,10 @@ public class ShotActivity extends SuperBaseActivity implements ShotView {
 
 
     private void setupToolbar() {
-//        mToolbar.setTitle(getTitle());
-//        setSupportActionBar(mToolbar);
-//        final ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+        //        mToolbar.setTitle(getTitle());
+        //        setSupportActionBar(mToolbar);
+        //        final ActionBar actionBar = getSupportActionBar();
+        //        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void tryToSetGifImage(SimpleDraweeView shotNormalImage, Shot shot) {
@@ -167,6 +174,41 @@ public class ShotActivity extends SuperBaseActivity implements ShotView {
             shotNormalImage.setImageURI(Uri.parse(url));
             shotNormalImage.setHierarchy(gdh);
         }
+
+//        ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
+//            @Override
+//            public void onFinalImageSet(
+//                    String id,
+//                    @Nullable ImageInfo imageInfo,
+//                    @Nullable Animatable anim) {
+//                if (anim != null) {
+//                    // app-specific logic to enable animation starting
+//                    hero.setVisibility(View.GONE);
+//                    Timber.d("**hero.setVisibility(View.GONE)");
+//                    anim.start();
+//                }
+//            }
+//        };
+//
+//        Uri uri = Uri.parse(url);
+//        DraweeController controller = Fresco.newDraweeControllerBuilder()
+//                .setUri(uri)
+//                .setControllerListener(controllerListener)
+//
+//                        // other setters
+//                .build();
+//        shotNormalImage.setController(controller);
+//        shotNormalImage.setHierarchy(gdh);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mShotFabMenu.isOpened()) {
+            mShotFabMenu.close(true);
+            return;
+        }
+
+        super.onBackPressed();
     }
 
     @Override
