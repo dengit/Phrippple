@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
         mListView.setAdapter(mShotsAdapter);
         mListView.setOnItemClickListener(this);
         setupReturnToFab(mListView);
-        setupResideMenu();
+//        setupResideMenu();
         initBase();
 
         tryToStartLoginActivity();
@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mResideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+//                mResideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
                 return true;
         }
         return super.onOptionsItemSelected(item);

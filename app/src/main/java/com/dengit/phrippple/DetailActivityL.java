@@ -6,16 +6,35 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.ImageView;
 
+import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.utils.Util;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.request.BasePostprocessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.imagepipeline.request.Postprocessor;
+
+import timber.log.Timber;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class DetailActivityL extends AbstractDetailActivity {
@@ -57,21 +76,26 @@ public class DetailActivityL extends AbstractDetailActivity {
         getWindow().getEnterTransition().addListener(new TransitionListener() {
             @Override
             public void onTransitionEnd(Transition transition) {
-                ImageView hero = (ImageView) findViewById(R.id.photo);
+                //                ImageView hero = (ImageView) findViewById(R.id.photo);
                 Integer colorFrom = Util.getColor(R.color.photo_tint);
                 ValueAnimator color = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, 0);
                 color.addUpdateListener(new TintListener(hero));
                 color.start();
 
-//                findViewById(R.id.info_button).animate().alpha(1.0f);
-//                findViewById(R.id.star_button).animate().alpha(1.0f);
-                mShotNormalImage.setBackground(hero.getDrawable());
+                //                findViewById(R.id.info_button).animate().alpha(1.0f);
+                //                findViewById(R.id.star_button).animate().alpha(1.0f);
+                //                mShotNormalImage.setBackground(hero.getDrawable());
                 mShotNormalImage.setVisibility(View.VISIBLE);
                 hero.setVisibility(View.GONE);
-
+                tryToSetGifImage(getShot());
+                Timber.d("**setupEnterAnimation onTransitionEnd");
                 getWindow().getEnterTransition().removeListener(this);
             }
         });
+    }
+
+    protected Shot getShot() {
+        return null;
     }
 
     @Override
@@ -87,10 +111,10 @@ public class DetailActivityL extends AbstractDetailActivity {
         });
         color.start();
 
-//        findViewById(R.id.info_button).animate().alpha(0.0f);
-//        findViewById(R.id.star_button).animate().alpha(0.0f);
+        //        findViewById(R.id.info_button).animate().alpha(0.0f);
+        //        findViewById(R.id.star_button).animate().alpha(0.0f);
 
-//        mShotNormalImage.setBackground(hero.getDrawable());
+        //        mShotNormalImage.setBackground(hero.getDrawable());
         mShotNormalImage.setVisibility(View.GONE);
         hero.setVisibility(View.VISIBLE);
     }
@@ -106,5 +130,27 @@ public class DetailActivityL extends AbstractDetailActivity {
         public void onAnimationUpdate(ValueAnimator valueAnimator) {
             mHero.getDrawable().setTint((Integer) valueAnimator.getAnimatedValue());
         }
+    }
+
+
+    private void tryToSetGifImage(Shot shot) {
+        GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(getResources())
+                .setProgressBarImage(new ProgressBarDrawable())
+                .build();
+        String url = shot.images.hidpi != null ? shot.images.hidpi : shot.images.normal;
+        Timber.d("**url:%s", url);
+
+        if (shot.animated) {
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setUri(Uri.parse(url))
+                    .setAutoPlayAnimations(true)
+                    .build();
+            mShotNormalImage.setController(controller);
+//                        mShotNormalImage.setHierarchy(gdh); // todo gif can not start as uncomment this line
+        } else {
+            mShotNormalImage.setImageURI(Uri.parse(url));
+//                        mShotNormalImage.setHierarchy(gdh);
+        }
+
     }
 }

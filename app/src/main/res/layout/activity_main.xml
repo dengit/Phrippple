@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="14dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/return_to_top"
         app:fab_elevationCompat="4dp" />

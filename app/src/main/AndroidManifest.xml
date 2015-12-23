@@ -17,7 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MainTheme">
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,21 +31,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:scheme="phrippple"
-                    android:host="phone-callback" />
+                    android:host="phone-callback"
+                    android:scheme="phrippple" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.login.AuthorizeActivity"
-            android:theme="@style/AuthorizeDialogStyle" />
+            android:theme="@style/AuthorizeDialogTheme" />
 
-        <activity android:name=".ui.shot.ShotActivity"/>
-        <activity android:name=".ui.comment.CommentActivity"/>
-        <activity android:name=".ui.profile.ProfileActivity"/>
-        <activity android:name=".ui.like.LikeActivity"/>
-        <activity android:name=".ui.bucket.BucketActivity"/>
-        <activity android:name=".ui.fan.FanActivity"/>
+        <activity
+            android:name=".ui.shot.ShotActivity"
+            android:theme="@style/DetailTheme" />
+        <activity android:name=".ui.comment.CommentActivity" />
+        <activity android:name=".ui.profile.ProfileActivity" />
+        <activity android:name=".ui.like.LikeActivity" />
+        <activity android:name=".ui.bucket.BucketActivity" />
+        <activity android:name=".ui.fan.FanActivity" />
 
         <activity
             android:name=".DetailActivity"
@@ -59,7 +61,11 @@
             android:name="io.fabric.ApiKey"
             android:value="f37655580f6d27d8f108567ba6744f1c0465c058" />
 
-        <meta-data android:value="5668fe12e0f55ac20b0013f2" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="TEST" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5668fe12e0f55ac20b0013f2"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="TEST" />
     </application>
 </manifest>

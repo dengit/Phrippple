@@ -29,12 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/shot_normal_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:visibility="gone"/>
-
                 <ImageView
                     android:id="@+id/photo"
                     android:layout_width="match_parent"
@@ -42,6 +36,13 @@
                     android:scaleType="centerCrop"
                     android:tint="@color/photo_tint"
                     android:transitionName="photo_hero" />
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/shot_normal_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:visibility="gone"/>
 
             </FrameLayout>
 

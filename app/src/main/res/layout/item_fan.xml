@@ -24,6 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"
-            android:textAppearance="@style/AppTheme.Author.TextAppearance"/>
+            android:textAppearance="@style/TextAppearance.Author"/>
     </LinearLayout>
 </LinearLayout>

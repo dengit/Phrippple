@@ -54,19 +54,23 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
 
     public Bitmap photo;
 
-    public void initDetailActivity(String url) {
+    public void initDetailActivity(final String url) {
 
+        //so far as I know, Fresco can not handle gif when
+        //encounter the following cases:
+        //1, fetchImageFromBitmapCache, bitmap is null
+        //2, setPostprocessor can not be called, SimpleDraweeView show nothing at the same time
         ImageRequest imageRequest = ImageRequest.fromUri(url);
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
         DataSource<CloseableReference<CloseableImage>> dataSource =
                 imagePipeline.fetchImageFromBitmapCache(imageRequest, null);
         dataSource.subscribe(new BaseBitmapDataSubscriber() {
             @Override
-            protected void onNewResultImpl(Bitmap bitmap) {
+            protected void onNewResultImpl(Bitmap bitmap) {//gif bitmap is null
 
                 //todo animated view will have abnormal size when using background attr in xml
                 if (bitmap == null) {
-                    Timber.d("**setBackgroundResource");
+                    Timber.d("**setBackgroundResource, url: %s", url);
                     hero.setBackgroundResource(R.drawable.shot_place_holder);
                 }
 
@@ -86,17 +90,6 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
                 Timber.d("**onFailureImpl");
             }
         }, Executors.newSingleThreadExecutor());
-
-        //        photo = getIntent().getParcelableExtra("photo");
-        //        hero.setImageBitmap(photo);
-        //
-        //        colorize(photo);
-        //
-        ////        setupText();
-        //
-        //        postCreate();
-        //
-        //        setupEnterAnimation();
     }
 
     public abstract void postCreate();

@@ -26,13 +26,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"
-            android:textAppearance="@style/AppTheme.Author.TextAppearance"/>
+            android:textAppearance="@style/TextAppearance.Author"/>
         <TextView
             android:id="@+id/comment_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="comment content"
-            android:textAppearance="@style/AppTheme.TextAppearance.Dark"/>
+            android:textAppearance="@style/TextAppearance.Dark"/>
 
 
         <RelativeLayout
@@ -46,7 +46,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="comment time"
-                android:textAppearance="@style/AppTheme.TextAppearance.Light" />
+                android:textAppearance="@style/TextAppearance.Light" />
             <TextView
                 android:id="@+id/comment_like_count"
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="100"
-                android:textAppearance="@style/AppTheme.TextAppearance.Dark" />
+                android:textAppearance="@style/TextAppearance.Dark" />
 
             <ImageView
                 android:layout_width="14dp"

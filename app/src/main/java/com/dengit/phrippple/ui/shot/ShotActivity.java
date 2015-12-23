@@ -100,7 +100,7 @@ public class ShotActivity extends DetailActivityL implements ShotView {
         setupFab();
 
         setTitle(mShot.title);
-        tryToSetGifImage(mShotNormalImage, mShot);
+//        tryToSetGifImage(mShotNormalImage, mShot);
         mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
         mAuthorName.setText(mShot.user.name);
         mShotTime.setText(mShot.updated_at);
@@ -156,49 +156,6 @@ public class ShotActivity extends DetailActivityL implements ShotView {
         //        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void tryToSetGifImage(SimpleDraweeView shotNormalImage, Shot shot) {
-        GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(getResources())
-                .setProgressBarImage(new ProgressBarDrawable())
-                .build();
-        String url = mShot.images.hidpi != null ? mShot.images.hidpi : mShot.images.normal;
-        if (shot.animated) {
-            DraweeController controller = Fresco.newDraweeControllerBuilder()
-                    .setUri(Uri.parse(url))
-                    .setAutoPlayAnimations(true)
-                    .build();
-            shotNormalImage.setController(controller);
-            shotNormalImage.setHierarchy(gdh);
-        } else {
-            shotNormalImage.setImageURI(Uri.parse(url));
-            shotNormalImage.setHierarchy(gdh);
-        }
-
-//        ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
-//            @Override
-//            public void onFinalImageSet(
-//                    String id,
-//                    @Nullable ImageInfo imageInfo,
-//                    @Nullable Animatable anim) {
-//                if (anim != null) {
-//                    // app-specific logic to enable animation starting
-//                    hero.setVisibility(View.GONE);
-//                    Timber.d("**hero.setVisibility(View.GONE)");
-//                    anim.start();
-//                }
-//            }
-//        };
-//
-//        Uri uri = Uri.parse(url);
-//        DraweeController controller = Fresco.newDraweeControllerBuilder()
-//                .setUri(uri)
-//                .setControllerListener(controllerListener)
-//
-//                        // other setters
-//                .build();
-//        shotNormalImage.setController(controller);
-//        shotNormalImage.setHierarchy(gdh);
-    }
-
     @Override
     public void onBackPressed() {
         if (mShotFabMenu.isOpened()) {
@@ -238,6 +195,11 @@ public class ShotActivity extends DetailActivityL implements ShotView {
     @OnClick(R.id.shot_bucket)
     public void onClickShotBucket(View v) {
         startActivity(BucketActivity.createIntent(BucketType.Others, mShot.id, mShot.buckets_count));
+    }
+
+    @Override
+    protected Shot getShot() {
+        return mShot;
     }
 
     @Override

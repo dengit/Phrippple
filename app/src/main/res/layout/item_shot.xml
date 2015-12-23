@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="1分钟"
-            android:textAppearance="@style/AppTheme.TextAppearance.Light" />
+            android:textAppearance="@style/TextAppearance.Light" />
 
         <LinearLayout
             android:layout_toRightOf="@id/shot_item_author_image"
@@ -51,7 +51,7 @@
                 android:text="author name"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:textAppearance="@style/AppTheme.Author.TextAppearance" />
+                android:textAppearance="@style/TextAppearance.Author" />
 
             <TextView
                 android:id="@+id/shot_item_title"
@@ -61,7 +61,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="title"
-                android:textAppearance="@style/AppTheme.Title.TextAppearance" />
+                android:textAppearance="@style/TextAppearance.Title" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -86,7 +86,7 @@
             android:padding="4dp"
             android:text="GIF"
             android:background="@drawable/gif_shape"
-            android:textAppearance="@style/AppTheme.TextAppearance.Light"
+            android:textAppearance="@style/TextAppearance.Light"
             android:visibility="gone" />
     </RelativeLayout>
 
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="100"
-            android:textAppearance="@style/AppTheme.TextAppearance.Dark" />
+            android:textAppearance="@style/TextAppearance.Dark" />
 
         <ImageView
             android:id="@+id/shot_item_comment"
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="100"
-            android:textAppearance="@style/AppTheme.TextAppearance.Dark" />
+            android:textAppearance="@style/TextAppearance.Dark" />
 
         <ImageView
             android:id="@+id/shot_item_view"
@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100"
-            android:textAppearance="@style/AppTheme.TextAppearance.Dark" />
+            android:textAppearance="@style/TextAppearance.Dark" />
 
 
     </LinearLayout>
