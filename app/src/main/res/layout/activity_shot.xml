@@ -177,7 +177,7 @@
         android:id="@+id/fab_send_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/fab_send_comment"
+        android:src="@drawable/fab_comment"
         app:fab_size="mini" />
 
     <com.github.clans.fab.FloatingActionButton

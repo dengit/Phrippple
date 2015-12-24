@@ -101,7 +101,7 @@
             android:id="@+id/shot_item_like"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/feed_button_like"
+            android:src="@drawable/btn_item_like"
             android:layout_marginRight="5dp"/>
 
         <TextView
@@ -116,7 +116,7 @@
             android:id="@+id/shot_item_comment"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/feed_button_comment"
+            android:src="@drawable/item_comment"
             android:layout_marginRight="5dp"/>
 
         <TextView
@@ -131,7 +131,7 @@
             android:id="@+id/shot_item_view"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/feed_view"
+            android:src="@drawable/item_view"
             android:layout_marginRight="5dp"/>
 
         <TextView

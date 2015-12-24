@@ -6,13 +6,10 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -22,17 +19,10 @@ import android.widget.ImageView;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.facebook.imagepipeline.request.BasePostprocessor;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.facebook.imagepipeline.request.Postprocessor;
 
 import timber.log.Timber;
 
@@ -42,22 +32,6 @@ public class DetailActivityL extends AbstractDetailActivity {
     @Override
     public void postCreate() {
         applySystemWindowsBottomInset();
-    }
-
-    private void applySystemWindowsBottomInset() {
-        container.setFitsSystemWindows(true);
-        container.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
-                DisplayMetrics metrics = getResources().getDisplayMetrics();
-                if (metrics.widthPixels < metrics.heightPixels) {
-                    view.setPadding(0, 0, 0, windowInsets.getSystemWindowInsetBottom());
-                } else {
-                    view.setPadding(0, 0, windowInsets.getSystemWindowInsetRight(), 0);
-                }
-                return windowInsets.consumeSystemWindowInsets();
-            }
-        });
     }
 
     @Override
@@ -94,10 +68,6 @@ public class DetailActivityL extends AbstractDetailActivity {
         });
     }
 
-    protected Shot getShot() {
-        return null;
-    }
-
     @Override
     public void setupExitAnimation() {
         Integer colorTo = Util.getColor(R.color.photo_tint);
@@ -119,19 +89,25 @@ public class DetailActivityL extends AbstractDetailActivity {
         hero.setVisibility(View.VISIBLE);
     }
 
-    private static class TintListener implements ValueAnimator.AnimatorUpdateListener {
-        private final ImageView mHero;
-
-        TintListener(ImageView hero) {
-            mHero = hero;
-        }
-
-        @Override
-        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-            mHero.getDrawable().setTint((Integer) valueAnimator.getAnimatedValue());
-        }
+    protected Shot getShot() {
+        return null;
     }
 
+    private void applySystemWindowsBottomInset() {
+        container.setFitsSystemWindows(true);
+        container.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View view, WindowInsets windowInsets) {
+                DisplayMetrics metrics = getResources().getDisplayMetrics();
+                if (metrics.widthPixels < metrics.heightPixels) {
+                    view.setPadding(0, 0, 0, windowInsets.getSystemWindowInsetBottom());
+                } else {
+                    view.setPadding(0, 0, windowInsets.getSystemWindowInsetRight(), 0);
+                }
+                return windowInsets.consumeSystemWindowInsets();
+            }
+        });
+    }
 
     private void tryToSetGifImage(Shot shot) {
         GenericDraweeHierarchy gdh = new GenericDraweeHierarchyBuilder(getResources())
@@ -146,11 +122,25 @@ public class DetailActivityL extends AbstractDetailActivity {
                     .setAutoPlayAnimations(true)
                     .build();
             mShotNormalImage.setController(controller);
-//                        mShotNormalImage.setHierarchy(gdh); // todo gif can not start as uncomment this line
+            //                        mShotNormalImage.setHierarchy(gdh); // todo gif can not start as uncomment this line
         } else {
             mShotNormalImage.setImageURI(Uri.parse(url));
-//                        mShotNormalImage.setHierarchy(gdh);
+            //                        mShotNormalImage.setHierarchy(gdh);
         }
 
     }
+
+    private static class TintListener implements ValueAnimator.AnimatorUpdateListener {
+        private final ImageView mHero;
+
+        TintListener(ImageView hero) {
+            mHero = hero;
+        }
+
+        @Override
+        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            mHero.getDrawable().setTint((Integer) valueAnimator.getAnimatedValue());
+        }
+    }
+
 }

@@ -20,10 +20,10 @@ import timber.log.Timber;
  */
 public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
-    private BasePresenter<T> mBasePresenter;
     protected int mCurrPage = 0;
     protected DribbbleAPI mDribbbleAPI;
     protected String mAccessToken;
+    private BasePresenter<T> mBasePresenter;
 
     public BaseModelImpl(BasePresenter<T> basePresenter) {
         mBasePresenter = basePresenter;

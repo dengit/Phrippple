@@ -21,8 +21,8 @@ import timber.log.Timber;
  */
 public class BucketModelImpl<T> extends BaseModelImpl<T> implements BucketModel<T> {
 
-    private BucketType mBucketType;
     private int mId;
+    private BucketType mBucketType;
     private BucketPresenter<T> mPresenter;
 
     public BucketModelImpl(BucketPresenter<T> presenter) {
@@ -31,13 +31,13 @@ public class BucketModelImpl<T> extends BaseModelImpl<T> implements BucketModel<
     }
 
     @Override
-    public void setBucketType(BucketType bucketType) {
-        mBucketType = bucketType;
+    public void setId(int id) {
+        mId = id;
     }
 
     @Override
-    public void setId(int id) {
-        mId = id;
+    public void setBucketType(BucketType bucketType) {
+        mBucketType = bucketType;
     }
 
     @Override

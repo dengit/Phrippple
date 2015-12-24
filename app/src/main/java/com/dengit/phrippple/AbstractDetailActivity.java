@@ -16,7 +16,6 @@
 
 package com.dengit.phrippple;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.v7.graphics.Palette;
 import android.view.MenuItem;
@@ -51,8 +50,30 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
     @Bind(R.id.shot_normal_image)
     protected SimpleDraweeView mShotNormalImage;
 
-
     public Bitmap photo;
+
+    @Override
+    public void onBackPressed() {
+        setupExitAnimation();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //        if (photo != null && !photo.isRecycled()) {
+        //            photo.recycle();
+        //        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void initDetailActivity(final String url) {
 
@@ -71,7 +92,7 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
                 //todo animated view will have abnormal size when using background attr in xml
                 if (bitmap == null) {
                     Timber.d("**setBackgroundResource, url: %s", url);
-                    hero.setBackgroundResource(R.drawable.shot_place_holder);
+                    hero.setBackgroundResource(R.drawable.place_holder_shot);
                 }
 
                 photo = bitmap;
@@ -92,31 +113,29 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
         }, Executors.newSingleThreadExecutor());
     }
 
+    public void applyPalette(Palette palette) {
+        container.setBackgroundColor(palette.getDarkMutedColor(Util.getColor(R.color.default_dark_muted)));
+
+        TextView titleView = (TextView) findViewById(R.id.title);
+        titleView.setTextColor(palette.getVibrantColor(Util.getColor(R.color.default_vibrant)));
+
+        TextView descriptionView = (TextView) findViewById(R.id.description);
+        descriptionView.setTextColor(palette.getLightVibrantColor(Util.getColor(R.color.default_light_vibrant)));
+
+        //        colorButton(R.id.info_button, palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)),
+        //                palette.getDarkVibrantColor(res.getColor(R.color.default_dark_vibrant)));
+        //        colorButton(R.id.star_button, palette.getMutedColor(res.getColor(R.color.default_muted)),
+        //                palette.getVibrantColor(res.getColor(R.color.default_vibrant)));
+
+    }
+
     public abstract void postCreate();
 
-    @Override
-    public void onBackPressed() {
-        setupExitAnimation();
-    }
+    public abstract void colorButton(int id, int bgColor, int tintColor);
 
+    public abstract void setupEnterAnimation();
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //        if (photo != null && !photo.isRecycled()) {
-        //            photo.recycle();
-        //        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    public abstract void setupExitAnimation();
 
     private void setupText() {
         TextView titleView = (TextView) findViewById(R.id.title);
@@ -134,34 +153,4 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
         Palette palette = Palette.from(photo).generate();
         //        applyPalette(palette);
     }
-
-    public void applyPalette(Palette palette) {
-        Resources res = getResources();
-
-        container.setBackgroundColor(palette.getDarkMutedColor(Util.getColor(R.color.default_dark_muted)));
-
-        TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setTextColor(palette.getVibrantColor(Util.getColor(R.color.default_vibrant)));
-
-        TextView descriptionView = (TextView) findViewById(R.id.description);
-        descriptionView.setTextColor(palette.getLightVibrantColor(Util.getColor(R.color.default_light_vibrant)));
-
-        //        colorButton(R.id.info_button, palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)),
-        //                palette.getDarkVibrantColor(res.getColor(R.color.default_dark_vibrant)));
-        //        colorButton(R.id.star_button, palette.getMutedColor(res.getColor(R.color.default_muted)),
-        //                palette.getVibrantColor(res.getColor(R.color.default_vibrant)));
-
-    }
-
-    public abstract void colorButton(int id, int bgColor, int tintColor);
-
-    //    private Bitmap setupPhoto(int resource) {
-    //        Bitmap bitmap = MainActivity.sPhotoCache.get(resource);
-    //        hero.setImageBitmap(bitmap);
-    //        return bitmap;
-    //    }
-
-    public abstract void setupEnterAnimation();
-
-    public abstract void setupExitAnimation();
 }

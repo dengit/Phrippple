@@ -32,6 +32,13 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, Adap
     private FansAdapter mFansAdapter;
     private FanPresenter<Fan> mFanPresenter;
 
+    public static Intent createIntent(int shotId, int fanCount) {
+        Intent intent = new Intent(APP.getInstance(), FanActivity.class);
+        intent.putExtra("shotId", shotId);
+        intent.putExtra("fanCount", fanCount);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,26 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, Adap
         ButterKnife.bind(this);
 
         initSetup();
+    }
+
+    @Override
+    public int getShotId() {
+        return mShotId;
+    }
+
+    @Override
+    protected void appendAdapterData(List<Fan> newItems) {
+        mFansAdapter.appendData(newItems);
+    }
+
+    @Override
+    protected void setAdapterData(List<Fan> newItems) {
+        mFansAdapter.setData(newItems);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(ProfileActivity.createIntent((User)((Fan)mFansAdapter.getItem(position)).user));
     }
 
     private void initSetup() {
@@ -55,30 +82,4 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, Adap
         mFanPresenter.firstFetchItems();
     }
 
-    public static Intent createIntent(int shotId, int fanCount) {
-        Intent intent = new Intent(APP.getInstance(), FanActivity.class);
-        intent.putExtra("shotId", shotId);
-        intent.putExtra("fanCount", fanCount);
-        return intent;
-    }
-
-    @Override
-    protected void appendAdapterData(List<Fan> newItems) {
-        mFansAdapter.appendData(newItems);
-    }
-
-    @Override
-    protected void setAdapterData(List<Fan> newItems) {
-        mFansAdapter.setData(newItems);
-    }
-
-    @Override
-    public int getShotId() {
-        return mShotId;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(ProfileActivity.createIntent((User)((Fan)mFansAdapter.getItem(position)).user));
-    }
 }

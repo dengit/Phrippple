@@ -57,13 +57,6 @@ public class BucketsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setUpBucketItem(ViewHolder holder, int position) {
-        Bucket bucket = (Bucket) getItem(position);
-        holder.bucketName.setText(bucket.name);
-        holder.shotCount.setText(bucket.shots_count + " shots");
-        holder.createTime.setText(bucket.created_at);
-    }
-
     public void setData(List<Bucket> newShots) {
         mBuckets.clear();
         appendData(newShots);
@@ -72,6 +65,13 @@ public class BucketsAdapter extends BaseAdapter {
     public void appendData(List<Bucket> newShots) {
         mBuckets.addAll(newShots);
         notifyDataSetChanged();
+    }
+
+    private void setUpBucketItem(ViewHolder holder, int position) {
+        Bucket bucket = (Bucket) getItem(position);
+        holder.bucketName.setText(bucket.name);
+        holder.shotCount.setText(bucket.shots_count + " shots");
+        holder.createTime.setText(bucket.created_at);
     }
 
 

@@ -95,21 +95,12 @@ public class ShotModelImpl implements ShotModel {
                 .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() { //todo use eventbus
-                        Timber.d("**onCompleted");
-                        //                        if (page == 1) {
-                        //                            mPresenter.onLoadNewestFinished(newItems);
-                        //                        } else {
-                        //                            mPresenter.onLoadMoreFinished(newItems);
-                        //                        }
-
+                        Timber.d("**undoLikeShot onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {// if the user does not like the shot
-
-                        Timber.d("**onError:%s", e.toString());
-//                        e.printStackTrace();
-                        //                        mPresenter.onError();
+                        Timber.d("**undoLikeShot onError:%s", e.toString());
                     }
 
                     @Override

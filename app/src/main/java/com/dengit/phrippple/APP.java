@@ -32,6 +32,10 @@ public class APP extends Application {
         MobclickAgent.setCatchUncaughtExceptions(false);
     }
 
+    public static APP getInstance() {
+        return mInstance;
+    }
+
     private void setupComponent() {
         DaggerAPPComponent.builder()
                 .aPPModule(new APPModule(this))
@@ -44,9 +48,5 @@ public class APP extends Application {
         Crashlytics.setUserIdentifier("12345");
         Crashlytics.setUserEmail("user@fabric.io");
         Crashlytics.setUserName("Test User");
-    }
-
-    public static APP getInstance() {
-        return mInstance;
     }
 }

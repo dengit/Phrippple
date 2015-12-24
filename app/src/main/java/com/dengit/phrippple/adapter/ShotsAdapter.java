@@ -63,6 +63,16 @@ public class ShotsAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void setData(List<Shot> newShots) {
+        mShots.clear();
+        appendData(newShots);
+    }
+
+    public void appendData(List<Shot> newShots) {
+        mShots.addAll(newShots);
+        notifyDataSetChanged();
+    }
+
     private void setUpShotItem(ViewHolder holder, int position) {
         final Shot shot = (Shot) getItem(position);
         if (shot.user.avatar_url.contains("gif")) {
@@ -95,16 +105,6 @@ public class ShotsAdapter extends BaseAdapter {
         };
         holder.authorImage.setOnClickListener(listener);
         holder.authorNameTV.setOnClickListener(listener);
-    }
-
-    public void setData(List<Shot> newShots) {
-        mShots.clear();
-        appendData(newShots);
-    }
-
-    public void appendData(List<Shot> newShots) {
-        mShots.addAll(newShots);
-        notifyDataSetChanged();
     }
 
     static class ViewHolder {

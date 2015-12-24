@@ -7,7 +7,7 @@ import com.dengit.phrippple.ui.BaseModel;
  * Created by dengit on 15/12/14.
  */
 public interface BucketModel<T> extends BaseModel<T> {
-    void setBucketType(BucketType bucketType);
-
     void setId(int id);
+
+    void setBucketType(BucketType bucketType);
 }

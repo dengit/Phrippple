@@ -7,6 +7,7 @@ import com.dengit.phrippple.ui.BaseView;
  * Created by dengit on 15/12/14.
  */
 public interface BucketView<T> extends BaseView<T> {
-    BucketType getBucketType();
     int getId();
+
+    BucketType getBucketType();
 }

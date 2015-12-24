@@ -45,24 +45,6 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
         //        mBasePresenter = new BasePresenterImpl<T>(this);
     }
 
-    protected void setBasePresenter(BasePresenter<T> basePresenter) {
-        mBasePresenter = basePresenter;
-    }
-
-    protected void initBase() {
-        mFooterLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.list_footer, null);
-        mFooter = mFooterLayout.findViewById(R.id.footer);
-        mFooterProgressBar = (ProgressBar) mFooterLayout.findViewById(R.id.footer_progressbar);
-        mLoadMoreTV = (TextView) mFooterLayout.findViewById(R.id.footer_loadmore);
-
-        mFooter.setOnClickListener(this);
-        mRefreshLayout.setOnRefreshListener(this);
-        mRefreshLayout.setWaveColor(Util.getColor(R.color.colorPrimary));
-
-        //todo setMaxDropHeight noneffective
-        mRefreshLayout.setMaxDropHeight(getResources().getDimensionPixelSize(R.dimen.dropMaxHeight));
-    }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -115,6 +97,33 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
         mListView.addFooterView(mFooterLayout);
     }
 
+    @Override
+    public void appendItems(List<T> newItems) {
+        appendAdapterData(newItems);
+    }
+
+    protected void setBasePresenter(BasePresenter<T> basePresenter) {
+        mBasePresenter = basePresenter;
+    }
+
+    protected abstract void setAdapterData(List<T> newItems);
+
+    protected abstract void appendAdapterData(List<T> newItems);
+
+    protected void initBase() {
+        mFooterLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.list_footer, null);
+        mFooter = mFooterLayout.findViewById(R.id.footer);
+        mFooterProgressBar = (ProgressBar) mFooterLayout.findViewById(R.id.footer_progressbar);
+        mLoadMoreTV = (TextView) mFooterLayout.findViewById(R.id.footer_loadmore);
+
+        mFooter.setOnClickListener(this);
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setWaveColor(Util.getColor(R.color.colorPrimary));
+
+        //todo setMaxDropHeight noneffective
+        mRefreshLayout.setMaxDropHeight(getResources().getDimensionPixelSize(R.dimen.dropMaxHeight));
+    }
+
     private void tryToGoneInitialProgressBar() {
         if (mInitialProgressBar.getVisibility() == View.VISIBLE) {
             mInitialProgressBar.setVisibility(View.GONE);
@@ -131,13 +140,4 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
             mLoadMoreTV.setText("click to load more");
         }
     }
-
-    protected abstract void setAdapterData(List<T> newItems);
-
-    @Override
-    public void appendItems(List<T> newItems) {
-        appendAdapterData(newItems);
-    }
-
-    protected abstract void appendAdapterData(List<T> newItems);
 }

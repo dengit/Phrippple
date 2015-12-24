@@ -26,6 +26,13 @@ public class LikeActivity extends BaseActivity<Shot> implements LikeView<Shot>, 
     private ShotsAdapter mShotsAdapter;
     private LikePresenter<Shot> mLikePresenter;
 
+    public static Intent createIntent(int userId, int likeCount) {
+        Intent intent = new Intent(APP.getInstance(), LikeActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("likeCount", likeCount);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,27 +45,6 @@ public class LikeActivity extends BaseActivity<Shot> implements LikeView<Shot>, 
     @Override
     public int getUserId() {
         return mUserId;
-    }
-
-    private void initSetup() {
-        mLikePresenter = new LikePresenterImpl<>(this);
-        setBasePresenter(mLikePresenter);
-        mUserId = getIntent().getIntExtra("userId", 0);
-        int likeCount = getIntent().getIntExtra("likeCount", 0);
-        setTitle(likeCount + " likes");
-        mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
-        mListView.setAdapter(mShotsAdapter);
-        mListView.setOnItemClickListener(this);
-
-        initBase();
-        mLikePresenter.firstFetchItems();
-    }
-
-    public static Intent createIntent(int userId, int likeCount) {
-        Intent intent = new Intent(APP.getInstance(), LikeActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("likeCount", likeCount);
-        return intent;
     }
 
     @Override
@@ -90,4 +76,19 @@ public class LikeActivity extends BaseActivity<Shot> implements LikeView<Shot>, 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         startActivity(ShotActivity.createIntent((Shot) mShotsAdapter.getItem(position)));
     }
+
+    private void initSetup() {
+        mLikePresenter = new LikePresenterImpl<>(this);
+        setBasePresenter(mLikePresenter);
+        mUserId = getIntent().getIntExtra("userId", 0);
+        int likeCount = getIntent().getIntExtra("likeCount", 0);
+        setTitle(likeCount + " likes");
+        mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
+        mListView.setAdapter(mShotsAdapter);
+        mListView.setOnItemClickListener(this);
+
+        initBase();
+        mLikePresenter.firstFetchItems();
+    }
+
 }

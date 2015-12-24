@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.*;
 import android.view.animation.AnimationUtils;
@@ -219,13 +218,13 @@ public class ResideMenu extends FrameLayout {
     }
 
     /**
-     * The visibility of the shadow under the activity;
+     * The visibility of the menu_reside_shadow under the activity;
      *
      * @param isVisible
      */
     public void setShadowVisible(boolean isVisible) {
         if (isVisible)
-            imageViewShadow.setBackgroundResource(R.drawable.shadow);
+            imageViewShadow.setBackgroundResource(R.drawable.menu_reside_shadow);
         else
             imageViewShadow.setBackgroundResource(0);
     }

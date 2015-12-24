@@ -18,8 +18,8 @@ import timber.log.Timber;
 public class DribbbleAPIHelper {
     private static DribbbleAPIHelper mHelper;
 
-    private DribbbleAPI mDribbbleAPI;
     private TokenInfo mTokenInfo;
+    private DribbbleAPI mDribbbleAPI;
 
     private DribbbleAPIHelper() {
         mTokenInfo = new TokenInfo();
@@ -30,6 +30,7 @@ public class DribbbleAPIHelper {
             .build()
             .create(DribbbleAPI.class);
     }
+
     public synchronized static DribbbleAPIHelper getInstance() {
         if (mHelper == null) {
             mHelper = new DribbbleAPIHelper();
@@ -56,16 +57,6 @@ public class DribbbleAPIHelper {
         save(tokenInfo);
     }
 
-    private void save(TokenInfo tokenInfo) {
-        SharedPreferences prefs = APP.getInstance().getSharedPreferences(
-                APP.getInstance().getPackageName(), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("access_token", tokenInfo.access_token);
-        editor.putString("scope", tokenInfo.scope);
-        editor.putString("token_type", tokenInfo.token_type);
-        editor.apply();
-    }
-
     public boolean hasAccessToken() {
         return !TextUtils.isEmpty(getAccessToken());
     }
@@ -82,6 +73,16 @@ public class DribbbleAPIHelper {
         }
 
         return mTokenInfo.access_token;
+    }
+
+    private void save(TokenInfo tokenInfo) {
+        SharedPreferences prefs = APP.getInstance().getSharedPreferences(
+                APP.getInstance().getPackageName(), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("access_token", tokenInfo.access_token);
+        editor.putString("scope", tokenInfo.scope);
+        editor.putString("token_type", tokenInfo.token_type);
+        editor.apply();
     }
 
     private void load(TokenInfo tokenInfo) {

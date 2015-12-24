@@ -11,6 +11,5 @@ import java.util.List;
  * Created by dengit on 15/12/9.
  */
 public interface MainPresenter<T> extends BasePresenter<T>{
-
     void requestToken(AuthorizeInfo info);
 }

@@ -23,12 +23,11 @@ import butterknife.ButterKnife;
  */
 public class CommentActivity extends BaseActivity<Comment> implements CommentView<Comment> {
 
-    private CommentPresenter<Comment> mCommentPresenter;
-    private CommentsAdapter mCommentsAdapter;
     private int mShotId;
+    private CommentsAdapter mCommentsAdapter;
+    private CommentPresenter<Comment> mCommentPresenter;
 
     public static Intent createIntent(int shotId, int commentCount) {
-
         Intent intent = new Intent(APP.getInstance(), CommentActivity.class);
         intent.putExtra("shotId", shotId);
         intent.putExtra("commentCount", commentCount);
@@ -44,19 +43,6 @@ public class CommentActivity extends BaseActivity<Comment> implements CommentVie
         initSetup();
     }
 
-    private void initSetup() {
-        mShotId = getIntent().getIntExtra("shotId", 0);
-        int commentCount = getIntent().getIntExtra("commentCount", 0);
-        setTitle(commentCount + " comments");
-        mCommentPresenter = new CommentPresenterImpl<>(this);
-        setBasePresenter(mCommentPresenter);
-        mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
-        mListView.setAdapter(mCommentsAdapter);
-
-        initBase();
-        mCommentPresenter.firstFetchItems();
-    }
-
     @Override
     public int getShotId() {
         return mShotId;
@@ -70,6 +56,19 @@ public class CommentActivity extends BaseActivity<Comment> implements CommentVie
     @Override
     protected void setAdapterData(List<Comment> newItems) {
         mCommentsAdapter.setData(newItems);
+    }
+
+    private void initSetup() {
+        mShotId = getIntent().getIntExtra("shotId", 0);
+        int commentCount = getIntent().getIntExtra("commentCount", 0);
+        setTitle(commentCount + " comments");
+        mCommentPresenter = new CommentPresenterImpl<>(this);
+        setBasePresenter(mCommentPresenter);
+        mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
+        mListView.setAdapter(mCommentsAdapter);
+
+        initBase();
+        mCommentPresenter.firstFetchItems();
     }
 
 }

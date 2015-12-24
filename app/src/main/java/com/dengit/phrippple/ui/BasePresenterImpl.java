@@ -19,9 +19,6 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
 //        mBaseModel = new BaseModelImpl<T>(this); //todo use DI?
     }
 
-    public void setBaseModel(BaseModel<T> baseModel) {
-        mBaseModel = baseModel;
-    }
 
     @Override
     public void onFooterClick() {
@@ -39,10 +36,6 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
     public void onLoadMoreFinished(List<T> newItems) {
         mBaseView.switchLoadMore(false, isEnd(newItems));
         mBaseView.appendItems(newItems);
-    }
-
-    private boolean isEnd(List<T> newItems) {
-        return newItems.size() < DribbbleAPI.LIMIT_PER_PAGE;
     }
 
     @Override
@@ -67,6 +60,14 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
         } else {
             mBaseModel.loadNewest();
         }
+    }
+
+    public void setBaseModel(BaseModel<T> baseModel) {
+        mBaseModel = baseModel;
+    }
+
+    private boolean isEnd(List<T> newItems) {
+        return newItems.size() < DribbbleAPI.LIMIT_PER_PAGE;
     }
 
 }

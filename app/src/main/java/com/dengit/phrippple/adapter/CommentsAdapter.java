@@ -60,17 +60,6 @@ public class CommentsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setUpCommentItem(ViewHolder holder, int position) {
-        Comment comment = (Comment) getItem(position);
-        holder.userPortrait.setImageURI(Uri.parse(comment.user.avatar_url));
-        holder.userName.setText(comment.user.name);
-        holder.commentContent.setText(Util.textToHtml(comment.body).toString().trim());
-        holder.commentTime.setText(comment.updated_at);
-        holder.commentLikeCount.setText(String.valueOf(comment.likes_count));
-    }
-
-
-
     public void setData(List<Comment> newShots) {
         mComments.clear();
         appendData(newShots);
@@ -81,6 +70,14 @@ public class CommentsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    private void setUpCommentItem(ViewHolder holder, int position) {
+        Comment comment = (Comment) getItem(position);
+        holder.userPortrait.setImageURI(Uri.parse(comment.user.avatar_url));
+        holder.userName.setText(comment.user.name);
+        holder.commentContent.setText(Util.textToHtml(comment.body).toString().trim());
+        holder.commentTime.setText(comment.updated_at);
+        holder.commentLikeCount.setText(String.valueOf(comment.likes_count));
+    }
 
     static class ViewHolder {
         @Bind(R.id.user_portrait)

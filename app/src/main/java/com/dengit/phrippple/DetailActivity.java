@@ -81,6 +81,26 @@ public class DetailActivity extends AbstractDetailActivity {
         runEnterAnimation();
     }
 
+    @Override
+    public void setupExitAnimation() {
+        ViewPropertyAnimator.animate(animatedHero).alpha(1);
+        ViewPropertyAnimator.animate(infoContainer).alpha(0).setListener(new AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                runExitAnimation();
+            }
+        });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+
+        // Override transitions: we don't want the normal window animation in addition to our
+        // custom one
+        overridePendingTransition(0, 0);
+    }
+
     /**
      * The enter animation scales the hero in from its previous thumbnail
      * size/location. In parallel, the container of the activity is fading in.
@@ -128,17 +148,6 @@ public class DetailActivity extends AbstractDetailActivity {
         ViewPropertyAnimator.animate(container).alpha(1);
     }
 
-    @Override
-    public void setupExitAnimation() {
-        ViewPropertyAnimator.animate(animatedHero).alpha(1);
-        ViewPropertyAnimator.animate(infoContainer).alpha(0).setListener(new AnimatorListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                runExitAnimation();
-            }
-        });
-    }
-
     /**
      * The exit animation is basically a reverse of the enter animation
      */
@@ -173,15 +182,6 @@ public class DetailActivity extends AbstractDetailActivity {
 
         // Hide the back button during the exit animation
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-
-        // Override transitions: we don't want the normal window animation in addition to our
-        // custom one
-        overridePendingTransition(0, 0);
     }
 
 }

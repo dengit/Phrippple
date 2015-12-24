@@ -57,12 +57,6 @@ public class FansAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void setUpFanItem(ViewHolder holder, int position) {
-        Fan fan = (Fan) getItem(position);
-        holder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));
-        holder.fanName.setText(fan.user.name);
-    }
-
     public void setData(List<Fan> newShots) {
         mFans.clear();
         appendData(newShots);
@@ -73,6 +67,11 @@ public class FansAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    private void setUpFanItem(ViewHolder holder, int position) {
+        Fan fan = (Fan) getItem(position);
+        holder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));
+        holder.fanName.setText(fan.user.name);
+    }
 
     static class ViewHolder {
         @Bind(R.id.fan_portrait)

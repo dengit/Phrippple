@@ -25,9 +25,9 @@ import butterknife.ButterKnife;
  */
 public class BucketActivity extends BaseActivity<Bucket> implements BucketView<Bucket> {
 
-    private BucketsAdapter mBucketsAdapter;
     private int mId;
     private BucketType mBucketType;
+    private BucketsAdapter mBucketsAdapter;
     private BucketPresenter<Bucket> mBucketPresenter;
 
     public static Intent createIntent(BucketType bucketType, int id, int bucketCount) {
@@ -38,7 +38,6 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
         return intent;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +45,26 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
         ButterKnife.bind(this);
 
         initSetup();
+    }
+
+    @Override
+    protected void appendAdapterData(List<Bucket> newItems) {
+        mBucketsAdapter.appendData(newItems);
+    }
+
+    @Override
+    protected void setAdapterData(List<Bucket> newItems) {
+        mBucketsAdapter.setData(newItems);
+    }
+
+    @Override
+    public int getId() {
+        return mId;
+    }
+
+    @Override
+    public BucketType getBucketType() {
+        return mBucketType;
     }
 
     private void initSetup() {
@@ -60,26 +79,6 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
 
         initBase();
         mBucketPresenter.firstFetchItems();
-    }
-
-    @Override
-    protected void appendAdapterData(List<Bucket> newItems) {
-        mBucketsAdapter.appendData(newItems);
-    }
-
-    @Override
-    protected void setAdapterData(List<Bucket> newItems) {
-        mBucketsAdapter.setData(newItems);
-    }
-
-    @Override
-    public BucketType getBucketType() {
-        return mBucketType;
-    }
-
-    @Override
-    public int getId() {
-        return mId;
     }
 
 }

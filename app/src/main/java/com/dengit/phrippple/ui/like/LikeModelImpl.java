@@ -23,8 +23,8 @@ import timber.log.Timber;
  */
 public class LikeModelImpl<T> extends BaseModelImpl<T> implements LikeModel<T> {
 
-    private LikePresenter<T> mPresenter;
     private int mUserId;
+    private LikePresenter<T> mPresenter;
 
     public LikeModelImpl(LikePresenter<T> presenter) {
         super(presenter);

@@ -47,6 +47,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="14dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/return_to_top"
+        android:src="@drawable/fab_return_to_top"
         app:fab_elevationCompat="4dp" />
 </RelativeLayout>

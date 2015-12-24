@@ -17,8 +17,8 @@ import timber.log.Timber;
  */
 public class CommentModelImpl<T> extends BaseModelImpl<T> implements CommentModel<T> {
 
-    private CommentPresenter<T> mPresenter;
     private int mShotId;
+    private CommentPresenter<T> mPresenter;
 
     public CommentModelImpl(CommentPresenter<T> presenter) {
         super(presenter);

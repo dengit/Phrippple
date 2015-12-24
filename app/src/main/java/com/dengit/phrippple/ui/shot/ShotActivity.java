@@ -42,11 +42,6 @@ import timber.log.Timber;
  */
 public class ShotActivity extends DetailActivityL implements ShotView {
 
-    private Shot mShot;
-
-    //    @Bind(R.id.toolbar)
-    //    Toolbar mToolbar;
-
     @Bind(R.id.shot_author_portrait)
     SimpleDraweeView mAuthorPortrait;
 
@@ -74,6 +69,7 @@ public class ShotActivity extends DetailActivityL implements ShotView {
     @Bind(R.id.shot_fab_menu)
     FloatingActionMenu mShotFabMenu;
 
+    private Shot mShot;
     private ShotPresenter mShotPresenter;
     private boolean hasLiked;
 
@@ -94,68 +90,6 @@ public class ShotActivity extends DetailActivityL implements ShotView {
         initSetup();
     }
 
-    private void initSetup() {
-        mShotPresenter = new ShotPresenterImpl(this);
-        setupToolbar();
-        setupFab();
-
-        setTitle(mShot.title);
-//        tryToSetGifImage(mShotNormalImage, mShot);
-        mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
-        mAuthorName.setText(mShot.user.name);
-        mShotTime.setText(mShot.updated_at);
-        mShotLike.setText(mShot.likes_count + " likes");
-        mShotBucket.setText(mShot.buckets_count + " buckets");
-        mShotView.setText(mShot.views_count + " views");
-        mShotCommented.setText(mShot.comments_count + " comments");
-
-        mShotDescrip.setText(Util.textToHtml(mShot.description));
-
-//        checkLikeStatus();
-    }
-
-    private void checkLikeStatus() {
-        mShotPresenter.checkLikeStatus();
-    }
-
-    private void setupFab() {
-        mShotFabMenu.setClosedOnTouchOutside(true);
-        mShotFabMenu.hideMenuButton(false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mShotFabMenu.showMenuButton(true);
-            }
-        }, 400);
-
-        FloatingActionButton sendCommentFab = (FloatingActionButton) findViewById(R.id.fab_send_comment);
-        sendCommentFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ShotActivity.this, "send comment", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        FloatingActionButton likeFab = (FloatingActionButton) findViewById(R.id.fab_like);
-        likeFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ShotActivity.this, "like this shot", Toast.LENGTH_SHORT).show();
-                mShotPresenter.setLikeStatus(!hasLiked);
-                ShotActivity.this.updateLike(!hasLiked);
-                mShotFabMenu.toggle(true);
-            }
-        });
-    }
-
-
-    private void setupToolbar() {
-        //        mToolbar.setTitle(getTitle());
-        //        setSupportActionBar(mToolbar);
-        //        final ActionBar actionBar = getSupportActionBar();
-        //        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
     @Override
     public void onBackPressed() {
         if (mShotFabMenu.isOpened()) {
@@ -170,7 +104,6 @@ public class ShotActivity extends DetailActivityL implements ShotView {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
     @OnClick(R.id.shot_comment)
     public void onClickShotComment(View v) {
@@ -210,6 +143,57 @@ public class ShotActivity extends DetailActivityL implements ShotView {
     @Override
     public void lightenLike() {
         updateLike(true);
+    }
+
+    private void initSetup() {
+        mShotPresenter = new ShotPresenterImpl(this);
+        setupFab();
+        setTitle(mShot.title);
+        mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));
+        mAuthorName.setText(mShot.user.name);
+        mShotTime.setText(mShot.updated_at);
+        mShotLike.setText(mShot.likes_count + " likes");
+        mShotBucket.setText(mShot.buckets_count + " buckets");
+        mShotView.setText(mShot.views_count + " views");
+        mShotCommented.setText(mShot.comments_count + " comments");
+
+        mShotDescrip.setText(Util.textToHtml(mShot.description));
+
+        //        checkLikeStatus();
+    }
+
+    private void checkLikeStatus() {
+        mShotPresenter.checkLikeStatus();
+    }
+
+    private void setupFab() {
+        mShotFabMenu.setClosedOnTouchOutside(true);
+        mShotFabMenu.hideMenuButton(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mShotFabMenu.showMenuButton(true);
+            }
+        }, 400);
+
+        FloatingActionButton sendCommentFab = (FloatingActionButton) findViewById(R.id.fab_send_comment);
+        sendCommentFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShotActivity.this, "send comment", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        FloatingActionButton likeFab = (FloatingActionButton) findViewById(R.id.fab_like);
+        likeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ShotActivity.this, "like this shot", Toast.LENGTH_SHORT).show();
+                mShotPresenter.setLikeStatus(!hasLiked);
+                ShotActivity.this.updateLike(!hasLiked);
+                mShotFabMenu.toggle(true);
+            }
+        });
     }
 
     private void updateLike(boolean like) {

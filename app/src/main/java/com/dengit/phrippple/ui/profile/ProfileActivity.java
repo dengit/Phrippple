@@ -92,6 +92,12 @@ public class ProfileActivity extends SuperBaseActivity {
 
     private User mUser;
 
+    public static Intent createIntent(User user) {
+        Intent intent = new Intent(APP.getInstance(), ProfileActivity.class);
+        intent.putExtra("user", user);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +105,32 @@ public class ProfileActivity extends SuperBaseActivity {
         ButterKnife.bind(this);
 
         initSetup();
+    }
+
+    @OnClick(R.id.user_buckets_count)
+    public void onClickBucketsCount(View v) {
+        startActivity(BucketActivity.createIntent(BucketType.Mine, mUser.id, mUser.buckets_count));
+    }
+
+    @OnClick(R.id.user_followers_count)
+    public void onClickFollowersCount(View v) {
+    }
+
+    @OnClick(R.id.user_followings_count)
+    public void onClickFollowingsCount(View v) {
+    }
+
+    @OnClick(R.id.user_likes_count)
+    public void onClickLikesCount(View v) {
+        startActivity(LikeActivity.createIntent(mUser.id, mUser.likes_count));
+    }
+
+    @OnClick(R.id.user_projects_count)
+    public void onClickProjectsCount(View v) {
+    }
+
+    @OnClick(R.id.user_shots_count)
+    public void onClickShotsCount(View v) {
     }
 
     private void initSetup() {
@@ -119,12 +151,12 @@ public class ProfileActivity extends SuperBaseActivity {
             @Override
             public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
                 super.onFinalImageSet(id, imageInfo, animatable);
-//                Blurry.with(ProfileActivity.this)
-//                        .radius(10)
-//                        .sampling(8)
-//                        .async()
-//                        .capture(mUserPortrait)
-//                        .into(mHeaderBlur);
+                //                Blurry.with(ProfileActivity.this)
+                //                        .radius(10)
+                //                        .sampling(8)
+                //                        .async()
+                //                        .capture(mUserPortrait)
+                //                        .into(mHeaderBlur);
                 Timber.d("**onFinalImageSet**");
             }
 
@@ -223,38 +255,5 @@ public class ProfileActivity extends SuperBaseActivity {
             mUserLikesCount.setText("likes " + mUser.likes_count);
         }
     }
-
-    public static Intent createIntent(User user) {
-        Intent intent = new Intent(APP.getInstance(), ProfileActivity.class);
-        intent.putExtra("user", user);
-        return intent;
-    }
-
-    @OnClick(R.id.user_buckets_count)
-    public void onClickBucketsCount(View v) {
-        startActivity(BucketActivity.createIntent(BucketType.Mine, mUser.id, mUser.buckets_count));
-    }
-
-    @OnClick(R.id.user_followers_count)
-    public void onClickFollowersCount(View v) {
-    }
-
-    @OnClick(R.id.user_followings_count)
-    public void onClickFollowingsCount(View v) {
-    }
-
-    @OnClick(R.id.user_likes_count)
-    public void onClickLikesCount(View v) {
-        startActivity(LikeActivity.createIntent(mUser.id, mUser.likes_count));
-    }
-
-    @OnClick(R.id.user_projects_count)
-    public void onClickProjectsCount(View v) {
-    }
-
-    @OnClick(R.id.user_shots_count)
-    public void onClickShotsCount(View v) {
-    }
-
 
 }

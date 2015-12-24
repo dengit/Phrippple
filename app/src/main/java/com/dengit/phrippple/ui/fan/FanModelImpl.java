@@ -17,8 +17,8 @@ import timber.log.Timber;
  */
 public class FanModelImpl<T> extends BaseModelImpl<T> implements FanModel<T> {
 
-    private FanPresenter<T> mPresenter;
     private int mShotId;
+    private FanPresenter<T> mPresenter;
 
     public FanModelImpl(FanPresenter<T> presenter) {
         super(presenter);
