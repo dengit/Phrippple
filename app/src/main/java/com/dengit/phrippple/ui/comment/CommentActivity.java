@@ -2,13 +2,17 @@ package com.dengit.phrippple.ui.comment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.CommentsAdapter;
 import com.dengit.phrippple.data.Comment;
+import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
@@ -21,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentActivity extends BaseActivity<Comment> implements CommentView<Comment> {
+public class CommentActivity extends BaseActivity<Comment> implements CommentView<Comment>, AdapterView.OnItemClickListener {
 
     private int mShotId;
     private CommentsAdapter mCommentsAdapter;
@@ -58,6 +62,11 @@ public class CommentActivity extends BaseActivity<Comment> implements CommentVie
         mCommentsAdapter.setData(newItems);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(ProfileActivity.createIntent(((Comment) mCommentsAdapter.getItem(position)).user));
+    }
+
     private void initSetup() {
         mShotId = getIntent().getIntExtra("shotId", 0);
         int commentCount = getIntent().getIntExtra("commentCount", 0);
@@ -66,6 +75,7 @@ public class CommentActivity extends BaseActivity<Comment> implements CommentVie
         setBasePresenter(mCommentPresenter);
         mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
         mListView.setAdapter(mCommentsAdapter);
+        mListView.setOnItemClickListener(this);
 
         initBase();
         mCommentPresenter.firstFetchItems();

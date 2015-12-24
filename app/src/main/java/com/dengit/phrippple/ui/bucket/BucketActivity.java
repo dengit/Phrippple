@@ -2,6 +2,7 @@ package com.dengit.phrippple.ui.bucket;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.BundleCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -76,7 +77,12 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bucket bucket = (Bucket) mBucketsAdapter.getItem(position);
-        startActivity(ShotListActivity.createIntent(bucket.id, ShotListType.ShotsOfBucket, bucket.shots_count));
+        Bundle args = new Bundle();
+        args.putInt("id", bucket.id);
+        args.putSerializable("type", ShotListType.ShotsOfBucket);
+        args.putInt("count", bucket.shots_count);
+
+        startActivity(ShotListActivity.createIntent(args));
     }
 
     private void initSetup() {

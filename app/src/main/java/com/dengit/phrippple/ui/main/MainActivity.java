@@ -112,8 +112,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                startActivity(ShotActivity.createIntent((Shot) mShotsAdapter.getItem(position)));
-        showPhoto(view, position);
+        startDetailActivity(view, position);
     }
 
     @Override
@@ -231,11 +230,11 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
      * When the user clicks a thumbnail, bundle up information about it and launch the
      * details activity.
      */
-    private void showPhoto(View view, int position) {
+    private void startDetailActivity(View view, int position) {
         final Intent intent = new Intent();
         intent.setClass(this, ShotActivity.class);
 
-        final Shot shot = (Shot) mShotsAdapter.getItem(position);
+        Shot shot = (Shot) mShotsAdapter.getItem(position);
         final SimpleDraweeView shotImage = (SimpleDraweeView) view.findViewById(R.id.shot_item_image);
 
         intent.putExtra("shot", shot);

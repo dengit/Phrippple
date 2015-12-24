@@ -121,7 +121,13 @@ public class ProfileActivity extends SuperBaseActivity {
 
     @OnClick(R.id.user_likes_count)
     public void onClickLikesCount(View v) {
-        startActivity(ShotListActivity.createIntent(mUser.id, ShotListType.ShotsOfLikes, mUser.likes_count));
+
+        Bundle args = new Bundle();
+        args.putInt("id", mUser.id);
+        args.putSerializable("type", ShotListType.ShotsOfLikes);
+        args.putInt("count", mUser.likes_count);
+
+        startActivity(ShotListActivity.createIntent(args));
     }
 
     @OnClick(R.id.user_projects_count)
@@ -130,7 +136,12 @@ public class ProfileActivity extends SuperBaseActivity {
 
     @OnClick(R.id.user_shots_count)
     public void onClickShotsCount(View v) {
-        startActivity(ShotListActivity.createIntent(mUser.id, ShotListType.ShotsOfSelf, mUser.shots_count));
+
+        Bundle args = new Bundle();
+        args.putSerializable("type", ShotListType.ShotsOfSelf);
+        args.putSerializable("user", mUser);
+
+        startActivity(ShotListActivity.createIntent(args));
     }
 
     private void initSetup() {
