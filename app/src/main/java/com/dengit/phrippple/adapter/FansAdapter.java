@@ -1,6 +1,7 @@
 package com.dengit.phrippple.adapter;
 
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 public class FansAdapter extends BaseAdapter {
 
     private List<Fan> mFans;
+
     public FansAdapter(List<Fan> fans) {
         mFans = fans;
     }
@@ -71,6 +73,26 @@ public class FansAdapter extends BaseAdapter {
         Fan fan = (Fan) getItem(position);
         holder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));
         holder.fanName.setText(fan.user.name);
+        holder.fanPrettyTime.setText(fan.created_at);
+
+        if (fan.user.shots_count > 0) {
+            holder.fanShotCount.setText(fan.user.shots_count + " shots");
+            holder.fanShotCount.setVisibility(View.VISIBLE);
+        }
+
+        if (fan.user.followers_count > 0) {
+            holder.fanFollowerCount.setText(fan.user.followers_count + " followers");
+            holder.fanFollowerCount.setVisibility(View.VISIBLE);
+        }
+
+        if (fan.user.shots_count > 0 && fan.user.followers_count > 0) {
+            holder.fanItemDivider.setVisibility(View.VISIBLE);
+        }
+
+        if (fan.user.location != null && !TextUtils.isEmpty(fan.user.location.trim())) {
+            holder.fanLocation.setVisibility(View.VISIBLE);
+            holder.fanLocation.setText(fan.user.location);
+        }
     }
 
     static class ViewHolder {
@@ -79,6 +101,22 @@ public class FansAdapter extends BaseAdapter {
 
         @Bind(R.id.fan_name)
         TextView fanName;
+
+        @Bind(R.id.fan_pretty_time)
+        TextView fanPrettyTime;
+
+        @Bind(R.id.fan_shot_count)
+        TextView fanShotCount;
+
+        @Bind(R.id.fan_follower_count)
+        TextView fanFollowerCount;
+
+        @Bind(R.id.fan_location)
+        TextView fanLocation;
+
+        @Bind(R.id.fan_item_divider)
+        View fanItemDivider;
+
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
