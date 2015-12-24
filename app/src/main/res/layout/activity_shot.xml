@@ -94,7 +94,7 @@
                     android:id="@+id/shot_author_portrait"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:placeholderImage="@drawable/profile_place_holder"
+                    app:placeholderImage="@drawable/place_holder_profile"
                     app:roundAsCircle="true" />
 
                 <TextView
