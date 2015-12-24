@@ -2,6 +2,7 @@ package com.dengit.phrippple.adapter;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,16 +76,38 @@ public class ShotsAdapter extends BaseAdapter {
 
     private void setUpShotItem(ViewHolder holder, int position) {
         final Shot shot = (Shot) getItem(position);
-        if (shot.user.avatar_url.contains("gif")) {
-            Timber.d("**avatar url: %s", shot.user.avatar_url);
-            Timber.d("**avatar name: %s", shot.user.name);
+
+        if (shot.user != null) {//self shots when shot.user is null
+            if (shot.user.avatar_url.contains("gif")) {
+                Timber.d("**avatar url: %s", shot.user.avatar_url);
+                Timber.d("**avatar name: %s", shot.user.name);
+            }
+
+            holder.authorNameTV.setText(String.valueOf(shot.user.name));
+            holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
+
+            //todo new listener every time
+            View.OnClickListener listener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = ProfileActivity.createIntent(shot.user);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    APP.getInstance().startActivity(intent); //todo use activity context without flag?
+                }
+            };
+            holder.authorImage.setOnClickListener(listener);
+            holder.authorNameTV.setOnClickListener(listener);
+        } else {
+            holder.authorNameTV.setVisibility(View.GONE);
+            holder.authorImage.setVisibility(View.GONE);
+            holder.titleTV.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                    APP.getInstance().getResources().getDimension(R.dimen.shot_title_big));
         }
+
         holder.shotImage.setImageURI(Uri.parse(shot.images.normal));
-        holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
         holder.likeTV.setText(String.valueOf(shot.likes_count));
         holder.msgTV.setText(String.valueOf(shot.comments_count));
         holder.viewTV.setText(String.valueOf(shot.views_count));
-        holder.authorNameTV.setText(String.valueOf(shot.user.name));
         holder.titleTV.setText(String.valueOf(shot.title));
 
         if (shot.animated) {
@@ -92,19 +115,6 @@ public class ShotsAdapter extends BaseAdapter {
         } else {
             holder.gifTag.setVisibility(View.GONE);
         }
-
-
-        //todo new listener every time
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ProfileActivity.createIntent(shot.user);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                APP.getInstance().startActivity(intent); //todo use activity context without flag?
-            }
-        };
-        holder.authorImage.setOnClickListener(listener);
-        holder.authorNameTV.setOnClickListener(listener);
     }
 
     static class ViewHolder {

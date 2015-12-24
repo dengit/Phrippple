@@ -45,7 +45,7 @@
             android:theme="@style/DetailTheme" />
         <activity android:name=".ui.comment.CommentActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
-        <activity android:name=".ui.like.LikeActivity" />
+        <activity android:name=".ui.shotlist.ShotListActivity" />
         <activity android:name=".ui.bucket.BucketActivity" />
         <activity android:name=".ui.fan.FanActivity" />
 

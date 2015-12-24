@@ -22,4 +22,5 @@ public class Bucket implements Serializable {
     public int shots_count;
     public String created_at;
     public String updated_at;
+    public User user;
 }

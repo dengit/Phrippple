@@ -11,16 +11,16 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
+import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
-import com.dengit.phrippple.ui.like.LikeActivity;
+import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.utils.Util;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
@@ -36,7 +36,6 @@ import com.facebook.imagepipeline.request.Postprocessor;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.blurry.Blurry;
 import timber.log.Timber;
 
 /**
@@ -122,7 +121,7 @@ public class ProfileActivity extends SuperBaseActivity {
 
     @OnClick(R.id.user_likes_count)
     public void onClickLikesCount(View v) {
-        startActivity(LikeActivity.createIntent(mUser.id, mUser.likes_count));
+        startActivity(ShotListActivity.createIntent(mUser.id, ShotListType.ShotsOfLikes, mUser.likes_count));
     }
 
     @OnClick(R.id.user_projects_count)
@@ -131,6 +130,7 @@ public class ProfileActivity extends SuperBaseActivity {
 
     @OnClick(R.id.user_shots_count)
     public void onClickShotsCount(View v) {
+        startActivity(ShotListActivity.createIntent(mUser.id, ShotListType.ShotsOfSelf, mUser.shots_count));
     }
 
     private void initSetup() {

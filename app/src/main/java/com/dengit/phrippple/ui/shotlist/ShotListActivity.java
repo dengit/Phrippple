@@ -1,4 +1,4 @@
-package com.dengit.phrippple.ui.like;
+package com.dengit.phrippple.ui.shotlist;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.ShotsAdapter;
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
 
@@ -20,31 +21,38 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class LikeActivity extends BaseActivity<Shot> implements LikeView<Shot>, AdapterView.OnItemClickListener {
+public class ShotListActivity extends BaseActivity<Shot> implements ShotListView<Shot>, AdapterView.OnItemClickListener {
 
-    private int mUserId;
+    private int mId;
+    private ShotListType mShotListType;
     private ShotsAdapter mShotsAdapter;
-    private LikePresenter<Shot> mLikePresenter;
+    private ShotListPresenter<Shot> mShotListPresenter;
 
-    public static Intent createIntent(int userId, int likeCount) {
-        Intent intent = new Intent(APP.getInstance(), LikeActivity.class);
-        intent.putExtra("userId", userId);
-        intent.putExtra("likeCount", likeCount);
+    public static Intent createIntent(int id, ShotListType type, int count) {
+        Intent intent = new Intent(APP.getInstance(), ShotListActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("type", type);
+        intent.putExtra("count", count);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_like);
+        setContentView(R.layout.activity_shotlist);
         ButterKnife.bind(this);
 
         initSetup();
     }
 
     @Override
-    public int getUserId() {
-        return mUserId;
+    public int getId() {
+        return mId;
+    }
+
+    @Override
+    public ShotListType getShotListType() {
+        return mShotListType;
     }
 
     @Override
@@ -78,17 +86,18 @@ public class LikeActivity extends BaseActivity<Shot> implements LikeView<Shot>, 
     }
 
     private void initSetup() {
-        mLikePresenter = new LikePresenterImpl<>(this);
-        setBasePresenter(mLikePresenter);
-        mUserId = getIntent().getIntExtra("userId", 0);
-        int likeCount = getIntent().getIntExtra("likeCount", 0);
-        setTitle(likeCount + " likes");
+        mShotListPresenter = new ShotListPresenterImpl<>(this);
+        setBasePresenter(mShotListPresenter);
+        mId = getIntent().getIntExtra("id", 0);
+        mShotListType = (ShotListType) getIntent().getSerializableExtra("type");
+        int count = getIntent().getIntExtra("count", 0);
+        setTitle(count + " shots");
         mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
         mListView.setAdapter(mShotsAdapter);
         mListView.setOnItemClickListener(this);
 
         initBase();
-        mLikePresenter.firstFetchItems();
+        mShotListPresenter.firstFetchItems();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.dengit.phrippple.adapter;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Bucket;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class BucketsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return mBuckets.get(position).id;
     }
 
     @Override
@@ -70,18 +72,21 @@ public class BucketsAdapter extends BaseAdapter {
     private void setUpBucketItem(ViewHolder holder, int position) {
         Bucket bucket = (Bucket) getItem(position);
         holder.bucketName.setText(bucket.name);
-        holder.shotCount.setText(bucket.shots_count + " shots");
-        holder.createTime.setText(bucket.created_at);
+        holder.bucketOwnerPortrait.setImageURI(Uri.parse(bucket.user.avatar_url));
+        holder.bucketOwnerName.setText(bucket.user.name);
+        holder.bucketShotCount.setText(bucket.shots_count + " shots");
     }
 
 
     static class ViewHolder {
         @Bind(R.id.bucket_name)
         TextView bucketName;
-        @Bind(R.id.shot_count)
-        TextView shotCount;
-        @Bind(R.id.create_time)
-        TextView createTime;
+        @Bind(R.id.bucket_owner_portrait)
+        SimpleDraweeView bucketOwnerPortrait;
+        @Bind(R.id.bucket_owner_name)
+        TextView bucketOwnerName;
+        @Bind(R.id.bucket_shot_count)
+        TextView bucketShotCount;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

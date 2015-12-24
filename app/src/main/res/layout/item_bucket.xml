@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="horizontal"
+              android:padding="10dp">
 
-    <TextView
-        android:id="@+id/bucket_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bucket_name"
-        android:padding="5dp"
-        android:textAppearance="@style/TextAppearance.Dark"/>
 
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/bucket_owner_portrait"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="left|bottom"
+        android:layout_marginRight="5dp"
+        fresco:placeholderImage="@drawable/place_holder_profile"
+        fresco:roundAsCircle="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
 
         <TextView
-            android:id="@+id/shot_count"
+            android:id="@+id/bucket_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="bucket_name"
+            android:textColor="@color/colorDark"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/bucket_shot_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 shots"
+            android:textAppearance="@style/TextAppearance.Dark" />
+
+        <TextView
+            android:id="@+id/bucket_owner_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="1 shots"
-            android:textAppearance="@style/TextAppearance.Dark"/>
-
-        <TextView
-            android:id="@+id/create_time"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp"
-            android:text="create_time"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearance.Light"/>
+            android:text="name"
+            android:textAppearance="@style/TextAppearance.Author" />
     </LinearLayout>
 
 

@@ -64,4 +64,10 @@ public interface DribbbleAPI {
 
     @DELETE("/v1/shots/{shotId}/like")
     Observable<Void> unlikeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
+
+    @GET("/v1/buckets/{bucketId}/shots")
+    Observable<List<Shot>> getBucketShots(@Path("bucketId")int bucketId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
+
+    @GET("/v1/users/{userId}/shots")
+    Observable<List<Shot>> getSelfShots(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 }

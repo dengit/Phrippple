@@ -19,8 +19,8 @@ public class BucketPresenterImpl<T> extends BasePresenterImpl<T> implements Buck
 
     @Override
     public void firstFetchItems() {
-        mBucketModel.setBucketType(mBucketView.getBucketType());
         mBucketModel.setId(mBucketView.getId());
+        mBucketModel.setBucketType(mBucketView.getBucketType());
         super.firstFetchItems();
     }
 }

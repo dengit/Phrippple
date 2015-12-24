@@ -2,6 +2,8 @@ package com.dengit.phrippple.ui.bucket;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dengit.phrippple.APP;
@@ -9,7 +11,11 @@ import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.BucketsAdapter;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
+import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.shot.ShotActivity;
+import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
 import com.squareup.otto.Subscribe;
 
@@ -23,7 +29,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketActivity extends BaseActivity<Bucket> implements BucketView<Bucket> {
+public class BucketActivity extends BaseActivity<Bucket> implements BucketView<Bucket>, AdapterView.OnItemClickListener {
 
     private int mId;
     private BucketType mBucketType;
@@ -67,6 +73,12 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
         return mBucketType;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bucket bucket = (Bucket) mBucketsAdapter.getItem(position);
+        startActivity(ShotListActivity.createIntent(bucket.id, ShotListType.ShotsOfBucket, bucket.shots_count));
+    }
+
     private void initSetup() {
         mBucketPresenter = new BucketPresenterImpl<>(this);
         setBasePresenter(mBucketPresenter);
@@ -76,6 +88,7 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
         setTitle(bucketCount + " buckets");
         mBucketsAdapter = new BucketsAdapter(new ArrayList<Bucket>());
         mListView.setAdapter(mBucketsAdapter);
+        mListView.setOnItemClickListener(this);
 
         initBase();
         mBucketPresenter.firstFetchItems();
