@@ -10,7 +10,7 @@
               android:orientation="horizontal">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/user_portrait"
+        android:id="@+id/comment_user_portrait_image"
         android:layout_width="30dp"
         android:layout_height="30dp"
         fresco:placeholderImage="@drawable/place_holder_profile"
@@ -22,7 +22,7 @@
         android:paddingRight="10dp"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/comment_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name"

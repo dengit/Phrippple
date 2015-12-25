@@ -80,9 +80,9 @@ public class CommentsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.user_portrait)
+        @Bind(R.id.comment_user_portrait_image)
         SimpleDraweeView userPortrait;
-        @Bind(R.id.user_name)
+        @Bind(R.id.comment_user_name)
         TextView userName;
         @Bind(R.id.comment_content)
         TextView commentContent;

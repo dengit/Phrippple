@@ -72,8 +72,14 @@ public class BucketsAdapter extends BaseAdapter {
     private void setUpBucketItem(ViewHolder holder, int position) {
         Bucket bucket = (Bucket) getItem(position);
         holder.bucketName.setText(bucket.name);
-        holder.bucketOwnerPortrait.setImageURI(Uri.parse(bucket.user.avatar_url));
-        holder.bucketOwnerName.setText(bucket.user.name);
+
+        if (bucket.user != null) {
+            holder.bucketOwnerPortrait.setImageURI(Uri.parse(bucket.user.avatar_url));
+            holder.bucketOwnerName.setText(bucket.user.name);
+            holder.bucketOwnerPortrait.setVisibility(View.VISIBLE);
+            holder.bucketOwnerName.setVisibility(View.VISIBLE);
+        }
+
         holder.bucketShotCount.setText(bucket.shots_count + " shots");
     }
 

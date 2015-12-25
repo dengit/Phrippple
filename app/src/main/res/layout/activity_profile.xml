@@ -3,7 +3,7 @@
             xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
+            android:id="@+id/container"
             android:background="@android:color/white">
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,15 +20,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"/>
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/user_portrait"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                fresco:roundAsCircle="true"
-                fresco:placeholderImage="@drawable/place_holder_profile"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_centerHorizontal="true"/>
+
+            <FrameLayout
+                android:id="@+id/hero_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="centerCrop"
+                    android:tint="@color/photo_tint"
+                    android:transitionName="photo_hero" />
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/target_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    fresco:roundAsCircle="true"
+                    fresco:placeholderImage="@drawable/place_holder_profile"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"/>
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/user_name"
@@ -36,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@id/user_portrait"
+                android:layout_below="@id/hero_container"
                 android:textColor="@android:color/white"
                 android:text="name" />
 

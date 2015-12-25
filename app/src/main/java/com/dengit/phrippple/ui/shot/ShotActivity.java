@@ -1,46 +1,36 @@
 package com.dengit.phrippple.ui.shot;
 
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dengit.phrippple.APP;
-import com.dengit.phrippple.DetailActivityL;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.TransitionDetailBaseActivityL;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.Util;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
-import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.interfaces.DraweeController;
+import com.dengit.phrippple.utils.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotActivity extends DetailActivityL implements ShotView {
+public class ShotActivity extends TransitionDetailBaseActivityL implements ShotView {
 
     @Bind(R.id.shot_author_portrait)
     SimpleDraweeView mAuthorPortrait;
@@ -112,12 +102,12 @@ public class ShotActivity extends DetailActivityL implements ShotView {
 
     @OnClick(R.id.shot_author_portrait)
     public void onClickShotAuthorPortrait(View v) {
-        startActivity(ProfileActivity.createIntent(mShot.user));
+        startDetailActivity(v);
     }
 
     @OnClick(R.id.shot_author_name)
     public void onClickShotAuthorName(View v) {
-        startActivity(ProfileActivity.createIntent(mShot.user));
+        startDetailActivity(mAuthorPortrait);
     }
 
     @OnClick(R.id.shot_fan)
@@ -127,12 +117,17 @@ public class ShotActivity extends DetailActivityL implements ShotView {
 
     @OnClick(R.id.shot_bucket)
     public void onClickShotBucket(View v) {
-        startActivity(BucketActivity.createIntent(BucketType.Others, mShot.id, mShot.buckets_count));
+        startActivity(BucketActivity.createIntent(BucketType.BucketsOfOthers, mShot.id, mShot.buckets_count));
     }
 
     @Override
-    protected Shot getShot() {
-        return mShot;
+    public String getTargetImageUrl() {
+        return mShot.images.hidpi != null ? mShot.images.hidpi : mShot.images.normal;
+    }
+
+    @Override
+    public boolean isTargetAnimate() {
+        return mShot.animated;
     }
 
     @Override
@@ -204,6 +199,19 @@ public class ShotActivity extends DetailActivityL implements ShotView {
         } else {
             mShotLike.setText(mShot.likes_count + " likes");
             mShotLike.setTextColor(Util.getColor(R.color.colorDark));
+        }
+    }
+
+    private void startDetailActivity(View view) {
+        final Intent intent = ProfileActivity.createIntent(mShot.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.shot_author_portrait);
+
+        if (Utils.hasLollipop()) {
+            startActivityLollipop(image, intent, "photo_hero");
+        } else {
+            startActivityGingerBread(image, intent);
         }
     }
 }

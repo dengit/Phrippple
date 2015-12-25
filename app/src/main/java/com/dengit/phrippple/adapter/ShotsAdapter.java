@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
+import com.dengit.phrippple.utils.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -27,9 +29,11 @@ import timber.log.Timber;
 public class ShotsAdapter extends BaseAdapter {
 
     private List<Shot> mShots;
+    private TransitionBaseActivity<Shot> mActivity;
 
-    public ShotsAdapter(List<Shot> mShots) {
-        this.mShots = mShots;
+    public ShotsAdapter(List<Shot> shots, TransitionBaseActivity<Shot> activity) {
+        mShots = shots;
+        mActivity = activity;
     }
 
     @Override
@@ -74,7 +78,7 @@ public class ShotsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private void setUpShotItem(ViewHolder holder, int position) {
+    private void setUpShotItem(ViewHolder holder, final int position) {
         final Shot shot = (Shot) getItem(position);
 
         if (shot.user != null) {//self shots when shot.user is null
@@ -87,16 +91,12 @@ public class ShotsAdapter extends BaseAdapter {
             holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
 
             //todo new listener every time
-            View.OnClickListener listener = new View.OnClickListener() {
+            holder.header.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = ProfileActivity.createIntent(shot.user);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    APP.getInstance().startActivity(intent); //todo use activity context without flag?
+                    startDetailActivity(v, position);
                 }
-            };
-            holder.authorImage.setOnClickListener(listener);
-            holder.authorNameTV.setOnClickListener(listener);
+            });
         } else {
             holder.authorNameTV.setVisibility(View.GONE);
             holder.authorImage.setVisibility(View.GONE);
@@ -117,6 +117,20 @@ public class ShotsAdapter extends BaseAdapter {
         }
     }
 
+    private void startDetailActivity(View view, int position) {
+        Shot shot = (Shot) getItem(position);
+        final Intent intent = ProfileActivity.createIntent(shot.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.shot_item_author_image);
+
+        if (Utils.hasLollipop()) {
+            mActivity.startActivityLollipop(image, intent, "photo_hero");
+        } else {
+            mActivity.startActivityGingerBread(image, intent);
+        }
+    }
+
     static class ViewHolder {
         @Bind(R.id.shot_item_image)
         SimpleDraweeView shotImage;
@@ -134,6 +148,8 @@ public class ShotsAdapter extends BaseAdapter {
         TextView titleTV;
         @Bind(R.id.shot_item_gif_tag)
         TextView gifTag;
+        @Bind(R.id.shot_item_header)
+        View header;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

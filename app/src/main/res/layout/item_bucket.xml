@@ -11,6 +11,7 @@
         android:id="@+id/bucket_owner_portrait"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:visibility="gone"
         android:layout_gravity="left|bottom"
         android:layout_marginRight="5dp"
         fresco:placeholderImage="@drawable/place_holder_profile"
@@ -44,6 +45,7 @@
             android:id="@+id/bucket_owner_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:padding="5dp"
             android:text="name"
             android:textAppearance="@style/TextAppearance.Author" />

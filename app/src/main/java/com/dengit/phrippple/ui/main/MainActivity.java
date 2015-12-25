@@ -23,6 +23,7 @@ import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
@@ -43,7 +44,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
+public class MainActivity extends TransitionBaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
     @Bind(R.id.fab_return_to_top)
     FloatingActionButton mReturnToTopFab;
@@ -155,7 +156,7 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
         setupToolbar();
         setupComponent();
         setBasePresenter(mMainPresenter);
-        mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>());
+        mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>(), this);
         mListView.setAdapter(mShotsAdapter);
         mListView.setOnItemClickListener(this);
         setupReturnToFab(mListView);
@@ -239,42 +240,10 @@ public class MainActivity extends BaseActivity<Shot> implements MainView<Shot>, 
 
         intent.putExtra("shot", shot);
         if (Utils.hasLollipop()) {
-            startActivityLollipop(shotImage, intent);
+            startActivityLollipop(shotImage, intent, "photo_hero");
         } else {
             startActivityGingerBread(shotImage, intent);
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void startActivityLollipop(View view, Intent intent) {
-        intent.setClass(this, ShotActivity.class);
-        ImageView hero = (ImageView) view;
-        ((ViewGroup) hero.getParent()).setTransitionGroup(false);
-
-        ActivityOptions options =
-                ActivityOptions.makeSceneTransitionAnimation(this, hero, "photo_hero");
-        startActivity(intent, options.toBundle());
-    }
-
-    private void startActivityGingerBread(View view, Intent intent) {
-        int[] screenLocation = new int[2];
-        view.getLocationOnScreen(screenLocation);
-        intent.
-                putExtra("left", screenLocation[0]).
-                putExtra("top", screenLocation[1]).
-                putExtra("width", view.getWidth()).
-                putExtra("height", view.getHeight());
-
-        startActivity(intent);
-
-        // Override transitions: we don't want the normal window animation in addition to our
-        // custom one
-        overridePendingTransition(0, 0);
-
-        // The detail activity handles the enter and exit animations. Both animations involve a
-        // ghost view animating into its final or initial position respectively. Since the detail
-        // activity starts translucent, the clicked view needs to be invisible in order for the
-        // animation to look correct.
-        ViewPropertyAnimator.animate(view).alpha(0.0f);
-    }
 }

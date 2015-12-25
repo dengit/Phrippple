@@ -14,11 +14,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
+import com.dengit.phrippple.DetailActivityL;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.utils.Util;
@@ -41,7 +41,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ProfileActivity extends SuperBaseActivity {
+public class ProfileActivity extends DetailActivityL {
 
     private static final String DEFAULT_HEADER_IMAGE = "https://d13yacurqjgara.cloudfront.net/users/995516/avatars/normal/195f0357fb7fca71c46f4d3e1a733a5f.jpg?1447156390";
     @Bind(R.id.header_layout)
@@ -50,7 +50,7 @@ public class ProfileActivity extends SuperBaseActivity {
     @Bind(R.id.header_blur_image)
     SimpleDraweeView mHeaderBlur;
 
-    @Bind(R.id.user_portrait)
+    @Bind(R.id.target_image)
     SimpleDraweeView mUserPortrait;
 
     @Bind(R.id.user_name)
@@ -103,12 +103,14 @@ public class ProfileActivity extends SuperBaseActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        mUser = (User) getIntent().getSerializableExtra("user");
+        initDetailActivity(mUser.avatar_url);
         initSetup();
     }
 
     @OnClick(R.id.user_buckets_count)
     public void onClickBucketsCount(View v) {
-        startActivity(BucketActivity.createIntent(BucketType.Mine, mUser.id, mUser.buckets_count));
+        startActivity(BucketActivity.createIntent(BucketType.BucketsOfSelf, mUser.id, mUser.buckets_count));
     }
 
     @OnClick(R.id.user_followers_count)
@@ -144,11 +146,20 @@ public class ProfileActivity extends SuperBaseActivity {
         startActivity(ShotListActivity.createIntent(args));
     }
 
+    @Override
+    public String getTargetImageUrl() {
+        return mUser.avatar_url;
+    }
+
+    @Override
+    public boolean isTargetAnimate() {
+        return false;
+    }
+
     private void initSetup() {
-        mUser = (User) getIntent().getSerializableExtra("user");
         setTitle(mUser.name);
         setHeaderBlurImageURI(Uri.parse(mUser.avatar_url));
-        setPortraitImageURI(Uri.parse(mUser.avatar_url));
+//        setPortraitImageURI(Uri.parse(mUser.avatar_url));
 
         mUserName.setText(mUser.name);
         mUserLocation.setText(mUser.location);

@@ -28,6 +28,7 @@ import com.dengit.phrippple.utils.Util;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
@@ -47,8 +48,8 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
     @Bind(R.id.photo)
     public ImageView hero;
 
-    @Bind(R.id.shot_normal_image)
-    protected SimpleDraweeView mShotNormalImage;
+    @Bind(R.id.target_image)
+    protected SimpleDraweeView mTargetImage;
 
     public Bitmap photo;
 
@@ -89,6 +90,8 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
             @Override
             protected void onNewResultImpl(Bitmap bitmap) {//gif bitmap is null
 
+                RoundingParams roundingParams = mTargetImage.getHierarchy().getRoundingParams();
+                boolean isRoundAsCircle = roundingParams != null && roundingParams.getRoundAsCircle();
                 //todo animated view will have abnormal size when using background attr in xml
                 if (bitmap == null) {
                     Timber.d("**setBackgroundResource, url: %s", url);
@@ -96,7 +99,11 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
                 }
 
                 photo = bitmap;
-                hero.setImageBitmap(photo);
+                if (isRoundAsCircle) {
+                    hero.setImageBitmap(Util.getCircleBitmap(photo));
+                } else {
+                    hero.setImageBitmap(photo);
+                }
 
                 colorize(photo);
 

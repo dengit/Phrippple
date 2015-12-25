@@ -1,11 +1,9 @@
 package com.dengit.phrippple.ui.bucket;
 
 import com.dengit.phrippple.api.DribbbleAPI;
-import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.ui.BaseModelImpl;
-import com.dengit.phrippple.utils.EventBusUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class BucketModelImpl<T> extends BaseModelImpl<T> implements BucketModel<
         final ArrayList<T> newItems = new ArrayList<>();
 
         Observable<List<Bucket>> observable;
-        if (mBucketType == BucketType.Mine) {
+        if (mBucketType == BucketType.BucketsOfSelf) {
             observable = mDribbbleAPI.getMineBuckets(mId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken);
         } else {
             observable = mDribbbleAPI.getOthersBuckets(mId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken);

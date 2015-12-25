@@ -39,7 +39,7 @@
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/shot_normal_image"
+                    android:id="@+id/target_image"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:visibility="gone"/>

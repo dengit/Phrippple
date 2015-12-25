@@ -39,8 +39,8 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
 
     public static Intent createIntent(BucketType bucketType, int id, int bucketCount) {
         Intent intent = new Intent(APP.getInstance(), BucketActivity.class);
-        intent.putExtra("type", bucketType);
         intent.putExtra("id", id);
+        intent.putExtra("type", bucketType);
         intent.putExtra("bucketCount", bucketCount);
         return intent;
     }
