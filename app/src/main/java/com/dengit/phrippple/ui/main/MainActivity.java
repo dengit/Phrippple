@@ -1,19 +1,16 @@
 package com.dengit.phrippple.ui.main;
 
-import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.dengit.phrippple.R;
@@ -22,7 +19,6 @@ import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
-import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
@@ -32,7 +28,6 @@ import com.dengit.phrippple.widget.ResideMenu;
 import com.dengit.phrippple.widget.ResideMenuItem;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.clans.fab.FloatingActionButton;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -44,7 +39,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends TransitionBaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
+public class MainActivity extends TransitionBaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AbsListView.OnScrollListener, AdapterView.OnItemSelectedListener {
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bind(R.id.spinner_sort_a)
+    Spinner mSpinnerA;
+
+    @Bind(R.id.spinner_sort_b)
+    Spinner mSpinnerB;
+
+    @Bind(R.id.spinner_sort_c)
+    Spinner mSpinnerC;
 
     @Bind(R.id.fab_return_to_top)
     FloatingActionButton mReturnToTopFab;
@@ -152,6 +159,26 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         mOldFirstVisibleItem = firstVisibleItem;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        if (parent == mSpinnerA) {
+            String[] sortA = getResources().getStringArray(R.array.sortA);
+            Toast.makeText(MainActivity.this, sortA[position], Toast.LENGTH_SHORT).show();
+        } else if (parent == mSpinnerB) {
+            String[] sortB = getResources().getStringArray(R.array.sortB);
+            Toast.makeText(MainActivity.this, sortB[position], Toast.LENGTH_SHORT).show();
+        } else if (parent == mSpinnerC) {
+            String[] sortC = getResources().getStringArray(R.array.sortC);
+            Toast.makeText(MainActivity.this, sortC[position], Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     private void initSetup() {
         setupToolbar();
         setupComponent();
@@ -168,10 +195,17 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     }
 
     private void setupToolbar() {
+        mToolbar.setTitle(getTitle());
+        setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            //            actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        mSpinnerA.setOnItemSelectedListener(this);
+        mSpinnerB.setOnItemSelectedListener(this);
+        mSpinnerC.setOnItemSelectedListener(this);
     }
 
     private void setupComponent() {

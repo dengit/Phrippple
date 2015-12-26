@@ -18,7 +18,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
-        <activity android:name=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,8 +46,9 @@
             android:name=".ui.shot.ShotActivity"
             android:theme="@style/DetailTheme" />
         <activity android:name=".ui.comment.CommentActivity" />
-        <activity android:name=".ui.profile.ProfileActivity"
-                  android:theme="@style/DetailTheme" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:theme="@style/DetailTheme" />
         <activity android:name=".ui.shotlist.ShotListActivity" />
         <activity android:name=".ui.bucket.BucketActivity" />
         <activity android:name=".ui.fan.FanActivity" />
