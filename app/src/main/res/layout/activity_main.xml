@@ -19,22 +19,22 @@
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <Spinner
-            android:id="@+id/spinner_sort_a"
+            android:id="@+id/spinner_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/sortA" />
+            android:entries="@array/spinner_sort"/>
 
         <Spinner
-            android:id="@+id/spinner_sort_b"
+            android:id="@+id/spinner_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/sortB" />
+            android:entries="@array/spinner_list" />
 
         <Spinner
-            android:id="@+id/spinner_sort_c"
+            android:id="@+id/spinner_time_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/sortC" />
+            android:entries="@array/spinner_time_frame" />
 
     </android.support.v7.widget.Toolbar>
 

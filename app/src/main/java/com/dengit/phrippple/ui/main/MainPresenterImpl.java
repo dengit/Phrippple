@@ -22,4 +22,11 @@ public class MainPresenterImpl<T> extends BasePresenterImpl<T> implements MainPr
         mMainModel.requestToken(info);
     }
 
+    @Override
+    public void firstFetchItems() {
+        mMainModel.setCurrSort(mMainView.getCurrSort());
+        mMainModel.setCurrList(mMainView.getCurrList());
+        mMainModel.setCurrTimeFrame(mMainView.getCurrTimeFrame());
+        super.firstFetchItems();
+    }
 }

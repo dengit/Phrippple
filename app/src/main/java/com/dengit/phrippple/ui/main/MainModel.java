@@ -9,4 +9,10 @@ import com.dengit.phrippple.ui.BaseModel;
  */
 public interface MainModel<T> extends BaseModel<T> {
     void requestToken(AuthorizeInfo info);
+
+    void setCurrSort(String currSort);
+
+    void setCurrList(String currList);
+
+    void setCurrTimeFrame(String currTimeFrame);
 }

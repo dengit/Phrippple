@@ -4,29 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.FansAdapter;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.data.Shot;
-import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
-import com.dengit.phrippple.utils.EventBusUtil;
-import com.squareup.otto.Subscribe;
+import com.dengit.phrippple.utils.Utils;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, AdapterView.OnItemClickListener {
+public class FanActivity extends TransitionBaseActivity<Fan> implements FanView<Fan>, AdapterView.OnItemClickListener {
 
     private int mShotId;
     private FansAdapter mFansAdapter;
@@ -65,7 +61,7 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(ProfileActivity.createIntent(((Fan)mFansAdapter.getItem(position)).user));
+        startDetailActivity(view, position);
     }
 
     private void initSetup() {
@@ -80,6 +76,24 @@ public class FanActivity extends BaseActivity<Fan> implements FanView<Fan>, Adap
 
         initBase();
         mFanPresenter.firstFetchItems();
+    }
+
+    /**
+     * When the user clicks a thumbnail, bundle up information about it and launch the
+     * details activity.
+     */
+    private void startDetailActivity(View view, int position) {
+        Fan fan = (Fan) mFansAdapter.getItem(position);
+        final Intent intent = ProfileActivity.createIntent(fan.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.fan_portrait_image);
+
+        if (Utils.hasLollipop()) {
+            startActivityLollipop(image, intent, "photo_hero");
+        } else {
+            startActivityGingerBread(image, intent);
+        }
     }
 
 }

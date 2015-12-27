@@ -44,14 +44,14 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.spinner_sort_a)
-    Spinner mSpinnerA;
+    @Bind(R.id.spinner_sort)
+    Spinner mSortSpinner;
 
-    @Bind(R.id.spinner_sort_b)
-    Spinner mSpinnerB;
+    @Bind(R.id.spinner_list)
+    Spinner mListSpinner;
 
-    @Bind(R.id.spinner_sort_c)
-    Spinner mSpinnerC;
+    @Bind(R.id.spinner_time_frame)
+    Spinner mTimeFrameSpinner;
 
     @Bind(R.id.fab_return_to_top)
     FloatingActionButton mReturnToTopFab;
@@ -66,6 +66,14 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     private ResideMenuItem itemProfile;
     private ResideMenuItem itemCalendar;
     private ResideMenuItem itemSettings;
+    private boolean mIsSortSpinnerFirst = true;
+    private boolean mIsListSpinnerFirst = true;
+    String[] mSortSpinnerArray;
+    String[] mListSpinnerArray;
+    String[] mTimeFrameSpinnerArray;
+    String mCurrTimeFrame;
+    String mCurrSort;
+    String mCurrList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,17 +113,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     @Override
     protected void appendAdapterData(List<Shot> newItems) {
         mShotsAdapter.appendData(newItems);
-    }
-
-    @Subscribe
-    public void firstFetchShots(TokenInfo tokenInfo) {
-        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
-        mMainPresenter.firstFetchItems();
-    }
-
-    @Subscribe
-    public void requestToken(AuthorizeInfo info) {
-        mMainPresenter.requestToken(info);
     }
 
     @Override
@@ -162,21 +159,64 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        if (parent == mSpinnerA) {
-            String[] sortA = getResources().getStringArray(R.array.sortA);
-            Toast.makeText(MainActivity.this, sortA[position], Toast.LENGTH_SHORT).show();
-        } else if (parent == mSpinnerB) {
-            String[] sortB = getResources().getStringArray(R.array.sortB);
-            Toast.makeText(MainActivity.this, sortB[position], Toast.LENGTH_SHORT).show();
-        } else if (parent == mSpinnerC) {
-            String[] sortC = getResources().getStringArray(R.array.sortC);
-            Toast.makeText(MainActivity.this, sortC[position], Toast.LENGTH_SHORT).show();
+        if (parent == mSortSpinner) {
+            if (mIsSortSpinnerFirst) {
+                mIsSortSpinnerFirst = false;
+                return;
+            }
+
+            mCurrSort = mSortSpinnerArray[position];
+            mCurrList = mListSpinnerArray[mListSpinner.getSelectedItemPosition()];
+            mCurrTimeFrame = mTimeFrameSpinnerArray[mTimeFrameSpinner.getSelectedItemPosition()];
+        } else if (parent == mListSpinner) {
+            if (mIsListSpinnerFirst) {
+                mIsListSpinnerFirst = false;
+                return;
+            }
+            mCurrSort = mSortSpinnerArray[mSortSpinner.getSelectedItemPosition()];
+            mCurrList = mListSpinnerArray[position];
+            mCurrTimeFrame = mTimeFrameSpinnerArray[mTimeFrameSpinner.getSelectedItemPosition()];
+        } else if (parent == mTimeFrameSpinner) {
+            mCurrTimeFrame = mTimeFrameSpinnerArray[position];
+            mCurrSort = mSortSpinnerArray[mSortSpinner.getSelectedItemPosition()];
+            mCurrList = mListSpinnerArray[mListSpinner.getSelectedItemPosition()];
+        }
+
+        if (DribbbleAPIHelper.getInstance().hasAccessToken()) {
+            mMainPresenter.firstFetchItems();
+            mInitialProgressBar.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Subscribe
+    public void firstFetchShots(TokenInfo tokenInfo) {
+        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
+        mMainPresenter.firstFetchItems();
+    }
+
+    @Subscribe
+    public void requestToken(AuthorizeInfo info) {
+        mMainPresenter.requestToken(info);
+    }
+
+    @Override
+    public String getCurrTimeFrame() {
+        return mCurrTimeFrame;
+    }
+
+    @Override
+    public String getCurrSort() {
+        return mCurrSort;
+    }
+
+    @Override
+    public String getCurrList() {
+        return mCurrList;
     }
 
     private void initSetup() {
@@ -203,9 +243,16 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             //            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mSpinnerA.setOnItemSelectedListener(this);
-        mSpinnerB.setOnItemSelectedListener(this);
-        mSpinnerC.setOnItemSelectedListener(this);
+        mSortSpinnerArray = getResources().getStringArray(R.array.spinner_sort);
+        mListSpinnerArray = getResources().getStringArray(R.array.spinner_list);
+        mTimeFrameSpinnerArray = getResources().getStringArray(R.array.spinner_time_frame);
+        mCurrTimeFrame = mSortSpinnerArray.length > 0 ? mSortSpinnerArray[0] : "";
+        mCurrSort = mListSpinnerArray.length > 0 ? mListSpinnerArray[0] : "";
+        mCurrList = mTimeFrameSpinnerArray.length > 0 ? mTimeFrameSpinnerArray[0] : "";
+
+        mSortSpinner.setOnItemSelectedListener(this);
+        mListSpinner.setOnItemSelectedListener(this);
+        mTimeFrameSpinner.setOnItemSelectedListener(this);
     }
 
     private void setupComponent() {
@@ -256,8 +303,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     private void tryToStartLoginActivity() {
         if (!DribbbleAPIHelper.getInstance().hasAccessToken()) {
             startActivity(AuthorizeActivity.createIntent());
-        } else {
-            mMainPresenter.firstFetchItems();
         }
     }
 
@@ -279,5 +324,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             startActivityGingerBread(shotImage, intent);
         }
     }
+
 
 }

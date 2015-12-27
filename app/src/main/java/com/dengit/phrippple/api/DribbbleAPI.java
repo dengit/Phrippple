@@ -34,9 +34,8 @@ public interface DribbbleAPI {
     String CALLBACK_HOST = "phone-callback";
     int LIMIT_PER_PAGE = 30;
 
-
     @GET("/v1/shots")
-    Observable<List<Shot>> getShots(@Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
+    Observable<List<Shot>> getShots(@Query("sort") String sort, @Query("list") String list, @Query("timeframe") String timeFrame, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
     @GET("/v1/users/{userId}/likes")
     Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);

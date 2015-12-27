@@ -96,7 +96,7 @@ public class FansAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.fan_portrait)
+        @Bind(R.id.fan_portrait_image)
         SimpleDraweeView fanPortrait;
 
         @Bind(R.id.fan_name)

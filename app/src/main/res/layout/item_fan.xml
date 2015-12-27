@@ -7,7 +7,7 @@
               android:padding="10dp">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/fan_portrait"
+        android:id="@+id/fan_portrait_image"
         android:layout_width="30dp"
         android:layout_height="30dp"
         fresco:placeholderImage="@drawable/place_holder_profile"

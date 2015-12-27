@@ -79,7 +79,7 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
         tryToGoneInitialProgressBar();
         switchRefresh(false);
         switchLoadMore(false, false);
-        Toast.makeText(this, "error! try it again!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "network error! swipe to refresh it!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

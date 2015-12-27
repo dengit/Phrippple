@@ -1,24 +1,24 @@
 <resources>
-    <string-array name="sortA">
-        <item>Popular</item>
-        <item>Recent</item>
-        <item>Viewed</item>
-        <item>Commented</item>
+    <string-array name="spinner_sort">
+        <item>popular</item>
+        <item>recent</item>
+        <item>views</item>
+        <item>comments</item>
     </string-array>
-    <string-array name="sortB">
-        <item>Shots</item>
-        <item>Team</item>
-        <item>Debuts</item>
-        <item>Playoffs</item>
-        <item>Rebounds</item>
-        <item>GIFs</item>
-        <item>Attachments</item>
+    <string-array name="spinner_list">
+        <item>shots</item>
+        <item>teams</item>
+        <item>debuts</item>
+        <item>playoffs</item>
+        <item>rebounds</item>
+        <item>animated</item>
+        <item>attachments</item>
     </string-array>
-    <string-array name="sortC">
-        <item>Now</item>
-        <item>Week</item>
-        <item>Month</item>
-        <item>Year</item>
-        <item>Time</item>
+    <string-array name="spinner_time_frame">
+        <item>now</item>
+        <item>week</item>
+        <item>month</item>
+        <item>year</item>
+        <item>ever</item>
     </string-array>
 </resources>

@@ -27,6 +27,9 @@ import timber.log.Timber;
  */
 public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
     private MainPresenter<T> mMainPresenter;
+    String mCurrSort;
+    String mCurrList;
+    String mCurrTimeFrame;
 
     public MainModelImpl(MainPresenter<T> mainPresenter) {
         super(mainPresenter);
@@ -34,9 +37,32 @@ public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
     }
 
     @Override
+    public void setCurrSort(String currSort) {
+        mCurrSort = currSort;
+    }
+
+    @Override
+    public void setCurrList(String currList) {
+        mCurrList = currList;
+    }
+
+    @Override
+    public void setCurrTimeFrame(String currTimeFrame) {
+        mCurrTimeFrame = currTimeFrame;
+    }
+
+    @Override
     protected void fetchItems(final int page) {
+
+        if (TextUtils.isEmpty(mCurrSort) ||
+                TextUtils.isEmpty(mCurrList) ||
+                TextUtils.isEmpty(mCurrTimeFrame)) {
+            Timber.d("**mCurrList or mCurrSort or mCurrTimeFrame is empty!");
+            return;
+        }
+
         final ArrayList<T> newItems = new ArrayList<>();
-        mDribbbleAPI.getShots(page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
+        mDribbbleAPI.getShots(mCurrSort, mCurrList, mCurrTimeFrame, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Shot>>() {
@@ -64,7 +90,7 @@ public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
                     @SuppressWarnings("unchecked")
                     public void onNext(List<Shot> shots) {
                         Timber.d("**Shots.size(): %d", shots.size());
-                        newItems.addAll((List<T>)shots);
+                        newItems.addAll((List<T>) shots);
                     }
                 });
     }
