@@ -21,4 +21,13 @@
         <item>year</item>
         <item>ever</item>
     </string-array>
+    <string-array name="drawer_items">
+        <item>Likes</item>
+        <item>Following</item>
+        <item>Shots</item>
+        <item>Buckets</item>
+        <item>Projects</item>
+        <item>Teams</item>
+        <item>Settings</item>
+    </string-array>
 </resources>

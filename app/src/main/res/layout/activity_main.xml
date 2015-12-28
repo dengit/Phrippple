@@ -1,74 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/container"
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:gravity="center"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
-
-        <Spinner
-            android:id="@+id/spinner_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinner_sort"/>
-
-        <Spinner
-            android:id="@+id/spinner_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinner_list" />
-
-        <Spinner
-            android:id="@+id/spinner_time_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinner_time_frame" />
-
-    </android.support.v7.widget.Toolbar>
-
-    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
-        android:id="@+id/refresh_layout"
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:layout_below="@id/toolbar"
-        tools:context=".ui.main.MainActivity">
+        android:fitsSystemWindows="true">
 
-        <ListView
-            android:id="@+id/list_view"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="?attr/colorPrimary"
+            android:gravity="center"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <Spinner
+                android:id="@+id/spinner_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/spinner_sort" />
+
+            <Spinner
+                android:id="@+id/spinner_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/spinner_list" />
+
+            <Spinner
+                android:id="@+id/spinner_time_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/spinner_time_frame" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null" />
-    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+            android:layout_below="@id/toolbar"
+            android:background="@android:color/white"
+            tools:context=".ui.main.MainActivity">
 
-    <ProgressBar
-        android:id="@+id/initial_progress_bar"
-        style="@android:style/Widget.ProgressBar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:visibility="visible" />
+            <ListView
+                android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null" />
+        </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fab_return_to_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="14dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/fab_return_to_top"
-        app:fab_elevationCompat="4dp" />
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/initial_progress_bar"
+            style="@android:style/Widget.ProgressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:visibility="visible" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_return_to_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="14dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/fab_return_to_top"
+            app:fab_elevationCompat="4dp" />
+    </RelativeLayout>
+    <ListView
+        android:background="@android:color/white"
+        android:id="@+id/drawer_menu_listview"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"/>
+</android.support.v4.widget.DrawerLayout>

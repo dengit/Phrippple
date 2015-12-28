@@ -1,6 +1,7 @@
 package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseView;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface MainView<T> extends BaseView<T> {
     String getCurrSort();
 
     String getCurrList();
+
+    void onFetchUserInfoFinished(User userInfo);
+
+    void onFetchUserInfoError();
 }

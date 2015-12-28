@@ -3,22 +3,19 @@ package com.dengit.phrippple.ui.main;
 import android.text.TextUtils;
 
 import com.dengit.phrippple.api.DribbbleAPI;
-import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
-import com.dengit.phrippple.ui.BaseModel;
+import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseModelImpl;
 import com.dengit.phrippple.utils.EventBusUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -116,6 +113,30 @@ public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
                     public void onNext(TokenInfo tokenInfo) {
                         Timber.d("**token:%s", tokenInfo.access_token);
                         EventBusUtil.getInstance().post(tokenInfo);
+                    }
+                });
+    }
+
+    @Override
+    public void fetchUserInfo() {
+        mDribbbleAPI.getUserInfo(mAccessToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<User>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mMainPresenter.onFetchUserInfoError();
+                    }
+
+                    @Override
+                    public void onNext(User userInfo) {
+                        Timber.d("**user.name:%s", userInfo.name);
+                        mMainPresenter.onFetchUserInfoFinished(userInfo);
                     }
                 });
     }

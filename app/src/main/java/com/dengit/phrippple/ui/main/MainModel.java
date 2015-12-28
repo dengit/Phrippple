@@ -15,4 +15,6 @@ public interface MainModel<T> extends BaseModel<T> {
     void setCurrList(String currList);
 
     void setCurrTimeFrame(String currTimeFrame);
+
+    void fetchUserInfo();
 }

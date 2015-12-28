@@ -8,6 +8,7 @@ import com.dengit.phrippple.data.LikeShotResponse;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
+import com.dengit.phrippple.data.User;
 
 import java.util.List;
 
@@ -69,4 +70,7 @@ public interface DribbbleAPI {
 
     @GET("/v1/users/{userId}/shots")
     Observable<List<Shot>> getSelfShots(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
+
+    @GET("/v1/user")
+    Observable<User> getUserInfo(@Query("access_token") String accessToken);
 }

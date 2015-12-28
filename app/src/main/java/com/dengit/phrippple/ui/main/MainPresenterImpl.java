@@ -1,6 +1,7 @@
 package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.AuthorizeInfo;
+import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BasePresenterImpl;
 
 /**
@@ -28,5 +29,20 @@ public class MainPresenterImpl<T> extends BasePresenterImpl<T> implements MainPr
         mMainModel.setCurrList(mMainView.getCurrList());
         mMainModel.setCurrTimeFrame(mMainView.getCurrTimeFrame());
         super.firstFetchItems();
+    }
+
+    @Override
+    public void fetchUserInfo() {
+        mMainModel.fetchUserInfo();
+    }
+
+    @Override
+    public void onFetchUserInfoFinished(User userInfo) {
+        mMainView.onFetchUserInfoFinished(userInfo);
+    }
+
+    @Override
+    public void onFetchUserInfoError() {
+        mMainView.onFetchUserInfoError();
     }
 }
