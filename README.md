@@ -14,7 +14,10 @@ An Open Source Dribbble Android Client
 - Fresco
 - Gson
 - ButterKnife
-- Oauth
+- OAuth2
+- Mocktio
+- Espresso
+- Roboletric
 
 ## License
     Copyright 2015 dengit
