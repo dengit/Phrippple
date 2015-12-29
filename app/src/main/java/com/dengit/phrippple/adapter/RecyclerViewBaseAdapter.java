@@ -1,16 +1,12 @@
 package com.dengit.phrippple.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dengit.phrippple.APP;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
-import com.dengit.phrippple.utils.Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
@@ -37,6 +33,7 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
             View view = LayoutInflater.from(APP.getInstance()).inflate(getItemLayoutResId(), parent, false);
             return createViewHolderItem(view);
         } else if (viewType == TYPE_FOOTER) {
+            mFooter.setLayoutParams(parent.getLayoutParams());//todo why this do work
             return new VHFooterBase(mFooter);
         }
 
@@ -54,7 +51,7 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemCount() {
-        return mItems.size() + 1;
+        return mItems.size() == 0 ? 0 : mItems.size() + 1;
     }
 
     @Override

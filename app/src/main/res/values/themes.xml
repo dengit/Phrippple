@@ -28,7 +28,6 @@
         <item name="actionBarStyle">@style/MainActionBar</item>
         <item name="windowActionBarOverlay">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <!-- Base application theme. -->

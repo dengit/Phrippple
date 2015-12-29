@@ -94,10 +94,6 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
             return;
         }
         setFooterStatus(isEnd);
-//        mRecyclerView.removeFooterView(mFooterLayout);
-//        mRecyclerView.addFooterView(mFooterLayout);
-        mRecyclerView.removeView(mFooterLayout);
-        mRecyclerView.addView(mFooterLayout);
     }
 
     @Override
