@@ -15,7 +15,7 @@ An Open Source Dribbble Android Client
 - Gson
 - ButterKnife
 - OAuth2
-- Mocktio
+- Mockito
 - Espresso
 - Roboletric
 
