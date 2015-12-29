@@ -4,19 +4,19 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true">
 
-    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/list_view"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null" />
-    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/initial_progress_bar"

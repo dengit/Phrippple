@@ -2,6 +2,7 @@ package com.dengit.phrippple.ui.fan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanActivity extends TransitionBaseActivity<Fan> implements FanView<Fan>, AdapterView.OnItemClickListener {
+public class FanActivity extends TransitionBaseActivity<Fan> implements FanView<Fan> {
 
     private int mShotId;
     private FansAdapter mFansAdapter;
@@ -59,41 +60,17 @@ public class FanActivity extends TransitionBaseActivity<Fan> implements FanView<
         mFansAdapter.setData(newItems);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startDetailActivity(view, position);
-    }
-
     private void initSetup() {
         mFanPresenter = new FanPresenterImpl<>(this);
         setBasePresenter(mFanPresenter);
         mShotId = getIntent().getIntExtra("shotId", 0);
         int fanCount = getIntent().getIntExtra("fanCount", 0);
         setTitle(fanCount + " fans");
-        mFansAdapter = new FansAdapter(new ArrayList<Fan>());
-        mListView.setAdapter(mFansAdapter);
-        mListView.setOnItemClickListener(this);
 
         initBase();
+        mFansAdapter = new FansAdapter(new ArrayList<Fan>(), mFooterLayout, this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mFansAdapter);
         mFanPresenter.firstFetchItems();
     }
-
-    /**
-     * When the user clicks a thumbnail, bundle up information about it and launch the
-     * details activity.
-     */
-    private void startDetailActivity(View view, int position) {
-        Fan fan = (Fan) mFansAdapter.getItem(position);
-        final Intent intent = ProfileActivity.createIntent(fan.user);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.fan_portrait_image);
-
-        if (Utils.hasLollipop()) {
-            startActivityLollipop(image, intent, "photo_hero");
-        } else {
-            startActivityGingerBread(image, intent);
-        }
-    }
-
 }

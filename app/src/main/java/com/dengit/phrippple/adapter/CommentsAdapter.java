@@ -1,6 +1,8 @@
 package com.dengit.phrippple.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,11 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Comment;
+import com.dengit.phrippple.data.Fan;
+import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.utils.Util;
+import com.dengit.phrippple.utils.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -21,65 +27,50 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentsAdapter extends BaseAdapter {
-    
-    private List<Comment> mComments;
+public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> {
 
-    public CommentsAdapter(List<Comment> comments) {
-        mComments = comments;
+    public CommentsAdapter(List<Comment> comments, View footer, TransitionBaseActivity<Comment> activity) {
+        super(comments, footer, activity);
     }
 
     @Override
-    public int getCount() {
-        return mComments.size();
+    protected RecyclerView.ViewHolder createViewHolderItem(View itemView) {
+        return new CommentVHItem(itemView);
     }
 
     @Override
-    public Object getItem(int position) {
-        return mComments.get(position);
+    protected int getItemLayoutResId() {
+        return R.layout.item_comment;
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_comment, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        setUpCommentItem(holder, position);
-
-        return convertView;
-    }
-
-    public void setData(List<Comment> newShots) {
-        mComments.clear();
-        appendData(newShots);
-    }
-
-    public void appendData(List<Comment> newShots) {
-        mComments.addAll(newShots);
-        notifyDataSetChanged();
-    }
-
-    private void setUpCommentItem(ViewHolder holder, int position) {
+    protected void setUpItems(VHItemBase holder, final int position) {
+        CommentVHItem itemHolder = (CommentVHItem) holder;
         Comment comment = (Comment) getItem(position);
-        holder.userPortrait.setImageURI(Uri.parse(comment.user.avatar_url));
-        holder.userName.setText(comment.user.name);
-        holder.commentContent.setText(Util.textToHtml(comment.body).toString().trim());
-        holder.commentTime.setText(comment.updated_at);
-        holder.commentLikeCount.setText(String.valueOf(comment.likes_count));
+        itemHolder.userPortrait.setImageURI(Uri.parse(comment.user.avatar_url));
+        itemHolder.userName.setText(comment.user.name);
+        itemHolder.commentContent.setText(Util.textToHtml(comment.body).toString().trim());
+        itemHolder.commentTime.setText(comment.updated_at);
+        itemHolder.commentLikeCount.setText(String.valueOf(comment.likes_count));
+
+        itemHolder.commentItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startProfileDetailActivity(v, position);
+            }
+        });
     }
 
-    static class ViewHolder {
+    private void startProfileDetailActivity(View view, int position) {
+        Comment comment = (Comment) getItem(position);
+        final Intent intent = ProfileActivity.createIntent(comment.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startDetailActivity(view, intent, R.id.comment_user_portrait_image);
+    }
+
+    static class CommentVHItem extends VHItemBase {
+        View commentItemView;
+
         @Bind(R.id.comment_user_portrait_image)
         SimpleDraweeView userPortrait;
         @Bind(R.id.comment_user_name)
@@ -91,8 +82,10 @@ public class CommentsAdapter extends BaseAdapter {
         @Bind(R.id.comment_like_count)
         TextView commentLikeCount;
 
-        public ViewHolder(View view) {
+        public CommentVHItem(View view) {
+            super(view);
             ButterKnife.bind(this, view);
+            commentItemView = view;
         }
     }
 }

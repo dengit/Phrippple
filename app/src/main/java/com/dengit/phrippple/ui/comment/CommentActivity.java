@@ -2,33 +2,28 @@ package com.dengit.phrippple.ui.comment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.CommentsAdapter;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
-import com.dengit.phrippple.utils.EventBusUtil;
 import com.dengit.phrippple.utils.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentActivity extends TransitionBaseActivity<Comment> implements CommentView<Comment>, AdapterView.OnItemClickListener {
+public class CommentActivity extends TransitionBaseActivity<Comment> implements CommentView<Comment> {
 
     private int mShotId;
     private CommentsAdapter mCommentsAdapter;
@@ -65,39 +60,18 @@ public class CommentActivity extends TransitionBaseActivity<Comment> implements 
         mCommentsAdapter.setData(newItems);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startDetailActivity(view, position);
-    }
-
     private void initSetup() {
         mShotId = getIntent().getIntExtra("shotId", 0);
         int commentCount = getIntent().getIntExtra("commentCount", 0);
         setTitle(commentCount + " comments");
         mCommentPresenter = new CommentPresenterImpl<>(this);
         setBasePresenter(mCommentPresenter);
-        mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>());
-        mListView.setAdapter(mCommentsAdapter);
-        mListView.setOnItemClickListener(this);
 
         initBase();
+        mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>(), mFooterLayout, this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mCommentsAdapter);
         mCommentPresenter.firstFetchItems();
     }
-    /**
-     * When the user clicks a thumbnail, bundle up information about it and launch the
-     * details activity.
-     */
-    private void startDetailActivity(View view, int position) {
-        Comment comment = (Comment) mCommentsAdapter.getItem(position);
-        final Intent intent = ProfileActivity.createIntent(comment.user);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.comment_user_portrait_image);
-
-        if (Utils.hasLollipop()) {
-            startActivityLollipop(image, intent, "photo_hero");
-        } else {
-            startActivityGingerBread(image, intent);
-        }
-    }
 }

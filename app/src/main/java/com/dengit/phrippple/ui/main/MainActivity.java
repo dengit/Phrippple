@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -52,7 +54,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends TransitionBaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AbsListView.OnScrollListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends TransitionBaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -79,7 +81,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     MainPresenter<Shot> mMainPresenter;
 
     private ShotsAdapter mShotsAdapter;
-    private int mOldFirstVisibleItem;
     private ResideMenu mResideMenu;
     private ResideMenuItem itemHome;
     private ResideMenuItem itemFollowing;
@@ -143,11 +144,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (parent == mListView) {
-            startShotDetailActivity(view, position);
-        } else if (parent == mDrawerMenuListView) {
             startDrawerItemActivity(position);
-        }
     }
 
     private void startDrawerItemActivity(int position) {
@@ -242,20 +239,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if (firstVisibleItem > mOldFirstVisibleItem) {
-            mReturnToTopFab.hide(true);
-        } else if (firstVisibleItem < mOldFirstVisibleItem) {
-            mReturnToTopFab.show(true);
-        }
-        mOldFirstVisibleItem = firstVisibleItem;
-    }
-
-    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if (parent == mSortSpinner) {
@@ -314,7 +297,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     public void onFetchUserInfoFinished(User userInfo) {
         mUser = userInfo;
         ((SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_user_portrait_image)).setImageURI(Uri.parse(userInfo.avatar_url));
-        ((TextView)mDrawerMenuHeader.findViewById(R.id.drawer_user_name)).setText(userInfo.name);
+        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_name)).setText(userInfo.name);
         ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_username)).setText(userInfo.username);
 
         if (mDrawerTip) {
@@ -356,24 +339,25 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         setupDrawer();
         setupComponent();
         setBasePresenter(mMainPresenter);
-        mShotsAdapter = new ShotsAdapter(new ArrayList<Shot>(), this);
-        mListView.setAdapter(mShotsAdapter);
-        mListView.setOnItemClickListener(this);
-        setupReturnToFab(mListView);
-//        setupResideMenu();
+        //        setupResideMenu();
         initBase();
 
+        mShotsAdapter = new ShotsAdapter(null, new ArrayList<Shot>(), mFooterLayout, this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mShotsAdapter);
+        setupReturnToFab(mRecyclerView);
         tryToStartLoginActivity();
         EventBusUtil.getInstance().register(this);
     }
 
     private void setupToolbar() {
         mToolbar.setTitle(getTitle());
+        //        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            //            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         mSortSpinnerArray = getResources().getStringArray(R.array.spinner_sort);
@@ -407,7 +391,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
                 .inject(this);
     }
 
-    private void setupReturnToFab(final ListView listView) {
+    private void setupReturnToFab(final RecyclerView recyclerView) {
         mReturnToTopFab.hide(false);
         mReturnToTopFab.setShowAnimation(AnimationUtils.loadAnimation(this, R.anim.show_from_bottom));
         mReturnToTopFab.setHideAnimation(AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom));
@@ -415,11 +399,21 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         mReturnToTopFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listView.smoothScrollToPosition(0);
+                recyclerView.smoothScrollToPosition(0);
             }
         });
 
-        listView.setOnScrollListener(this);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    mReturnToTopFab.hide(true);
+                } else if (dy < 0) {
+                    mReturnToTopFab.show(true);
+                }
+            }
+        });
     }
 
     private void setupResideMenu() {
@@ -463,24 +457,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         }
     }
 
-    /**
-     * When the user clicks a thumbnail, bundle up information about it and launch the
-     * details activity.
-     */
-    private void startShotDetailActivity(View view, int position) {
-        final Intent intent = new Intent();
-        intent.setClass(this, ShotActivity.class);
-
-        Shot shot = (Shot) mShotsAdapter.getItem(position);
-        final SimpleDraweeView shotImage = (SimpleDraweeView) view.findViewById(R.id.shot_item_image);
-
-        intent.putExtra("shot", shot);
-        if (Utils.hasLollipop()) {
-            startActivityLollipop(shotImage, intent, "photo_hero");
-        } else {
-            startActivityGingerBread(shotImage, intent);
-        }
-    }
 
     private void startProfileDetailActivity(View view) {
         final Intent intent = ProfileActivity.createIntent(mUser);

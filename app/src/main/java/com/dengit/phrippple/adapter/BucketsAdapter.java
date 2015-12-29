@@ -1,6 +1,9 @@
 package com.dengit.phrippple.adapter;
 
+import android.app.Activity;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,9 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Bucket;
+import com.dengit.phrippple.data.ShotListType;
+import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -20,71 +26,59 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketsAdapter extends BaseAdapter {
+public class BucketsAdapter extends RecyclerViewBaseAdapter<Bucket> {
 
-    private List<Bucket> mBuckets;
-
-    public BucketsAdapter(List<Bucket> buckets) {
-        mBuckets = buckets;
-    }
-
-    @Override
-    public int getCount() {
-        return mBuckets.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return mBuckets.get(position);
+    public BucketsAdapter(List<Bucket> buckets, View footer, Activity activity) {
+        super(buckets, footer, activity);
     }
 
     @Override
     public long getItemId(int position) {
-        return mBuckets.get(position).id;
+        return ((Bucket)getItem(position)).id;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_bucket, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        setUpBucketItem(holder, position);
-
-        return convertView;
+    protected int getItemLayoutResId() {
+        return R.layout.item_bucket;
     }
 
-    public void setData(List<Bucket> newShots) {
-        mBuckets.clear();
-        appendData(newShots);
+    @Override
+    protected RecyclerView.ViewHolder createViewHolderItem(View itemView) {
+        return new BucketVHItem(itemView);
     }
 
-    public void appendData(List<Bucket> newShots) {
-        mBuckets.addAll(newShots);
-        notifyDataSetChanged();
-    }
-
-    private void setUpBucketItem(ViewHolder holder, int position) {
+    protected void setUpItems(VHItemBase holder, final int position) {
+        BucketVHItem itemHolder = (BucketVHItem) holder;
         Bucket bucket = (Bucket) getItem(position);
-        holder.bucketName.setText(bucket.name);
+        itemHolder.bucketName.setText(bucket.name);
 
         if (bucket.user != null) {
-            holder.bucketOwnerPortrait.setImageURI(Uri.parse(bucket.user.avatar_url));
-            holder.bucketOwnerName.setText(bucket.user.name);
-            holder.bucketOwnerPortrait.setVisibility(View.VISIBLE);
-            holder.bucketOwnerName.setVisibility(View.VISIBLE);
+            itemHolder.bucketOwnerPortrait.setImageURI(Uri.parse(bucket.user.avatar_url));
+            itemHolder.bucketOwnerName.setText(bucket.user.name);
+            itemHolder.bucketOwnerPortrait.setVisibility(View.VISIBLE);
+            itemHolder.bucketOwnerName.setVisibility(View.VISIBLE);
         }
 
-        holder.bucketShotCount.setText(bucket.shots_count + " shots");
+        itemHolder.bucketShotCount.setText(bucket.shots_count + " shots");
+
+
+        itemHolder.bucketItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bucket bucket = (Bucket) getItem(position);
+                Bundle args = new Bundle();
+                args.putInt("id", bucket.id);
+                args.putSerializable("type", ShotListType.ShotsOfBucket);
+                args.putInt("count", bucket.shots_count);
+
+                mActivity.startActivity(ShotListActivity.createIntent(args));
+            }
+        });
     }
 
 
-    static class ViewHolder {
+    static class BucketVHItem extends VHItemBase {
+        View bucketItemView;
         @Bind(R.id.bucket_name)
         TextView bucketName;
         @Bind(R.id.bucket_owner_portrait)
@@ -94,8 +88,10 @@ public class BucketsAdapter extends BaseAdapter {
         @Bind(R.id.bucket_shot_count)
         TextView bucketShotCount;
 
-        public ViewHolder(View view) {
+        public BucketVHItem(View view) {
+            super(view);
             ButterKnife.bind(this, view);
+            bucketItemView = view;
         }
     }
 }

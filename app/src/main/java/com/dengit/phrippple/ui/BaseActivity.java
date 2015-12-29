@@ -1,10 +1,11 @@
 package com.dengit.phrippple.ui;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,16 +22,16 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/7.
  */
-public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseView<T>, View.OnClickListener, WaveSwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseView<T>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.initial_progress_bar)
     protected ProgressBar mInitialProgressBar;
 
-    @Bind(R.id.list_view)
-    protected ListView mListView;
+    @Bind(R.id.recycler_view)
+    protected RecyclerView mRecyclerView;
 
     @Bind(R.id.refresh_layout)
-    protected WaveSwipeRefreshLayout mRefreshLayout;
+    protected SwipeRefreshLayout mRefreshLayout;
 
     protected View mFooter;
     protected ProgressBar mFooterProgressBar;
@@ -93,8 +94,10 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
             return;
         }
         setFooterStatus(isEnd);
-        mListView.removeFooterView(mFooterLayout);
-        mListView.addFooterView(mFooterLayout);
+//        mRecyclerView.removeFooterView(mFooterLayout);
+//        mRecyclerView.addFooterView(mFooterLayout);
+        mRecyclerView.removeView(mFooterLayout);
+        mRecyclerView.addView(mFooterLayout);
     }
 
     @Override
@@ -118,10 +121,10 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
 
         mFooter.setOnClickListener(this);
         mRefreshLayout.setOnRefreshListener(this);
-        mRefreshLayout.setWaveColor(Util.getColor(R.color.colorPrimary));
+//        mRefreshLayout.setWaveColor(Util.getColor(R.color.colorPrimary));
 
         //todo setMaxDropHeight noneffective
-        mRefreshLayout.setMaxDropHeight(getResources().getDimensionPixelSize(R.dimen.dropMaxHeight));
+//        mRefreshLayout.setMaxDropHeight(getResources().getDimensionPixelSize(R.dimen.dropMaxHeight));
     }
 
     private void tryToGoneInitialProgressBar() {

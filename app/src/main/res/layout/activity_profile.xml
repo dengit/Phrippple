@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:id="@+id/container"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:fresco="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/container"
             android:background="@android:color/white">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,22 +19,26 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/header_blur_image"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"/>
+                android:layout_height="300dp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_overlay"/>
 
             <FrameLayout
                 android:id="@+id/hero_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="?attr/actionBarSize">
 
                 <ImageView
                     android:id="@+id/photo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
                     android:scaleType="centerCrop"
                     android:tint="@color/photo_tint"
                     android:transitionName="photo_hero" />
@@ -43,11 +48,11 @@
                     android:id="@+id/target_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:visibility="gone"
-                    fresco:roundAsCircle="true"
-                    fresco:placeholderImage="@drawable/place_holder_profile"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:visibility="gone"
+                    fresco:placeholderImage="@drawable/place_holder_profile"
+                    fresco:roundAsCircle="true" />
 
             </FrameLayout>
 
@@ -55,47 +60,49 @@
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/hero_container"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@id/hero_container"
-                android:textColor="@android:color/white"
-                android:text="name" />
+                android:text="name"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/user_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/user_name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@id/user_name"
-                android:textColor="@android:color/white"
-                android:text="location" />
+                android:text="location"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/user_bio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/user_location"
                 android:layout_centerHorizontal="true"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_below="@id/user_location"
-                android:textColor="@android:color/white"
-                android:text="bio" />
+                android:text="bio"
+                android:textColor="@android:color/white" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/user_link_web"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="link_web"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_link_twitter"
                 android:layout_width="wrap_content"
@@ -103,13 +110,15 @@
                 android:padding="5dp"
                 android:text="link_twitter"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_buckets_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="buckets_count"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_followers_count"
                 android:layout_width="wrap_content"
@@ -117,6 +126,7 @@
                 android:padding="5dp"
                 android:text="followers_count"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_followings_count"
                 android:layout_width="wrap_content"
@@ -124,6 +134,7 @@
                 android:padding="5dp"
                 android:text="followings_count"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_likes_count"
                 android:layout_width="wrap_content"
@@ -131,6 +142,7 @@
                 android:padding="5dp"
                 android:text="likes_count"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_projects_count"
                 android:layout_width="wrap_content"
@@ -138,20 +150,22 @@
                 android:padding="5dp"
                 android:text="projects_count"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_shots_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="shots_count"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/user_created_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="created_at"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

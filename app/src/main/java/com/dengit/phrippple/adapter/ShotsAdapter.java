@@ -2,18 +2,18 @@ package com.dengit.phrippple.adapter;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
+import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.dengit.phrippple.utils.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -26,59 +26,27 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotsAdapter extends BaseAdapter {
+public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
 
-    private List<Shot> mShots;
-    private TransitionBaseActivity<Shot> mActivity;
+    private User mUser;
 
-    public ShotsAdapter(List<Shot> shots, TransitionBaseActivity<Shot> activity) {
-        mShots = shots;
-        mActivity = activity;
+    public ShotsAdapter(User user, List<Shot> shots, View footer, TransitionBaseActivity<Shot> activity) {
+        super(shots, footer, activity);
+        mUser = user;
     }
 
     @Override
-    public int getCount() {
-        return mShots.size();
+    protected int getItemLayoutResId() {
+        return R.layout.item_shot;
     }
 
     @Override
-    public Object getItem(int position) {
-        return mShots.get(position);
+    protected RecyclerView.ViewHolder createViewHolderItem(View itemView) {
+        return new ShotVHItem(itemView);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_shot, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        setUpShotItem(holder, position);
-
-        return convertView;
-    }
-
-    public void setData(List<Shot> newShots) {
-        mShots.clear();
-        appendData(newShots);
-    }
-
-    public void appendData(List<Shot> newShots) {
-        mShots.addAll(newShots);
-        notifyDataSetChanged();
-    }
-
-    private void setUpShotItem(ViewHolder holder, final int position) {
+    protected void setUpItems(VHItemBase holder, final int position) {
+        ShotVHItem itemHolder = (ShotVHItem) holder;
         final Shot shot = (Shot) getItem(position);
 
         if (shot.user != null) {//self shots when shot.user is null
@@ -87,51 +55,66 @@ public class ShotsAdapter extends BaseAdapter {
                 Timber.d("**avatar name: %s", shot.user.name);
             }
 
-            holder.authorNameTV.setText(String.valueOf(shot.user.name));
-            holder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
+            itemHolder.authorNameTV.setText(String.valueOf(shot.user.name));
+            itemHolder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
 
             //todo new listener every time
-            holder.header.setOnClickListener(new View.OnClickListener() {
+            itemHolder.header.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startDetailActivity(v, position);
+                    startProfileDetailActivity(v, position);
                 }
             });
         } else {
-            holder.authorNameTV.setVisibility(View.GONE);
-            holder.authorImage.setVisibility(View.GONE);
-            holder.titleTV.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+            itemHolder.authorNameTV.setVisibility(View.GONE);
+            itemHolder.authorImage.setVisibility(View.GONE);
+            itemHolder.titleTV.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                     APP.getInstance().getResources().getDimension(R.dimen.shot_title_big));
         }
 
-        holder.shotImage.setImageURI(Uri.parse(shot.images.normal));
-        holder.likeTV.setText(String.valueOf(shot.likes_count));
-        holder.msgTV.setText(String.valueOf(shot.comments_count));
-        holder.viewTV.setText(String.valueOf(shot.views_count));
-        holder.titleTV.setText(String.valueOf(shot.title));
+        itemHolder.shotImage.setImageURI(Uri.parse(shot.images.normal));
+        itemHolder.likeTV.setText(String.valueOf(shot.likes_count));
+        itemHolder.msgTV.setText(String.valueOf(shot.comments_count));
+        itemHolder.viewTV.setText(String.valueOf(shot.views_count));
+        itemHolder.titleTV.setText(String.valueOf(shot.title));
 
         if (shot.animated) {
-            holder.gifTag.setVisibility(View.VISIBLE);
+            itemHolder.gifTag.setVisibility(View.VISIBLE);
         } else {
-            holder.gifTag.setVisibility(View.GONE);
+            itemHolder.gifTag.setVisibility(View.GONE);
         }
+
+        itemHolder.shotItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startShotDetailActivity(v, position);
+            }
+        });
     }
 
-    private void startDetailActivity(View view, int position) {
+    private void startShotDetailActivity(View view, int position) {
+        Shot shot = (Shot) getItem(position);
+        setUser(shot); //shot.user is null when shots are users'
+        final Intent intent = ShotActivity.createIntent(shot);
+        startDetailActivity(view, intent, R.id.shot_item_image);
+    }
+
+    private void startProfileDetailActivity(View view, int position) {
         Shot shot = (Shot) getItem(position);
         final Intent intent = ProfileActivity.createIntent(shot.user);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startDetailActivity(view, intent, R.id.shot_item_author_image);
+    }
 
-        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.shot_item_author_image);
-
-        if (Utils.hasLollipop()) {
-            mActivity.startActivityLollipop(image, intent, "photo_hero");
-        } else {
-            mActivity.startActivityGingerBread(image, intent);
+    private void setUser(Shot shot) {
+        if (mUser != null && shot.user == null) {
+            shot.user = mUser;
         }
     }
 
-    static class ViewHolder {
+    static class ShotVHItem extends VHItemBase {
+        View shotItemView;
+
         @Bind(R.id.shot_item_image)
         SimpleDraweeView shotImage;
         @Bind(R.id.shot_item_author_image)
@@ -151,8 +134,11 @@ public class ShotsAdapter extends BaseAdapter {
         @Bind(R.id.shot_item_header)
         View header;
 
-        public ViewHolder(View view) {
+        public ShotVHItem(View view) {
+            super(view);
             ButterKnife.bind(this, view);
+            shotItemView = view;
         }
     }
+
 }

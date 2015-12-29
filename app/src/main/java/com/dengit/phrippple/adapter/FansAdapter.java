@@ -1,6 +1,8 @@
 package com.dengit.phrippple.adapter;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,10 @@ import android.widget.TextView;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Fan;
+import com.dengit.phrippple.data.User;
+import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
+import com.dengit.phrippple.utils.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -21,81 +27,66 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FansAdapter extends BaseAdapter {
+public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
 
-    private List<Fan> mFans;
-
-    public FansAdapter(List<Fan> fans) {
-        mFans = fans;
+    public FansAdapter(List<Fan> fans, View footer, TransitionBaseActivity<Fan> activity) {
+        super(fans, footer, activity);
     }
 
     @Override
-    public int getCount() {
-        return mFans.size();
+    protected int getItemLayoutResId() {
+        return R.layout.item_fan;
     }
 
     @Override
-    public Object getItem(int position) {
-        return mFans.get(position);
+    protected RecyclerView.ViewHolder createViewHolderItem(View itemView) {
+        return new FanVHItem(itemView);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(APP.getInstance()).inflate(R.layout.item_fan, parent, false);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        setUpFanItem(holder, position);
-        return convertView;
-    }
-
-    public void setData(List<Fan> newShots) {
-        mFans.clear();
-        appendData(newShots);
-    }
-
-    public void appendData(List<Fan> newShots) {
-        mFans.addAll(newShots);
-        notifyDataSetChanged();
-    }
-
-    private void setUpFanItem(ViewHolder holder, int position) {
+    protected void setUpItems(VHItemBase holder, final int position) {
+        FanVHItem itemHolder = (FanVHItem) holder;
         Fan fan = (Fan) getItem(position);
-        holder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));
-        holder.fanName.setText(fan.user.name);
-        holder.fanPrettyTime.setText(fan.created_at);
+        itemHolder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));
+        itemHolder.fanName.setText(fan.user.name);
+        itemHolder.fanPrettyTime.setText(fan.created_at);
 
         if (fan.user.shots_count > 0) {
-            holder.fanShotCount.setText(fan.user.shots_count + " shots");
-            holder.fanShotCount.setVisibility(View.VISIBLE);
+            itemHolder.fanShotCount.setText(fan.user.shots_count + " shots");
+            itemHolder.fanShotCount.setVisibility(View.VISIBLE);
         }
 
         if (fan.user.followers_count > 0) {
-            holder.fanFollowerCount.setText(fan.user.followers_count + " followers");
-            holder.fanFollowerCount.setVisibility(View.VISIBLE);
+            itemHolder.fanFollowerCount.setText(fan.user.followers_count + " followers");
+            itemHolder.fanFollowerCount.setVisibility(View.VISIBLE);
         }
 
         if (fan.user.shots_count > 0 && fan.user.followers_count > 0) {
-            holder.fanItemDivider.setVisibility(View.VISIBLE);
+            itemHolder.fanItemDivider.setVisibility(View.VISIBLE);
         }
 
         if (fan.user.location != null && !TextUtils.isEmpty(fan.user.location.trim())) {
-            holder.fanLocation.setVisibility(View.VISIBLE);
-            holder.fanLocation.setText(fan.user.location);
+            itemHolder.fanLocation.setVisibility(View.VISIBLE);
+            itemHolder.fanLocation.setText(fan.user.location);
         }
+
+        itemHolder.fanItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startProfileDetailActivity(v, position);
+            }
+        });
     }
 
-    static class ViewHolder {
+    private void startProfileDetailActivity(View view, int position) {
+        Fan fan = (Fan) getItem(position);
+        final Intent intent = ProfileActivity.createIntent(fan.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startDetailActivity(view, intent, R.id.fan_portrait_image);
+    }
+
+    static class FanVHItem extends VHItemBase {
+        View fanItemView;
+
         @Bind(R.id.fan_portrait_image)
         SimpleDraweeView fanPortrait;
 
@@ -117,9 +108,10 @@ public class FansAdapter extends BaseAdapter {
         @Bind(R.id.fan_item_divider)
         View fanItemDivider;
 
-
-        public ViewHolder(View view) {
+        public FanVHItem(View view) {
+            super(view);
             ButterKnife.bind(this, view);
+            fanItemView = view;
         }
     }
 }
