@@ -32,6 +32,7 @@ import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
@@ -143,7 +144,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent == mListView) {
-            startDetailActivity(view, position);
+            startShotDetailActivity(view, position);
         } else if (parent == mDrawerMenuListView) {
             startDrawerItemActivity(position);
         }
@@ -201,7 +202,14 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if (v == itemHome) {
+        if (v == mDrawerMenuHeader) {
+            if (mUser == null) {
+                Toast.makeText(this, "login first!", Toast.LENGTH_SHORT).show();
+            } else {
+                startProfileDetailActivity(v);
+            }
+            mDrawerLayout.closeDrawers();
+        } else if (v == itemHome) {
             //            changeFragment(new HomeFragment());
             Toast.makeText(this, "itemHome", Toast.LENGTH_SHORT).show();
         } else if (v == itemFollowing) {
@@ -287,19 +295,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
 
     }
 
-    @Subscribe
-    public void firstFetchShots(TokenInfo tokenInfo) {
-        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
-        mMainPresenter.firstFetchItems();
-        mDrawerTip = true;
-        mMainPresenter.fetchUserInfo();
-    }
-
-    @Subscribe
-    public void requestToken(AuthorizeInfo info) {
-        mMainPresenter.requestToken(info);
-    }
-
     @Override
     public String getCurrTimeFrame() {
         return mCurrTimeFrame;
@@ -333,6 +328,27 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             mDrawerLayout.openDrawer(Gravity.LEFT);
         }
         Toast.makeText(this, "login error!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        if (mUser == null) {
+            mMainPresenter.fetchUserInfo();
+        }
+    }
+
+    @Subscribe
+    public void firstFetchShots(TokenInfo tokenInfo) {
+        DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
+        mMainPresenter.firstFetchItems();
+        mDrawerTip = true;
+        mMainPresenter.fetchUserInfo();
+    }
+
+    @Subscribe
+    public void requestToken(AuthorizeInfo info) {
+        mMainPresenter.requestToken(info);
     }
 
     private void initSetup() {
@@ -380,6 +396,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         mDrawerMenuListView.setOnItemClickListener(this);
 
         mDrawerMenuHeader = LayoutInflater.from(this).inflate(R.layout.drawer_menu_header, null);
+        mDrawerMenuHeader.setOnClickListener(this);
         mDrawerMenuListView.addHeaderView(mDrawerMenuHeader);
     }
 
@@ -450,7 +467,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
      * When the user clicks a thumbnail, bundle up information about it and launch the
      * details activity.
      */
-    private void startDetailActivity(View view, int position) {
+    private void startShotDetailActivity(View view, int position) {
         final Intent intent = new Intent();
         intent.setClass(this, ShotActivity.class);
 
@@ -465,5 +482,16 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         }
     }
 
+    private void startProfileDetailActivity(View view) {
+        final Intent intent = ProfileActivity.createIntent(mUser);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.drawer_user_portrait_image);
+
+        if (Utils.hasLollipop()) {
+            startActivityLollipop(image, intent, "photo_hero");
+        } else {
+            startActivityGingerBread(image, intent);
+        }
+    }
 }
