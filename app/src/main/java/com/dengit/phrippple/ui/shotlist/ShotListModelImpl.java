@@ -112,6 +112,18 @@ public class ShotListModelImpl<T> extends BaseModelImpl<T> implements ShotListMo
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
+        } else if (mShotListType == ShotListType.ShotsOfFollowing) {
+            mDribbbleAPI.getUserFollowingShots(page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
+                    .flatMap(new Func1<List<Shot>, Observable<Shot>>() {
+                        @Override
+                        public Observable<Shot> call(List<Shot> shots) {
+                            return Observable.from(shots);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(subscriber);
         }
+
     }
 }

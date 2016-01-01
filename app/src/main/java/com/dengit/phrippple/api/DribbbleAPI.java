@@ -73,4 +73,7 @@ public interface DribbbleAPI {
 
     @GET("/v1/user")
     Observable<User> getUserInfo(@Query("access_token") String accessToken);
+
+    @GET("/v1/user/following/shots")
+    Observable<List<Shot>> getUserFollowingShots(@Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 }

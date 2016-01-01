@@ -8,5 +8,6 @@ import java.io.Serializable;
 public enum ShotListType implements Serializable {
     ShotsOfLikes,
     ShotsOfBucket,
-    ShotsOfSelf
+    ShotsOfSelf,
+    ShotsOfFollowing
 }

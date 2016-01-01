@@ -82,7 +82,11 @@ public class ShotListActivity extends TransitionBaseActivity<Shot> implements Sh
         parseArgs();
         mShotListPresenter = new ShotListPresenterImpl<>(this);
         setBasePresenter(mShotListPresenter);
-        setTitle(mCount + " shots");
+        if (mShotListType == ShotListType.ShotsOfFollowing) {
+            setTitle("Following shots");
+        } else {
+            setTitle(mCount + " shots");
+        }
 
         initBase();
         mShotsAdapter = new ShotsAdapter(getUser(), new ArrayList<Shot>(), mFooterLayout, this);

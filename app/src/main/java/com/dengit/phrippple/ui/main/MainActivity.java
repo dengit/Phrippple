@@ -152,9 +152,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             }
             case "Following": {
                 Bundle args = new Bundle();
-                args.putInt("id", mUser.id);
-                args.putSerializable("type", ShotListType.ShotsOfLikes);
-                args.putInt("count", mUser.likes_count);
+                args.putSerializable("type", ShotListType.ShotsOfFollowing);
 
                 startActivity(ShotListActivity.createIntent(args));
                 break;
