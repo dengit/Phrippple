@@ -3,17 +3,13 @@ package com.dengit.phrippple.ui.bucket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.BucketsAdapter;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.ui.BaseActivity;
-import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 
 import java.util.ArrayList;
 import java.util.List;

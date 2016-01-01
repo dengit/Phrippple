@@ -3,8 +3,6 @@ package com.dengit.phrippple.ui.shotlist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
@@ -13,9 +11,6 @@ import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.TransitionBaseActivity;
-import com.dengit.phrippple.ui.shot.ShotActivity;
-import com.dengit.phrippple.utils.Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,12 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dengit.phrippple.R;
-import com.dengit.phrippple.utils.Util;
 
 import java.util.List;
 
 import butterknife.Bind;
-import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import timber.log.Timber;
 
 /**

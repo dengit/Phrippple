@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -35,12 +34,9 @@ import com.dengit.phrippple.ui.TransitionBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
-import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
 import com.dengit.phrippple.utils.Utils;
-import com.dengit.phrippple.widget.ResideMenu;
-import com.dengit.phrippple.widget.ResideMenuItem;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
@@ -81,15 +77,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     MainPresenter<Shot> mMainPresenter;
 
     private ShotsAdapter mShotsAdapter;
-    private ResideMenu mResideMenu;
-    private ResideMenuItem itemHome;
-    private ResideMenuItem itemFollowing;
-    private ResideMenuItem itemLikes;
-    private ResideMenuItem itemShots;
-    private ResideMenuItem itemBuckets;
-    private ResideMenuItem itemProjects;
-    private ResideMenuItem itemTeams;
-    private ResideMenuItem itemSettings;
     private boolean mIsSortSpinnerFirst = true;
     private boolean mIsListSpinnerFirst = true;
     private String[] mSortSpinnerArray;
@@ -126,7 +113,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mResideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -206,35 +192,6 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
                 startProfileDetailActivity(v);
             }
             mDrawerLayout.closeDrawers();
-        } else if (v == itemHome) {
-            //            changeFragment(new HomeFragment());
-            Toast.makeText(this, "itemHome", Toast.LENGTH_SHORT).show();
-        } else if (v == itemFollowing) {
-            //            changeFragment(new ProfileFragment());
-            Toast.makeText(this, "itemProfile", Toast.LENGTH_SHORT).show();
-        } else if (v == itemLikes) {
-            //            changeFragment(new CalendarFragment());
-            Toast.makeText(this, "itemCalendar", Toast.LENGTH_SHORT).show();
-        } else if (v == itemShots) {
-            //            changeFragment(new ProfileFragment());
-            Toast.makeText(this, "itemProfile", Toast.LENGTH_SHORT).show();
-        } else if (v == itemBuckets) {
-            //            changeFragment(new CalendarFragment());
-            Toast.makeText(this, "itemCalendar", Toast.LENGTH_SHORT).show();
-        } else if (v == itemProjects) {
-            //            changeFragment(new ProfileFragment());
-            Toast.makeText(this, "itemProfile", Toast.LENGTH_SHORT).show();
-        } else if (v == itemTeams) {
-            //            changeFragment(new CalendarFragment());
-            Toast.makeText(this, "itemCalendar", Toast.LENGTH_SHORT).show();
-        } else if (v == itemSettings) {
-            //            changeFragment(new SettingsFragment());
-            Toast.makeText(this, "itemSettings", Toast.LENGTH_SHORT).show();
-
-        }
-
-        if (v instanceof ResideMenuItem) {
-            mResideMenu.closeMenu();
         }
     }
 
@@ -399,7 +356,7 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         mReturnToTopFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
+                recyclerView.scrollToPosition(0);
             }
         });
 
@@ -407,48 +364,13 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
+                if (recyclerView.computeVerticalScrollOffset() == 0 || dy > 0) {
                     mReturnToTopFab.hide(true);
                 } else if (dy < 0) {
                     mReturnToTopFab.show(true);
                 }
             }
         });
-    }
-
-    private void setupResideMenu() {
-        mResideMenu = new ResideMenu(this);
-        mResideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-        mResideMenu.setBackground(R.drawable.menu_reside_bg);
-        mResideMenu.attachToActivity(this);
-
-        // create menu items;
-        itemHome = new ResideMenuItem(this, R.drawable.ic_menu_home, "Home");
-        itemFollowing = new ResideMenuItem(this, R.drawable.ic_menu_calendar, "Following");
-        itemLikes = new ResideMenuItem(this, R.drawable.ic_menu_calendar, "Likes");
-        itemShots = new ResideMenuItem(this, R.drawable.ic_menu_calendar, "Shots");
-        itemBuckets = new ResideMenuItem(this, R.drawable.ic_menu_calendar, "Buckets");
-        itemProjects = new ResideMenuItem(this, R.drawable.ic_menu_calendar, "Projects");
-        itemTeams = new ResideMenuItem(this, R.drawable.ic_menu_calendar, "Teams");
-        itemSettings = new ResideMenuItem(this, R.drawable.ic_menu_settings, "Settings");
-
-        itemHome.setOnClickListener(this);
-        itemFollowing.setOnClickListener(this);
-        itemLikes.setOnClickListener(this);
-        itemShots.setOnClickListener(this);
-        itemBuckets.setOnClickListener(this);
-        itemProjects.setOnClickListener(this);
-        itemTeams.setOnClickListener(this);
-        itemSettings.setOnClickListener(this);
-
-        mResideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemFollowing, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemLikes, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemShots, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemBuckets, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemProjects, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemTeams, ResideMenu.DIRECTION_LEFT);
-        mResideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_LEFT);
     }
 
     private void tryToStartLoginActivity() {

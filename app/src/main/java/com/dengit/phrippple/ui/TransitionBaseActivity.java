@@ -8,11 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.dengit.phrippple.R;
-import com.dengit.phrippple.data.Shot;
-import com.dengit.phrippple.ui.shot.ShotActivity;
-import com.dengit.phrippple.utils.Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 /**

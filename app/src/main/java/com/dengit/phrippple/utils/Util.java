@@ -11,7 +11,6 @@ import android.os.Build;
 import android.text.Html;
 
 import com.dengit.phrippple.APP;
-import com.dengit.phrippple.R;
 
 /**
  * Created by dengit on 15/12/14.

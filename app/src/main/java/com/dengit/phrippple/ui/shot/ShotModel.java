@@ -1,7 +1,5 @@
 package com.dengit.phrippple.ui.shot;
 
-import com.dengit.phrippple.ui.BaseModel;
-
 /**
  * Created by dengit on 15/12/14.
  */

@@ -3,7 +3,6 @@ package com.dengit.phrippple.ui.main;
 import com.dengit.phrippple.data.Shot;
 
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by dengit on 15/12/9.

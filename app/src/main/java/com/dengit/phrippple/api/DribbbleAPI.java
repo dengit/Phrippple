@@ -2,8 +2,8 @@ package com.dengit.phrippple.api;
 
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.Fan;
+import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.LikeShotResponse;
 import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;

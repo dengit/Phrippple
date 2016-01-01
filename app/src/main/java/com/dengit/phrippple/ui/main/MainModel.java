@@ -1,7 +1,6 @@
 package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.AuthorizeInfo;
-import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.ui.BaseModel;
 
 /**
