@@ -11,7 +11,6 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.AuthorizeInfo;
-import com.dengit.phrippple.ui.BaseActivity;
 import com.dengit.phrippple.ui.SuperBaseActivity;
 import com.dengit.phrippple.utils.EventBusUtil;
 

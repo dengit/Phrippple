@@ -4,16 +4,6 @@ import android.text.TextUtils;
 
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
-import com.dengit.phrippple.data.LikeShot;
-import com.dengit.phrippple.data.Shot;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/16.

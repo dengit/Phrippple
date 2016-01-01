@@ -1,6 +1,5 @@
 package com.dengit.phrippple.ui.bucket;
 
-import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.ui.BasePresenter;
 
 /**

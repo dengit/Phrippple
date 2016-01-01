@@ -1,10 +1,7 @@
 package com.dengit.phrippple.ui.main;
 
-import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.BaseView;
-
-import java.util.List;
 
 /**
  * Created by dengit on 15/12/9.

@@ -4,7 +4,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.dengit.phrippple"
@@ -17,8 +17,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // Warning:Renderscript support mode is not currently supported with renderscript target 21+
-        renderscriptTargetApi 20
-        renderscriptSupportModeEnabled true
+//        renderscriptTargetApi 20
+//        renderscriptSupportModeEnabled true
     }
 
     signingConfigs {
@@ -64,9 +64,9 @@ dependencies {
     compile 'com.squareup:otto:1.3.8'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.facebook.fresco:fresco:0.8.1'
-    compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.4'
+//    compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.4'
     compile 'com.github.clans:fab:1.6.2'
-    compile 'jp.wasabeef:blurry:1.0.5'
+//    compile 'jp.wasabeef:blurry:1.0.5'
     compile 'com.makeramen:roundedimageview:2.2.1'
 //    compile ('com.specyci:residemenu:1.6'){
 //        exclude group: 'com.nineoldandroids'
@@ -74,7 +74,7 @@ dependencies {
 
     //dagger2
     compile 'com.google.dagger:dagger:2.0'
-    provided 'org.glassfish:javax.annotation:10.0-b28' //needed for dagger2
+    provided 'org.glassfish:javax.annotation:10.0-b28' //needed by dagger2
 
     //app monitor
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
