@@ -3,8 +3,8 @@ package com.dengit.phrippple.adapter;
 import android.content.Intent;
 import android.view.View;
 
-import com.dengit.phrippple.ui.TransitionBaseActivity;
-import com.dengit.phrippple.utils.Utils;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;

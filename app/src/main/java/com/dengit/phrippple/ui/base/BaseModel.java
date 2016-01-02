@@ -1,4 +1,4 @@
-package com.dengit.phrippple.ui;
+package com.dengit.phrippple.ui.base;
 
 /**
  * Created by dengit on 15/12/16.

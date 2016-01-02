@@ -1,4 +1,8 @@
-package com.dengit.phrippple.ui.main;
+package com.dengit.phrippple.injection.module;
+
+import com.dengit.phrippple.ui.main.MainPresenter;
+import com.dengit.phrippple.ui.main.MainPresenterImpl;
+import com.dengit.phrippple.ui.main.MainView;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,6 +20,6 @@ public abstract class AbstractMainModule<T> {
 
     @Provides
     public MainPresenter<T> providePresenter() {
-        return new MainPresenterImpl<T>(mMainView);
+        return new MainPresenterImpl<>(mMainView);
     }
 }

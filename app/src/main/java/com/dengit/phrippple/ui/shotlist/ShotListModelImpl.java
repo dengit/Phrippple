@@ -4,7 +4,7 @@ import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
-import com.dengit.phrippple.ui.BaseModelImpl;
+import com.dengit.phrippple.ui.base.BaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dengit.phrippple;
+package com.dengit.phrippple.ui.base.transition;
 
 import android.annotation.TargetApi;
 import android.os.Build;

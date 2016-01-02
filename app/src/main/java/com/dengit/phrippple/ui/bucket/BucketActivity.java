@@ -9,7 +9,7 @@ import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.BucketsAdapter;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.ui.BaseActivity;
+import com.dengit.phrippple.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

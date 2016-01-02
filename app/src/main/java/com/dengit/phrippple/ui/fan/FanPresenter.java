@@ -1,6 +1,6 @@
 package com.dengit.phrippple.ui.fan;
 
-import com.dengit.phrippple.ui.BasePresenter;
+import com.dengit.phrippple.ui.base.BasePresenter;
 
 /**
  * Created by dengit on 15/12/14.

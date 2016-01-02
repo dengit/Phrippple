@@ -1,4 +1,4 @@
-package com.dengit.phrippple.ui;
+package com.dengit.phrippple.ui.base;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;

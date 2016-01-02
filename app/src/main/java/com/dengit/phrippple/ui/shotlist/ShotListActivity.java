@@ -10,7 +10,7 @@ import com.dengit.phrippple.adapter.ShotsAdapter;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

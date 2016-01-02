@@ -3,7 +3,7 @@ package com.dengit.phrippple.ui.bucket;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.ui.BaseModelImpl;
+import com.dengit.phrippple.ui.base.BaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;

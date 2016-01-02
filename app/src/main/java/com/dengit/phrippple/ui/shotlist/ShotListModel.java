@@ -1,7 +1,7 @@
 package com.dengit.phrippple.ui.shotlist;
 
 import com.dengit.phrippple.data.ShotListType;
-import com.dengit.phrippple.ui.BaseModel;
+import com.dengit.phrippple.ui.base.BaseModel;
 
 /**
  * Created by dengit on 15/12/14.

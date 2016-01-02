@@ -2,7 +2,7 @@ package com.dengit.phrippple.ui.comment;
 
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.ui.BaseModelImpl;
+import com.dengit.phrippple.ui.base.BaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;

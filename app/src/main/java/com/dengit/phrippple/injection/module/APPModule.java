@@ -1,4 +1,6 @@
-package com.dengit.phrippple;
+package com.dengit.phrippple.injection.module;
+
+import com.dengit.phrippple.APP;
 
 import dagger.Module;
 

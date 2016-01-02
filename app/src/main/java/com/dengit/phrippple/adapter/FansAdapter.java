@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 

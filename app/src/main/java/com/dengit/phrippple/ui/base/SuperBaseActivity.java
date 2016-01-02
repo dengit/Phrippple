@@ -1,10 +1,11 @@
-package com.dengit.phrippple.ui;
+package com.dengit.phrippple.ui.base;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.dengit.phrippple.injection.component.ActivityComponent;
 import com.umeng.analytics.MobclickAgent;
 
 /**

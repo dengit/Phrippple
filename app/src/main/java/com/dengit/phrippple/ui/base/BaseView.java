@@ -1,4 +1,4 @@
-package com.dengit.phrippple.ui;
+package com.dengit.phrippple.ui.base;
 
 import java.util.List;
 

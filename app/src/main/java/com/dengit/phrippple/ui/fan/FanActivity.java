@@ -8,7 +8,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.FansAdapter;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

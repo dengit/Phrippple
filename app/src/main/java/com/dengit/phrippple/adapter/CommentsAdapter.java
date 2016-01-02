@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
-import com.dengit.phrippple.utils.Util;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> 
         Comment comment = (Comment) getItem(position);
         itemHolder.userPortrait.setImageURI(Uri.parse(comment.user.avatar_url));
         itemHolder.userName.setText(comment.user.name);
-        itemHolder.commentContent.setText(Util.textToHtml(comment.body).toString().trim());
+        itemHolder.commentContent.setText(Utils.textToHtml(comment.body).toString().trim());
         itemHolder.commentTime.setText(comment.updated_at);
         itemHolder.commentLikeCount.setText(String.valueOf(comment.likes_count));
 

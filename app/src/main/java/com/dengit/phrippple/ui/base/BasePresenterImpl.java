@@ -1,4 +1,4 @@
-package com.dengit.phrippple.ui;
+package com.dengit.phrippple.ui.base;
 
 import com.dengit.phrippple.api.DribbbleAPI;
 
@@ -18,7 +18,6 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
         mBaseView = baseView;
 //        mBaseModel = new BaseModelImpl<T>(this); //todo use DI?
     }
-
 
     @Override
     public void onFooterClick() {

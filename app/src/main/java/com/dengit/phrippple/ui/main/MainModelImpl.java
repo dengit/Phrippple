@@ -8,8 +8,8 @@ import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.BaseModelImpl;
-import com.dengit.phrippple.utils.EventBusUtil;
+import com.dengit.phrippple.ui.base.BaseModelImpl;
+import com.dengit.phrippple.util.EventBusUtil;
 
 import java.util.ArrayList;
 import java.util.List;

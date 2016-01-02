@@ -1,6 +1,6 @@
 package com.dengit.phrippple.ui.bucket;
 
-import com.dengit.phrippple.ui.BasePresenterImpl;
+import com.dengit.phrippple.ui.base.BasePresenterImpl;
 
 /**
  * Created by dengit on 15/12/14.

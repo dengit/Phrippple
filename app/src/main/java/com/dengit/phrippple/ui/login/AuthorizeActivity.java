@@ -11,8 +11,8 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.AuthorizeInfo;
-import com.dengit.phrippple.ui.SuperBaseActivity;
-import com.dengit.phrippple.utils.EventBusUtil;
+import com.dengit.phrippple.ui.base.SuperBaseActivity;
+import com.dengit.phrippple.util.EventBusUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

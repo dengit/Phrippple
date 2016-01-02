@@ -11,7 +11,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.facebook.drawee.view.SimpleDraweeView;

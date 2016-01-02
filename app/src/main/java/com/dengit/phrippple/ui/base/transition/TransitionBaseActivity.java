@@ -1,4 +1,4 @@
-package com.dengit.phrippple.ui;
+package com.dengit.phrippple.ui.base.transition;
 
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.dengit.phrippple.ui.base.BaseActivity;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 /**
  * Created by dengit on 15/12/25.
  */
+//only transition beginning
 public abstract class TransitionBaseActivity<T> extends BaseActivity<T> {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

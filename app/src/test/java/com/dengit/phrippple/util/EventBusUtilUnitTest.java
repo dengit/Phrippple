@@ -1,4 +1,4 @@
-package com.dengit.phrippple.utils;
+package com.dengit.phrippple.util;
 
 import org.junit.Test;
 

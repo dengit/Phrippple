@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dengit.phrippple;
+package com.dengit.phrippple.ui.base.transition;
 
 import android.graphics.Bitmap;
 import android.support.v7.graphics.Palette;
@@ -23,8 +23,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dengit.phrippple.ui.SuperBaseActivity;
-import com.dengit.phrippple.utils.Util;
+import com.dengit.phrippple.R;
+import com.dengit.phrippple.ui.base.SuperBaseActivity;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -100,7 +101,7 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
 
                 photo = bitmap;
                 if (isRoundAsCircle) {
-                    hero.setImageBitmap(Util.getCircleBitmap(photo));
+                    hero.setImageBitmap(Utils.getCircleBitmap(photo));
                 } else {
                     hero.setImageBitmap(photo);
                 }
@@ -121,13 +122,13 @@ public abstract class AbstractDetailActivity extends SuperBaseActivity {
     }
 
     public void applyPalette(Palette palette) {
-        container.setBackgroundColor(palette.getDarkMutedColor(Util.getColor(R.color.default_dark_muted)));
+        container.setBackgroundColor(palette.getDarkMutedColor(Utils.getColor(R.color.default_dark_muted)));
 
         TextView titleView = (TextView) findViewById(R.id.title);
-        titleView.setTextColor(palette.getVibrantColor(Util.getColor(R.color.default_vibrant)));
+        titleView.setTextColor(palette.getVibrantColor(Utils.getColor(R.color.default_vibrant)));
 
         TextView descriptionView = (TextView) findViewById(R.id.description);
-        descriptionView.setTextColor(palette.getLightVibrantColor(Util.getColor(R.color.default_light_vibrant)));
+        descriptionView.setTextColor(palette.getLightVibrantColor(Utils.getColor(R.color.default_light_vibrant)));
 
         //        colorButton(R.id.info_button, palette.getDarkMutedColor(res.getColor(R.color.default_dark_muted)),
         //                palette.getDarkVibrantColor(res.getColor(R.color.default_dark_vibrant)));

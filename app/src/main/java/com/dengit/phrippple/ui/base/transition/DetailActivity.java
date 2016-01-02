@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dengit.phrippple;
+package com.dengit.phrippple.ui.base.transition;
 
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -27,7 +27,8 @@ import android.view.animation.Interpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.dengit.phrippple.utils.Utils;
+import com.dengit.phrippple.R;
+import com.dengit.phrippple.util.Utils;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;

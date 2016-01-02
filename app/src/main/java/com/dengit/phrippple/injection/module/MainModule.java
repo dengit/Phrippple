@@ -1,6 +1,7 @@
-package com.dengit.phrippple.ui.main;
+package com.dengit.phrippple.injection.module;
 
 import com.dengit.phrippple.data.Shot;
+import com.dengit.phrippple.ui.main.MainView;
 
 import dagger.Module;
 

@@ -14,14 +14,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
-import com.dengit.phrippple.DetailActivityL;
+import com.dengit.phrippple.ui.base.transition.DetailActivityL;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
-import com.dengit.phrippple.utils.Util;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -163,7 +163,7 @@ public class ProfileActivity extends DetailActivityL {
 
         mUserName.setText(mUser.name);
         mUserLocation.setText(mUser.location);
-        mUserBio.setText(Util.textToHtml(mUser.bio));
+        mUserBio.setText(Utils.textToHtml(mUser.bio));
         visibleOtherInfo(mUser);
     }
 

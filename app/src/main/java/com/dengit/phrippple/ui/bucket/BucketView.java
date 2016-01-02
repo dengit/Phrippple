@@ -1,7 +1,7 @@
 package com.dengit.phrippple.ui.bucket;
 
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.ui.BaseView;
+import com.dengit.phrippple.ui.base.BaseView;
 
 /**
  * Created by dengit on 15/12/14.

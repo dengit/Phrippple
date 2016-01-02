@@ -1,4 +1,4 @@
-package com.dengit.phrippple;
+package com.dengit.phrippple.ui.base.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -17,7 +17,8 @@ import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.ImageView;
 
-import com.dengit.phrippple.utils.Util;
+import com.dengit.phrippple.R;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
@@ -51,7 +52,7 @@ public abstract class DetailActivityL extends AbstractDetailActivity {
             @Override
             public void onTransitionEnd(Transition transition) {
                 //                ImageView hero = (ImageView) findViewById(R.id.photo);
-                Integer colorFrom = Util.getColor(R.color.photo_tint);
+                Integer colorFrom = Utils.getColor(R.color.photo_tint);
                 ValueAnimator color = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, 0);
                 color.addUpdateListener(new TintListener(hero));
                 color.start();
@@ -71,7 +72,7 @@ public abstract class DetailActivityL extends AbstractDetailActivity {
 
     @Override
     public void setupExitAnimation() {
-        Integer colorTo = Util.getColor(R.color.photo_tint);
+        Integer colorTo = Utils.getColor(R.color.photo_tint);
         ValueAnimator color = ValueAnimator.ofObject(new ArgbEvaluator(), 0, colorTo);
         color.addUpdateListener(new TintListener(hero));
         color.addListener(new AnimatorListenerAdapter() {

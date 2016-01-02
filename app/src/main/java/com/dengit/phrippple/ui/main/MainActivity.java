@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.ShotsAdapter;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
@@ -30,13 +31,15 @@ import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.TransitionBaseActivity;
+import com.dengit.phrippple.injection.component.DaggerActivityComponent;
+import com.dengit.phrippple.injection.module.MainModule;
+import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
-import com.dengit.phrippple.utils.EventBusUtil;
-import com.dengit.phrippple.utils.Utils;
+import com.dengit.phrippple.util.EventBusUtil;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
@@ -290,9 +293,9 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     }
 
     private void initSetup() {
+        setupComponent();
         setupToolbar();
         setupDrawer();
-        setupComponent();
         setBasePresenter(mMainPresenter);
         //        setupResideMenu();
         initBase();
@@ -340,8 +343,9 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     }
 
     private void setupComponent() {
-        DaggerMainComponent.builder()
+        DaggerActivityComponent.builder()
                 .mainModule(new MainModule(this))
+                .aPPComponent(APP.getInstance().getComponent())
                 .build()
                 .inject(this);
     }

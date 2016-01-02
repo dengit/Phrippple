@@ -12,13 +12,12 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
-import com.dengit.phrippple.ui.TransitionDetailBaseActivityL;
+import com.dengit.phrippple.ui.base.transition.TransitionDetailBaseActivityL;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
-import com.dengit.phrippple.utils.Util;
-import com.dengit.phrippple.utils.Utils;
+import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -152,7 +151,7 @@ public class ShotActivity extends TransitionDetailBaseActivityL implements ShotV
         mShotView.setText(mShot.views_count + " views");
         mShotCommented.setText(mShot.comments_count + " comments");
 
-        mShotDescrip.setText(Util.textToHtml(mShot.description));
+        mShotDescrip.setText(Utils.textToHtml(mShot.description));
 
         //        checkLikeStatus();
     }
@@ -195,10 +194,10 @@ public class ShotActivity extends TransitionDetailBaseActivityL implements ShotV
         hasLiked = like;
         if (like) {
             mShotLike.setText((mShot.likes_count + 1) + " likes");
-            mShotLike.setTextColor(Util.getColor(R.color.colorPrimary));
+            mShotLike.setTextColor(Utils.getColor(R.color.colorPrimary));
         } else {
             mShotLike.setText(mShot.likes_count + " likes");
-            mShotLike.setTextColor(Util.getColor(R.color.colorDark));
+            mShotLike.setTextColor(Utils.getColor(R.color.colorDark));
         }
     }
 
