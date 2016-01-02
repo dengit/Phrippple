@@ -9,4 +9,6 @@ public interface ShotModel {
     void checkLikeStatus();
 
     void setLikeStatus(boolean status);
+
+    void fetchAco();
 }

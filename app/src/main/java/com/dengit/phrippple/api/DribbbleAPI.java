@@ -12,12 +12,14 @@ import com.dengit.phrippple.data.User;
 
 import java.util.List;
 
+import retrofit.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.http.Url;
 import rx.Observable;
 
 /**
@@ -25,7 +27,7 @@ import rx.Observable;
  */
 public interface DribbbleAPI {
 
-    String API_BASE_URL = "https://api.dribbble.com";
+    String API_BASE_URL = "https://api.dribbble.com/v1/";
     String CLIENT_ID = "c5c94fd5886dbfddacd4bc3e62cd14b3456ebe17d8de208b27ce91224d951aec";
     String CLIENT_SECRET = "f6dba6bd84efd90a1fe29728e06f83d0bb8ad7841bd7ef9333f7271bc7f3d863";
     String OAUTH_SCOPE = "write%20comment%20upload";
@@ -35,45 +37,48 @@ public interface DribbbleAPI {
     String CALLBACK_HOST = "phone-callback";
     int LIMIT_PER_PAGE = 30;
 
-    @GET("/v1/shots")
+    @GET("shots")
     Observable<List<Shot>> getShots(@Query("sort") String sort, @Query("list") String list, @Query("timeframe") String timeFrame, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/users/{userId}/likes")
+    @GET("users/{userId}/likes")
     Observable<List<LikeShot>> getLikeShots(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
     @POST(TOKEN_URL)
     Observable<TokenInfo> getToken(@Body RequestTokenBody body);
 
-    @GET("/v1/shots/{shotId}/comments")
+    @GET("shots/{shotId}/comments")
     Observable<List<Comment>> getComments(@Path("shotId") int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/shots/{shotId}/likes")
+    @GET("shots/{shotId}/likes")
     Observable<List<Fan>> getFans(@Path("shotId") int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/users/{userId}/buckets")
+    @GET("users/{userId}/buckets")
     Observable<List<Bucket>> getMineBuckets(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/shots/{shotId}/buckets")
+    @GET("shots/{shotId}/buckets")
     Observable<List<Bucket>> getOthersBuckets(@Path("shotId")int shotId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/shots/{shotId}/like")
+    @GET("shots/{shotId}/like")
     Observable<LikeShotResponse> checkLikeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
 
-    @POST("/v1/shots/{shotId}/like")
+    @POST("shots/{shotId}/like")
     Observable<LikeShotResponse> likeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
 
-    @DELETE("/v1/shots/{shotId}/like")
+    @DELETE("shots/{shotId}/like")
     Observable<Void> unlikeShot(@Path("shotId") int shotId, @Query("access_token") String accessToken);
 
-    @GET("/v1/buckets/{bucketId}/shots")
+    @GET("buckets/{bucketId}/shots")
     Observable<List<Shot>> getBucketShots(@Path("bucketId")int bucketId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/users/{userId}/shots")
+    @GET("users/{userId}/shots")
     Observable<List<Shot>> getSelfShots(@Path("userId")int userId, @Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
 
-    @GET("/v1/user")
+    @GET("user")
     Observable<User> getUserInfo(@Query("access_token") String accessToken);
 
-    @GET("/v1/user/following/shots")
+    @GET("user/following/shots")
     Observable<List<Shot>> getUserFollowingShots(@Query("page") int page, @Query("per_page") int perPage, @Query("access_token") String accessToken);
+
+    @GET
+    Observable<Byte[]> getColorsAco(@Url String url);
 }

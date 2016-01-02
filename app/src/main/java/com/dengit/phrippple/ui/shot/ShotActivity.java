@@ -1,10 +1,14 @@
 package com.dengit.phrippple.ui.shot;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +25,8 @@ import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,6 +57,9 @@ public class ShotActivity extends TransitionDetailBaseActivityL implements ShotV
 
     @Bind(R.id.shot_comment)
     TextView mShotCommented;
+
+    @Bind(R.id.shot_color)
+    LinearLayout mShotColors;
 
     @Bind(R.id.shot_descrip)
     TextView mShotDescrip;
@@ -139,6 +148,17 @@ public class ShotActivity extends TransitionDetailBaseActivityL implements ShotV
         updateLike(true);
     }
 
+    @Override
+    public void showAco(List<String> shotColors) {
+        LinearLayout.LayoutParams layoutParams =
+                new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+        for (String color : shotColors) {
+            ImageView colorImage = new ImageView(this);
+            colorImage.setBackgroundColor(Color.parseColor(color));
+            mShotColors.addView(colorImage, layoutParams);
+        }
+    }
+
     private void initSetup() {
         mShotPresenter = new ShotPresenterImpl(this);
         setupFab();
@@ -154,6 +174,7 @@ public class ShotActivity extends TransitionDetailBaseActivityL implements ShotV
         mShotDescrip.setText(Utils.textToHtml(mShot.description));
 
         //        checkLikeStatus();
+        mShotPresenter.fetchAco();
     }
 
     private void checkLikeStatus() {

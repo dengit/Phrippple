@@ -4,6 +4,11 @@ import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.LikeShotResponse;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -109,5 +114,66 @@ public class ShotModelImpl implements ShotModel {
                     }
                 });
 
+    }
+
+    @Override
+    public void fetchAco() {
+
+        final ArrayList<String> shotColors = new ArrayList<>();
+        Observable.create(new Observable.OnSubscribe<List<String>>() {
+            @Override
+            public void call(Subscriber<? super List<String>> subscriber) {
+                byte[] acoBytes = DribbbleAPIHelper.getColorsAco(mShotId);
+                subscriber.onNext(parseAco(acoBytes));
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<String>>() {
+                    @Override
+                    public void onCompleted() {
+                        mPresenter.updateAco(shotColors);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<String> colors) {
+                        shotColors.addAll(colors);
+                    }
+                });
+    }
+
+    private List<String> parseAco(byte[] acoBytes) {
+        if ((acoBytes == null) || (acoBytes.length < 5)) {
+            return Collections.emptyList();
+        }
+
+        if (acoBytes[1] != 1) {
+            return Collections.emptyList();
+        }
+
+        Timber.d("**acoBytes[3]: %d", acoBytes[3]);
+        ArrayList<String> colors = new ArrayList<>();
+        for (int i = 0, m = 3; (i < 8) && (m + 10 < acoBytes.length); ++i) {
+            m += 4;
+            int r = acoBytes[m];
+            m += 2;
+            int g = acoBytes[m];
+            m += 2;
+            int b = acoBytes[m];
+            m += 2;
+            String color = "#"
+                    + String.format("%02x", r & 0xFF)
+                    + String.format("%02x", g & 0xFF)
+                    + String.format("%02x", b & 0xFF);
+            colors.add(color);
+        }
+
+        return colors;
     }
 }

@@ -1,5 +1,7 @@
 package com.dengit.phrippple.ui.shot;
 
+import java.util.List;
+
 /**
  * Created by dengit on 15/12/14.
  */
@@ -26,5 +28,16 @@ public class ShotPresenterImpl implements ShotPresenter {
     @Override
     public void updateLikeStatus() {
         mShotView.lightenLike();
+    }
+
+    @Override
+    public void fetchAco() {
+        mShotModel.setShotId(mShotView.getShotId());
+        mShotModel.fetchAco();
+    }
+
+    @Override
+    public void updateAco(List<String> shotColors) {
+        mShotView.showAco(shotColors);
     }
 }

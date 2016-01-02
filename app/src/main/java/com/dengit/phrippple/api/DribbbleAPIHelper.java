@@ -6,6 +6,10 @@ import android.text.TextUtils;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.data.TokenInfo;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+
+import java.io.IOException;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -24,11 +28,11 @@ public class DribbbleAPIHelper {
     private DribbbleAPIHelper() {
         mTokenInfo = new TokenInfo();
         mDribbbleAPI = new Retrofit.Builder()
-            .baseUrl(DribbbleAPI.API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build()
-            .create(DribbbleAPI.class);
+                .baseUrl(DribbbleAPI.API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
+                .create(DribbbleAPI.class);
     }
 
     public synchronized static DribbbleAPIHelper getInstance() {
@@ -95,5 +99,18 @@ public class DribbbleAPIHelper {
         tokenInfo.access_token = prefs.getString("access_token", "");
         tokenInfo.scope = prefs.getString("scope", "");
         tokenInfo.token_type = prefs.getString("token_type", "");
+    }
+
+    public static byte[] getColorsAco(int shotId) {
+        try {
+            String url = String.format("https://dribbble.com/shots/%d/colors.aco", shotId);
+            Timber.d("**ColorsAco url: %s", url);
+
+            return new OkHttpClient().newCall(new Request.Builder().url(url).build()).execute().body().bytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
