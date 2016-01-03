@@ -1,8 +1,13 @@
 package com.dengit.phrippple.ui.main;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +29,7 @@ import android.widget.Toast;
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.ShotsAdapter;
+import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.BucketType;
@@ -40,7 +46,13 @@ import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.util.EventBusUtil;
 import com.dengit.phrippple.util.Utils;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.BasePostprocessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.facebook.imagepipeline.request.Postprocessor;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
 
@@ -188,11 +200,12 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         super.onClick(v);
         if (v == mDrawerMenuHeader) {
             if (mUser == null) {
-                Toast.makeText(this, "login first!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "mUser is null!", Toast.LENGTH_SHORT).show();
+                mDrawerLayout.closeDrawers();
             } else {
                 startProfileDetailActivity(v);
             }
-            mDrawerLayout.closeDrawers();
+
         }
     }
 
@@ -257,10 +270,49 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         ((SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_user_portrait_image)).setImageURI(Uri.parse(userInfo.avatar_url));
         ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_name)).setText(userInfo.name);
         ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_username)).setText(userInfo.username);
-
+        setHeaderBlurImageURI(Uri.parse(userInfo.avatar_url));
         if (mDrawerTip) {
             mDrawerLayout.openDrawer(Gravity.LEFT);
         }
+    }
+
+    private void setHeaderBlurImageURI(Uri uri) {
+        if (mUser.avatar_url.contains(".gif")) {
+            uri = Uri.parse(DribbbleAPI.DEFAULT_HEADER_IMAGE);
+        }
+        SimpleDraweeView drawerBluerHeaderImage = (SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_header_blur_image);
+        Postprocessor blurPostprocessor = new BasePostprocessor() {
+            @Override
+            public String getName() {
+                return "BlurPostprocessor";
+            }
+
+            @Override
+            public void process(Bitmap bitmap) {
+                // >= level 17
+                final RenderScript rs = RenderScript.create(MainActivity.this);
+                final Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                        Allocation.USAGE_SCRIPT);
+                final Allocation output = Allocation.createTyped(rs, input.getType());
+                final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+                script.setRadius(12);
+                script.setInput(input);
+                script.forEach(output);
+                output.copyTo(bitmap);
+            }
+        };
+
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setPostprocessor(blurPostprocessor)
+                .build();
+
+        PipelineDraweeController controller = (PipelineDraweeController)
+                Fresco.newDraweeControllerBuilder()
+                        .setImageRequest(request)
+                        .setOldController(drawerBluerHeaderImage.getController())
+                                // other setters as you need
+                        .build();
+        drawerBluerHeaderImage.setController(controller);
     }
 
     @Override

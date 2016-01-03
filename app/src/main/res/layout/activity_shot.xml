@@ -50,6 +50,7 @@
                 android:id="@+id/shot_color"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:padding="2dp"
                 android:orientation="horizontal">
             </LinearLayout>
 

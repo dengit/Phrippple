@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dengit.phrippple.APP;
+import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.ui.base.transition.DetailActivityL;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
@@ -43,7 +44,6 @@ import timber.log.Timber;
  */
 public class ProfileActivity extends DetailActivityL {
 
-    private static final String DEFAULT_HEADER_IMAGE = "https://d13yacurqjgara.cloudfront.net/users/995516/avatars/normal/195f0357fb7fca71c46f4d3e1a733a5f.jpg?1447156390";
     @Bind(R.id.header_layout)
     View mProfileHeader;
 
@@ -200,7 +200,7 @@ public class ProfileActivity extends DetailActivityL {
     private void setHeaderBlurImageURI(Uri uri) {
 
         if (mUser.avatar_url.contains(".gif")) {
-            uri = Uri.parse(DEFAULT_HEADER_IMAGE);
+            uri = Uri.parse(DribbbleAPI.DEFAULT_HEADER_IMAGE);
         }
 
         Postprocessor blurPostprocessor = new BasePostprocessor() {

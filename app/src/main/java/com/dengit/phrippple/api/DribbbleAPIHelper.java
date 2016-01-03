@@ -101,16 +101,11 @@ public class DribbbleAPIHelper {
         tokenInfo.token_type = prefs.getString("token_type", "");
     }
 
-    public static byte[] getColorsAco(int shotId) {
-        try {
-            String url = String.format("https://dribbble.com/shots/%d/colors.aco", shotId);
-            Timber.d("**ColorsAco url: %s", url);
-
-            return new OkHttpClient().newCall(new Request.Builder().url(url).build()).execute().body().bytes();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public static byte[] getColorsAco(int shotId) throws IOException {
+        String url = String.format("https://dribbble.com/shots/%d/colors.aco", shotId);
+        Timber.d("**ColorsAco url: %s", url);
+        return new OkHttpClient()
+                .newCall(new Request.Builder().url(url).build())
+                .execute().body().bytes();
     }
 }

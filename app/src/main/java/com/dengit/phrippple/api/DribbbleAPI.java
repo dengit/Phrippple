@@ -26,7 +26,7 @@ import rx.Observable;
  * Created by dengit on 15/12/7.
  */
 public interface DribbbleAPI {
-
+    String DEFAULT_HEADER_IMAGE = "https://d13yacurqjgara.cloudfront.net/users/995516/avatars/normal/195f0357fb7fca71c46f4d3e1a733a5f.jpg?1447156390";
     String API_BASE_URL = "https://api.dribbble.com/v1/";
     String CLIENT_ID = "c5c94fd5886dbfddacd4bc3e62cd14b3456ebe17d8de208b27ce91224d951aec";
     String CLIENT_SECRET = "f6dba6bd84efd90a1fe29728e06f83d0bb8ad7841bd7ef9333f7271bc7f3d863";

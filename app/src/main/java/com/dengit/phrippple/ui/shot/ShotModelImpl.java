@@ -1,9 +1,11 @@
 package com.dengit.phrippple.ui.shot;
 
+import com.dengit.phrippple.RetryWithDelay;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
 import com.dengit.phrippple.data.LikeShotResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -53,7 +55,6 @@ public class ShotModelImpl implements ShotModel {
                     }
 
                     @Override
-                    @SuppressWarnings("unchecked")
                     public void onNext(LikeShotResponse response) {
                         Timber.d("**response.id: %d", response.id);
                     }
@@ -123,29 +124,35 @@ public class ShotModelImpl implements ShotModel {
         Observable.create(new Observable.OnSubscribe<List<String>>() {
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
-                byte[] acoBytes = DribbbleAPIHelper.getColorsAco(mShotId);
-                subscriber.onNext(parseAco(acoBytes));
-                subscriber.onCompleted();
+                try {
+                    byte[] acoBytes = DribbbleAPIHelper.getColorsAco(mShotId);
+                    subscriber.onNext(parseAco(acoBytes));
+                    subscriber.onCompleted();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
             }
         })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<String>>() {
-                    @Override
-                    public void onCompleted() {
-                        mPresenter.updateAco(shotColors);
-                    }
+        .retryWhen(new RetryWithDelay(5, 1000))
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Subscriber<List<String>>() {
+            @Override
+            public void onCompleted() {
+                Timber.d("shotColors: %s", shotColors);
+                mPresenter.updateAco(shotColors);
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
+            @Override
+            public void onError(Throwable e) {
 
-                    }
+            }
 
-                    @Override
-                    public void onNext(List<String> colors) {
-                        shotColors.addAll(colors);
-                    }
-                });
+            @Override
+            public void onNext(List<String> colors) {
+                shotColors.addAll(colors);
+            }
+        });
     }
 
     private List<String> parseAco(byte[] acoBytes) {
@@ -157,9 +164,10 @@ public class ShotModelImpl implements ShotModel {
             return Collections.emptyList();
         }
 
-        Timber.d("**acoBytes[3]: %d", acoBytes[3]);
+        int colorCount = acoBytes[3];
+        Timber.d("**colorCount: %d", colorCount);
         ArrayList<String> colors = new ArrayList<>();
-        for (int i = 0, m = 3; (i < 8) && (m + 10 < acoBytes.length); ++i) {
+        for (int i = 0, m = 3; (i < colorCount) && (m + 10 < acoBytes.length); ++i) {
             m += 4;
             int r = acoBytes[m];
             m += 2;
