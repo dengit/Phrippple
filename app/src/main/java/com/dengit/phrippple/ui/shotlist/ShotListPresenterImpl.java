@@ -1,11 +1,11 @@
 package com.dengit.phrippple.ui.shotlist;
 
-import com.dengit.phrippple.ui.base.BasePresenterImpl;
+import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class ShotListPresenterImpl<T> extends BasePresenterImpl<T> implements ShotListPresenter<T> {
+public class ShotListPresenterImpl<T> extends FetchBasePresenterImpl<T> implements ShotListPresenter<T> {
     private ShotListView<T> mShotListView;
     private ShotListModel<T> mShotListModel;
 

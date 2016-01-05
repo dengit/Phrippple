@@ -9,37 +9,37 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/16.
  */
-public class BasePresenterImpl<T> implements BasePresenter<T> {
+public class FetchBasePresenterImpl<T> implements FetchBasePresenter<T> {
 
-    private BaseView<T> mBaseView;
-    private BaseModel<T> mBaseModel;
+    private FetchBaseView<T> mFetchBaseView;
+    private FetchBaseModel<T> mFetchBaseModel;
 
-    public BasePresenterImpl(BaseView<T> baseView) {
-        mBaseView = baseView;
+    public FetchBasePresenterImpl(FetchBaseView<T> fetchBaseView) {
+        mFetchBaseView = fetchBaseView;
 //        mBaseModel = new BaseModelImpl<T>(this); //todo use DI?
     }
 
     @Override
     public void onFooterClick() {
-        mBaseView.switchLoadMore(true, false);
-        mBaseModel.loadMore();
+        mFetchBaseView.switchLoadMore(true, false);
+        mFetchBaseModel.loadMore();
     }
 
     @Override
     public void onLoadNewestFinished(List<T> newItems) {
-        mBaseView.switchRefresh(false);
-        mBaseView.setItems(newItems, isEnd(newItems));
+        mFetchBaseView.switchRefresh(false);
+        mFetchBaseView.setItems(newItems, isEnd(newItems));
     }
 
     @Override
     public void onLoadMoreFinished(List<T> newItems) {
-        mBaseView.switchLoadMore(false, isEnd(newItems));
-        mBaseView.appendItems(newItems);
+        mFetchBaseView.switchLoadMore(false, isEnd(newItems));
+        mFetchBaseView.appendItems(newItems);
     }
 
     @Override
     public void onError() {
-        mBaseView.handleError();
+        mFetchBaseView.handleError();
     }
 
     @Override
@@ -50,19 +50,19 @@ public class BasePresenterImpl<T> implements BasePresenter<T> {
     @Override
     public void fetchNewestItems(boolean isRefresh) {
         if (isRefresh) {
-            if (mBaseModel.checkIfCanRefresh()) {
-                mBaseView.switchRefresh(true);
-                mBaseModel.loadNewest();
+            if (mFetchBaseModel.checkIfCanRefresh()) {
+                mFetchBaseView.switchRefresh(true);
+                mFetchBaseModel.loadNewest();
             } else {
                 Timber.d("** checkIfCanRefresh is false");
             }
         } else {
-            mBaseModel.loadNewest();
+            mFetchBaseModel.loadNewest();
         }
     }
 
-    public void setBaseModel(BaseModel<T> baseModel) {
-        mBaseModel = baseModel;
+    public void setBaseModel(FetchBaseModel<T> fetchBaseModel) {
+        mFetchBaseModel = fetchBaseModel;
     }
 
     private boolean isEnd(List<T> newItems) {

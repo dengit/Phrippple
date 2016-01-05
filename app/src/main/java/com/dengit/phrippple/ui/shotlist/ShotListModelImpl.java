@@ -4,7 +4,7 @@ import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.LikeShot;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
-import com.dengit.phrippple.ui.base.BaseModelImpl;
+import com.dengit.phrippple.ui.base.FetchBaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ShotListModelImpl<T> extends BaseModelImpl<T> implements ShotListModel<T> {
+public class ShotListModelImpl<T> extends FetchBaseModelImpl<T> implements ShotListModel<T> {
 
     private int mId;
     private ShotListType mShotListType;

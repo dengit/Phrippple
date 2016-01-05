@@ -9,7 +9,7 @@ import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.BucketsAdapter;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.ui.base.BaseActivity;
+import com.dengit.phrippple.ui.base.FetchBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketActivity extends BaseActivity<Bucket> implements BucketView<Bucket> {
+public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketView<Bucket> {
 
     private int mId;
     private BucketType mBucketType;

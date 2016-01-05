@@ -14,7 +14,7 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
  * Created by dengit on 15/12/25.
  */
 //both transition beginning and transition ending
-public abstract class TransitionDetailBaseActivityL extends DetailActivityL {
+public abstract class BaseTransitionDetailActivityL extends DetailActivityL {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void startActivityLollipop(View view, Intent intent, String sharedElementName) {

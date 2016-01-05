@@ -9,7 +9,7 @@ import com.dengit.phrippple.data.RequestTokenBody;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.base.BaseModelImpl;
+import com.dengit.phrippple.ui.base.FetchBaseModelImpl;
 import com.dengit.phrippple.util.EventBusUtil;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/9.
  */
-public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
+public class MainModelImpl<T> extends FetchBaseModelImpl<T> implements MainModel<T> {
     private MainPresenter<T> mMainPresenter;
     private String mCurrSort;
     private String mCurrList;

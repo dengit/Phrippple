@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  */
 public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> {
 
-    public CommentsAdapter(List<Comment> comments, View footer, TransitionBaseActivity<Comment> activity) {
+    public CommentsAdapter(List<Comment> comments, View footer, BaseTransitionFetchActivity<Comment> activity) {
         super(comments, footer, activity);
     }
 

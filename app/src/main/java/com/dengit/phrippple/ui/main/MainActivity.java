@@ -39,7 +39,7 @@ import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.injection.module.MainModule;
-import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
@@ -65,7 +65,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends TransitionBaseActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends BaseTransitionFetchActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;

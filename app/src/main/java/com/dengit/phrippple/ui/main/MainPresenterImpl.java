@@ -2,13 +2,13 @@ package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.base.BasePresenterImpl;
-import com.dengit.phrippple.ui.base.BaseView;
+import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
+import com.dengit.phrippple.ui.base.FetchBaseView;
 
 /**
  * Created by dengit on 15/12/9.
  */
-public class MainPresenterImpl<T> extends BasePresenterImpl<T> implements MainPresenter<T> {
+public class MainPresenterImpl<T> extends FetchBasePresenterImpl<T> implements MainPresenter<T> {
     private MainView<T> mMainView;
     private MainModel<T> mMainModel;
 
@@ -24,7 +24,7 @@ public class MainPresenterImpl<T> extends BasePresenterImpl<T> implements MainPr
     }
 
     @Override
-    public void attachView(BaseView<T> view) {
+    public void attachView(FetchBaseView<T> view) {
     }
 
     @Override

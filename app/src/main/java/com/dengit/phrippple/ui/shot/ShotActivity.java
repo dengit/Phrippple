@@ -16,7 +16,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.BucketType;
 import com.dengit.phrippple.data.Shot;
-import com.dengit.phrippple.ui.base.transition.TransitionDetailBaseActivityL;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionDetailActivityL;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
@@ -35,7 +35,7 @@ import butterknife.OnClick;
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotActivity extends TransitionDetailBaseActivityL implements ShotView {
+public class ShotActivity extends BaseTransitionDetailActivityL implements ShotView {
 
     @Bind(R.id.shot_author_portrait)
     SimpleDraweeView mAuthorPortrait;

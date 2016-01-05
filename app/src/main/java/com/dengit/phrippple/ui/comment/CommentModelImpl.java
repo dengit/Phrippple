@@ -2,7 +2,7 @@ package com.dengit.phrippple.ui.comment;
 
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.ui.base.BaseModelImpl;
+import com.dengit.phrippple.ui.base.FetchBaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentModelImpl<T> extends BaseModelImpl<T> implements CommentModel<T> {
+public class CommentModelImpl<T> extends FetchBaseModelImpl<T> implements CommentModel<T> {
 
     private int mShotId;
     private CommentPresenter<T> mPresenter;

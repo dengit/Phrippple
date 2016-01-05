@@ -1,12 +1,12 @@
 package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.base.BaseView;
+import com.dengit.phrippple.ui.base.FetchBaseView;
 
 /**
  * Created by dengit on 15/12/9.
  */
-public interface MainView<T> extends BaseView<T> {
+public interface MainView<T> extends FetchBaseView<T> {
     String getCurrTimeFrame();
 
     String getCurrSort();

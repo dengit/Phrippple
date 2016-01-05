@@ -11,7 +11,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,7 +29,7 @@ public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
 
     private User mUser;
 
-    public ShotsAdapter(User user, List<Shot> shots, View footer, TransitionBaseActivity<Shot> activity) {
+    public ShotsAdapter(User user, List<Shot> shots, View footer, BaseTransitionFetchActivity<Shot> activity) {
         super(shots, footer, activity);
         mUser = user;
     }

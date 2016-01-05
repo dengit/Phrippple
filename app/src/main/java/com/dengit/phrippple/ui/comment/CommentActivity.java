@@ -8,7 +8,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.CommentsAdapter;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentActivity extends TransitionBaseActivity<Comment> implements CommentView<Comment> {
+public class CommentActivity extends BaseTransitionFetchActivity<Comment> implements CommentView<Comment> {
 
     private int mShotId;
     private CommentsAdapter mCommentsAdapter;

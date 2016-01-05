@@ -8,15 +8,15 @@ import com.dengit.phrippple.api.DribbbleAPIHelper;
 /**
  * Created by dengit on 15/12/16.
  */
-public abstract class BaseModelImpl<T> implements BaseModel<T> {
+public abstract class FetchBaseModelImpl<T> implements FetchBaseModel<T> {
 
     protected int mCurrPage = 0;
     protected DribbbleAPI mDribbbleAPI;
     protected String mAccessToken;
-    private BasePresenter<T> mBasePresenter;
+    private FetchBasePresenter<T> mFetchBasePresenter;
 
-    public BaseModelImpl(BasePresenter<T> basePresenter) {
-        mBasePresenter = basePresenter;
+    public FetchBaseModelImpl(FetchBasePresenter<T> fetchBasePresenter) {
+        mFetchBasePresenter = fetchBasePresenter;
         mDribbbleAPI = DribbbleAPIHelper.getInstance().getDribbbleAPI();
         mAccessToken = DribbbleAPIHelper.getInstance().getAccessToken();
     }

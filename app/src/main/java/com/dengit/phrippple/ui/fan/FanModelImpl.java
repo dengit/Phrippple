@@ -2,7 +2,7 @@ package com.dengit.phrippple.ui.fan;
 
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.ui.base.BaseModelImpl;
+import com.dengit.phrippple.ui.base.FetchBaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanModelImpl<T> extends BaseModelImpl<T> implements FanModel<T> {
+public class FanModelImpl<T> extends FetchBaseModelImpl<T> implements FanModel<T> {
 
     private int mShotId;
     private FanPresenter<T> mPresenter;

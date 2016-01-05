@@ -1,11 +1,11 @@
 package com.dengit.phrippple.ui.comment;
 
-import com.dengit.phrippple.ui.base.BasePresenterImpl;
+import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentPresenterImpl<T> extends BasePresenterImpl<T> implements CommentPresenter<T> {
+public class CommentPresenterImpl<T> extends FetchBasePresenterImpl<T> implements CommentPresenter<T> {
     private CommentView<T> mCommentView;
     private CommentModel<T> mCommentModel;
 

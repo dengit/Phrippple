@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dengit.phrippple.R;
-import com.dengit.phrippple.ui.base.SuperBaseActivity;
+import com.dengit.phrippple.ui.base.BaseActivity;
 import com.dengit.phrippple.util.Utils;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
@@ -41,7 +41,7 @@ import java.util.concurrent.Executors;
 import butterknife.Bind;
 import timber.log.Timber;
 
-public abstract class AbstractDetailActivity extends SuperBaseActivity {
+public abstract class AbstractDetailActivity extends BaseActivity {
 
     @Bind(R.id.container)
     public View container;

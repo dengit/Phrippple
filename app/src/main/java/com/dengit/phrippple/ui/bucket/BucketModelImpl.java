@@ -3,7 +3,7 @@ package com.dengit.phrippple.ui.bucket;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.ui.base.BaseModelImpl;
+import com.dengit.phrippple.ui.base.FetchBaseModelImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketModelImpl<T> extends BaseModelImpl<T> implements BucketModel<T> {
+public class BucketModelImpl<T> extends FetchBaseModelImpl<T> implements BucketModel<T> {
 
     private int mId;
     private BucketType mBucketType;

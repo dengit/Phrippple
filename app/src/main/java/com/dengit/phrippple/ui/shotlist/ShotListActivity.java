@@ -10,7 +10,7 @@ import com.dengit.phrippple.adapter.ShotsAdapter;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ShotListActivity extends TransitionBaseActivity<Shot> implements ShotListView<Shot> {
+public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implements ShotListView<Shot> {
 
     private int mId;
     private ShotListType mShotListType;

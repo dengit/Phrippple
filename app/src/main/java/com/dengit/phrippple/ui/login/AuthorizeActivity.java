@@ -11,7 +11,7 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.AuthorizeInfo;
-import com.dengit.phrippple.ui.base.SuperBaseActivity;
+import com.dengit.phrippple.ui.base.BaseActivity;
 import com.dengit.phrippple.util.EventBusUtil;
 
 import butterknife.Bind;
@@ -21,7 +21,7 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/7.
  */
-public class AuthorizeActivity extends SuperBaseActivity {
+public class AuthorizeActivity extends BaseActivity {
 
     @Bind(R.id.webview_login)
     WebView mLoginWebview;

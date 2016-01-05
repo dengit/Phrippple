@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by dengit on 15/12/16.
  */
-public interface BasePresenter<T>  {
+public interface FetchBasePresenter<T>  {
 
     void onFooterClick();
 

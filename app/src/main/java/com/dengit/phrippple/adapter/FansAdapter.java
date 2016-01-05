@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.ui.base.transition.TransitionBaseActivity;
+import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  */
 public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
 
-    public FansAdapter(List<Fan> fans, View footer, TransitionBaseActivity<Fan> activity) {
+    public FansAdapter(List<Fan> fans, View footer, BaseTransitionFetchActivity<Fan> activity) {
         super(fans, footer, activity);
     }
 

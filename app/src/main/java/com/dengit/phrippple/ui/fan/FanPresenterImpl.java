@@ -1,11 +1,11 @@
 package com.dengit.phrippple.ui.fan;
 
-import com.dengit.phrippple.ui.base.BasePresenterImpl;
+import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanPresenterImpl<T> extends BasePresenterImpl<T> implements FanPresenter<T> {
+public class FanPresenterImpl<T> extends FetchBasePresenterImpl<T> implements FanPresenter<T> {
     private FanView<T> mFanView;
     private FanModel<T> mFanModel;
 

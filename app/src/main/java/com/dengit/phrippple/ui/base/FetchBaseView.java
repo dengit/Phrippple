@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by dengit on 15/12/16.
  */
-public interface BaseView<T> {
+public interface FetchBaseView<T> {
 
     void switchLoadMore(boolean isOpen, boolean isEnd);
 

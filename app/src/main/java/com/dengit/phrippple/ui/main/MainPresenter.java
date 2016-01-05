@@ -2,14 +2,14 @@ package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.ui.base.BasePresenter;
-import com.dengit.phrippple.ui.base.BaseView;
+import com.dengit.phrippple.ui.base.FetchBasePresenter;
+import com.dengit.phrippple.ui.base.FetchBaseView;
 
 /**
  * Created by dengit on 15/12/9.
  */
-public interface MainPresenter<T> extends BasePresenter<T>{
-    void attachView(BaseView<T> view);
+public interface MainPresenter<T> extends FetchBasePresenter<T> {
+    void attachView(FetchBaseView<T> view);
 
     void detachView();
 
