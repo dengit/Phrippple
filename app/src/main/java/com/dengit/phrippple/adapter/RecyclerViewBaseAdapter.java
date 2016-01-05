@@ -43,7 +43,7 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof VHItemBase) {
-            setUpItems((VHItemBase) holder, position);
+            setupItems((VHItemBase) holder, position);
         } else if (holder instanceof VHFooterBase) {
             //cast holder to VHHeader and set data for header.
         }
@@ -82,7 +82,7 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
 
     protected abstract int getItemLayoutResId();
     protected abstract RecyclerView.ViewHolder createViewHolderItem(View itemView);
-    protected abstract void setUpItems(VHItemBase holder, int position);
+    protected abstract void setupItems(VHItemBase holder, int position);
 
     static class VHItemBase extends RecyclerView.ViewHolder {
         public VHItemBase(View view) {

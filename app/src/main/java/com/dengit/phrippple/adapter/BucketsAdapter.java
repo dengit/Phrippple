@@ -42,7 +42,7 @@ public class BucketsAdapter extends RecyclerViewBaseAdapter<Bucket> {
         return new BucketVHItem(itemView);
     }
 
-    protected void setUpItems(VHItemBase holder, final int position) {
+    protected void setupItems(VHItemBase holder, final int position) {
         BucketVHItem itemHolder = (BucketVHItem) holder;
         Bucket bucket = (Bucket) getItem(position);
         itemHolder.bucketName.setText(bucket.name);

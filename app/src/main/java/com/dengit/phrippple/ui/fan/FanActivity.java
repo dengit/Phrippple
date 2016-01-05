@@ -58,11 +58,12 @@ public class FanActivity extends TransitionBaseActivity<Fan> implements FanView<
     private void initSetup() {
         mFanPresenter = new FanPresenterImpl<>(this);
         setBasePresenter(mFanPresenter);
+        setupBase();
+
         mShotId = getIntent().getIntExtra("shotId", 0);
         int fanCount = getIntent().getIntExtra("fanCount", 0);
         setTitle(fanCount + " fans");
 
-        initBase();
         mFansAdapter = new FansAdapter(new ArrayList<Fan>(), mFooterLayout, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mFansAdapter);

@@ -125,6 +125,16 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     }
 
     @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -154,7 +164,8 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             return;
         }
 
-        String item = (String) mDrawerMenuListView.getAdapter().getItem(position);
+        String item = (String) mDrawerMenuListView.getAdapter()
+                .getItem(position);
         switch (item) {
             case "Likes": {
                 Bundle args = new Bundle();
@@ -182,7 +193,8 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
                 break;
             }
             case "Buckets":
-                startActivity(BucketActivity.createIntent(BucketType.BucketsOfSelf, mUser.id, mUser.buckets_count));
+                startActivity(BucketActivity.createIntent(
+                        BucketType.BucketsOfSelf, mUser.id, mUser.buckets_count));
                 break;
             case "Projects":
                 break;
@@ -267,10 +279,18 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
     @Override
     public void onFetchUserInfoFinished(User userInfo) {
         mUser = userInfo;
-        ((SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_user_portrait_image)).setImageURI(Uri.parse(userInfo.avatar_url));
-        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_name)).setText(userInfo.name);
-        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_username)).setText(userInfo.username);
+
+        ((SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_user_portrait_image))
+                .setImageURI(Uri.parse(userInfo.avatar_url));
+
+        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_name))
+                .setText(userInfo.name);
+
+        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_username))
+                .setText(userInfo.username);
+
         setHeaderBlurImageURI(Uri.parse(userInfo.avatar_url));
+
         if (mDrawerTip) {
             mDrawerLayout.openDrawer(Gravity.LEFT);
         }
@@ -280,7 +300,8 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         if (mUser.avatar_url.contains(".gif")) {
             uri = Uri.parse(DribbbleAPI.DEFAULT_HEADER_IMAGE);
         }
-        SimpleDraweeView drawerBluerHeaderImage = (SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_header_blur_image);
+        SimpleDraweeView drawerBluerHeaderImage =
+                (SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_header_blur_image);
         Postprocessor blurPostprocessor = new BasePostprocessor() {
             @Override
             public String getName() {
@@ -291,10 +312,12 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
             public void process(Bitmap bitmap) {
                 // >= level 17
                 final RenderScript rs = RenderScript.create(MainActivity.this);
-                final Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                final Allocation input = Allocation.createFromBitmap(
+                        rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
                         Allocation.USAGE_SCRIPT);
                 final Allocation output = Allocation.createTyped(rs, input.getType());
-                final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+                final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(
+                        rs, Element.U8_4(rs));
                 script.setRadius(12);
                 script.setInput(input);
                 script.forEach(output);
@@ -346,23 +369,27 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
 
     private void initSetup() {
         setupComponent();
+        setBasePresenter(mMainPresenter);
+        setupBase();
         setupToolbar();
         setupDrawer();
-        setBasePresenter(mMainPresenter);
         //        setupResideMenu();
-        initBase();
-
-        mShotsAdapter = new ShotsAdapter(null, new ArrayList<Shot>(), mFooterLayout, this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mShotsAdapter);
-        setupReturnToFab(mRecyclerView);
+        setupRecyclerView();
+        setupReturnToFab();
         tryToStartLoginActivity();
         EventBusUtil.getInstance().register(this);
     }
 
+    private void setupComponent() {
+        DaggerActivityComponent.builder()
+                .mainModule(new MainModule(this))
+                .aPPComponent(APP.getInstance().getComponent())
+                .build()
+                .inject(this);
+    }
+
     private void setupToolbar() {
         mToolbar.setTitle(getTitle());
-        //        mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -394,15 +421,17 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         mDrawerMenuListView.addHeaderView(mDrawerMenuHeader);
     }
 
-    private void setupComponent() {
-        DaggerActivityComponent.builder()
-                .mainModule(new MainModule(this))
-                .aPPComponent(APP.getInstance().getComponent())
-                .build()
-                .inject(this);
+    private void setupRecyclerView() {
+        if (mFooterLayout == null) {
+            throw new RuntimeException("must call setupBase() before this method!");
+        }
+
+        mShotsAdapter = new ShotsAdapter(null, new ArrayList<Shot>(), mFooterLayout, this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mShotsAdapter);
     }
 
-    private void setupReturnToFab(final RecyclerView recyclerView) {
+    private void setupReturnToFab() {
         mReturnToTopFab.hide(false);
         mReturnToTopFab.setShowAnimation(AnimationUtils.loadAnimation(this, R.anim.show_from_bottom));
         mReturnToTopFab.setHideAnimation(AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom));
@@ -410,11 +439,11 @@ public class MainActivity extends TransitionBaseActivity<Shot> implements MainVi
         mReturnToTopFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.scrollToPosition(0);
+                mRecyclerView.scrollToPosition(0);
             }
         });
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);

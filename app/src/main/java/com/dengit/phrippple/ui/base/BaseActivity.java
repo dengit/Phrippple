@@ -107,7 +107,7 @@ public abstract class BaseActivity<T> extends SuperBaseActivity implements BaseV
 
     protected abstract void appendAdapterData(List<T> newItems);
 
-    protected void initBase() {
+    protected void setupBase() {
         mFooterLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.list_footer, null);
         mFooter = mFooterLayout.findViewById(R.id.footer);
         mFooterProgressBar = (ProgressBar) mFooterLayout.findViewById(R.id.footer_progressbar);

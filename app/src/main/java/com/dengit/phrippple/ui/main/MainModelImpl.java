@@ -25,9 +25,9 @@ import timber.log.Timber;
  */
 public class MainModelImpl<T> extends BaseModelImpl<T> implements MainModel<T> {
     private MainPresenter<T> mMainPresenter;
-    String mCurrSort;
-    String mCurrList;
-    String mCurrTimeFrame;
+    private String mCurrSort;
+    private String mCurrList;
+    private String mCurrTimeFrame;
 
     public MainModelImpl(MainPresenter<T> mainPresenter) {
         super(mainPresenter);

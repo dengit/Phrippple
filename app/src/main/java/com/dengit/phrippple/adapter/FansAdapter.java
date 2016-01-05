@@ -37,7 +37,7 @@ public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
         return new FanVHItem(itemView);
     }
 
-    protected void setUpItems(VHItemBase holder, final int position) {
+    protected void setupItems(VHItemBase holder, final int position) {
         FanVHItem itemHolder = (FanVHItem) holder;
         Fan fan = (Fan) getItem(position);
         itemHolder.fanPortrait.setImageURI(Uri.parse(fan.user.avatar_url));

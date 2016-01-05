@@ -37,7 +37,7 @@ public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> 
         return R.layout.item_comment;
     }
 
-    protected void setUpItems(VHItemBase holder, final int position) {
+    protected void setupItems(VHItemBase holder, final int position) {
         CommentVHItem itemHolder = (CommentVHItem) holder;
         Comment comment = (Comment) getItem(position);
         itemHolder.userPortrait.setImageURI(Uri.parse(comment.user.avatar_url));

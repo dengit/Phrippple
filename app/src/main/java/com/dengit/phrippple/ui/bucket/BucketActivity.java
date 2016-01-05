@@ -66,12 +66,13 @@ public class BucketActivity extends BaseActivity<Bucket> implements BucketView<B
     private void initSetup() {
         mBucketPresenter = new BucketPresenterImpl<>(this);
         setBasePresenter(mBucketPresenter);
+        setupBase();
+
         mBucketType = (BucketType) getIntent().getSerializableExtra("type");
         mId = getIntent().getIntExtra("id", 0);
         int bucketCount = getIntent().getIntExtra("bucketCount", 0);
         setTitle(bucketCount + " buckets");
 
-        initBase();
         mBucketsAdapter = new BucketsAdapter(new ArrayList<Bucket>(), mFooterLayout, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mBucketsAdapter);

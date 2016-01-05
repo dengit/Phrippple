@@ -56,13 +56,14 @@ public class CommentActivity extends TransitionBaseActivity<Comment> implements 
     }
 
     private void initSetup() {
+        mCommentPresenter = new CommentPresenterImpl<>(this);
+        setBasePresenter(mCommentPresenter);
+        setupBase();
+
         mShotId = getIntent().getIntExtra("shotId", 0);
         int commentCount = getIntent().getIntExtra("commentCount", 0);
         setTitle(commentCount + " comments");
-        mCommentPresenter = new CommentPresenterImpl<>(this);
-        setBasePresenter(mCommentPresenter);
 
-        initBase();
         mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>(), mFooterLayout, this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mCommentsAdapter);

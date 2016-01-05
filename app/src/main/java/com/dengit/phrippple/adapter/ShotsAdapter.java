@@ -44,7 +44,7 @@ public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
         return new ShotVHItem(itemView);
     }
 
-    protected void setUpItems(VHItemBase holder, final int position) {
+    protected void setupItems(VHItemBase holder, final int position) {
         ShotVHItem itemHolder = (ShotVHItem) holder;
         final Shot shot = (Shot) getItem(position);
 

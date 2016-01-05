@@ -79,19 +79,12 @@ public class ShotListActivity extends TransitionBaseActivity<Shot> implements Sh
     }
 
     private void initSetup() {
-        parseArgs();
         mShotListPresenter = new ShotListPresenterImpl<>(this);
         setBasePresenter(mShotListPresenter);
-        if (mShotListType == ShotListType.ShotsOfFollowing) {
-            setTitle("Following shots");
-        } else {
-            setTitle(mCount + " shots");
-        }
-
-        initBase();
-        mShotsAdapter = new ShotsAdapter(getUser(), new ArrayList<Shot>(), mFooterLayout, this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mShotsAdapter);
+        setupBase();
+        parseArgs();
+        setupTitle();
+        setupRecyclerView();
         mShotListPresenter.firstFetchItems();
     }
 
@@ -105,6 +98,24 @@ public class ShotListActivity extends TransitionBaseActivity<Shot> implements Sh
             mId = args.getInt("id", 0);
             mCount = args.getInt("count", 0);
         }
+    }
+
+    private void setupTitle() {
+        if (mShotListType == ShotListType.ShotsOfFollowing) {
+            setTitle("Following shots");
+        } else {
+            setTitle(mCount + " shots");
+        }
+    }
+
+    private void setupRecyclerView() {
+        if (mFooterLayout == null) {
+            throw new RuntimeException("must call setupBase() before this method!");
+        }
+
+        mShotsAdapter = new ShotsAdapter(getUser(), new ArrayList<Shot>(), mFooterLayout, this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mShotsAdapter);
     }
 
     private User getUser() {
