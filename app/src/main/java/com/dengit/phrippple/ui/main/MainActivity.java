@@ -101,21 +101,16 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     private String mCurrSort;
     private String mCurrList;
     private User mUser;
-    private View mDrawerMenuHeader;
+    private View mDrawerHeader;
     private boolean mDrawerTip = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         initSetup();
-
-        Intent intent = getIntent();
-        Timber.d(intent.toString());
-
     }
 
     @Override
@@ -210,7 +205,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if (v == mDrawerMenuHeader) {
+        if (v == mDrawerHeader) {
             if (mUser == null) {
                 Toast.makeText(this, "mUser is null!", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.closeDrawers();
@@ -232,15 +227,18 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
 
             mCurrSort = mSortSpinnerArray[position];
             mCurrList = mListSpinnerArray[mListSpinner.getSelectedItemPosition()];
-            mCurrTimeFrame = mTimeFrameSpinnerArray[mTimeFrameSpinner.getSelectedItemPosition()];
+            mCurrTimeFrame =
+                    mTimeFrameSpinnerArray[mTimeFrameSpinner.getSelectedItemPosition()];
         } else if (parent == mListSpinner) {
             if (mIsListSpinnerFirst) {
                 mIsListSpinnerFirst = false;
                 return;
             }
-            mCurrSort = mSortSpinnerArray[mSortSpinner.getSelectedItemPosition()];
+            mCurrSort =
+                    mSortSpinnerArray[mSortSpinner.getSelectedItemPosition()];
             mCurrList = mListSpinnerArray[position];
-            mCurrTimeFrame = mTimeFrameSpinnerArray[mTimeFrameSpinner.getSelectedItemPosition()];
+            mCurrTimeFrame =
+                    mTimeFrameSpinnerArray[mTimeFrameSpinner.getSelectedItemPosition()];
         } else if (parent == mTimeFrameSpinner) {
             mCurrTimeFrame = mTimeFrameSpinnerArray[position];
             mCurrSort = mSortSpinnerArray[mSortSpinner.getSelectedItemPosition()];
@@ -280,13 +278,13 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     public void onFetchUserInfoFinished(User userInfo) {
         mUser = userInfo;
 
-        ((SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_user_portrait_image))
+        ((SimpleDraweeView) mDrawerHeader.findViewById(R.id.drawer_user_portrait_image))
                 .setImageURI(Uri.parse(userInfo.avatar_url));
 
-        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_name))
+        ((TextView) mDrawerHeader.findViewById(R.id.drawer_user_name))
                 .setText(userInfo.name);
 
-        ((TextView) mDrawerMenuHeader.findViewById(R.id.drawer_user_username))
+        ((TextView) mDrawerHeader.findViewById(R.id.drawer_user_username))
                 .setText(userInfo.username);
 
         setHeaderBlurImageURI(Uri.parse(userInfo.avatar_url));
@@ -301,7 +299,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
             uri = Uri.parse(DribbbleAPI.DEFAULT_HEADER_IMAGE);
         }
         SimpleDraweeView drawerBluerHeaderImage =
-                (SimpleDraweeView) mDrawerMenuHeader.findViewById(R.id.drawer_header_blur_image);
+                (SimpleDraweeView) mDrawerHeader.findViewById(R.id.drawer_header_blur_image);
         Postprocessor blurPostprocessor = new BasePostprocessor() {
             @Override
             public String getName() {
@@ -410,15 +408,18 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     }
 
     private void setupDrawer() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, 0, 0);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, 0, 0);
         mDrawerLayout.setDrawerListener(toggle);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drawer_items));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.drawer_items));
         mDrawerMenuListView.setAdapter(adapter);
         mDrawerMenuListView.setOnItemClickListener(this);
 
-        mDrawerMenuHeader = LayoutInflater.from(this).inflate(R.layout.drawer_menu_header, null);
-        mDrawerMenuHeader.setOnClickListener(this);
-        mDrawerMenuListView.addHeaderView(mDrawerMenuHeader);
+        mDrawerHeader = LayoutInflater.from(this).inflate(R.layout.drawer_header, null);
+        mDrawerHeader.setOnClickListener(this);
+        mDrawerMenuListView.addHeaderView(mDrawerHeader);
     }
 
     private void setupRecyclerView() {
@@ -433,8 +434,10 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
 
     private void setupReturnToFab() {
         mReturnToTopFab.hide(false);
-        mReturnToTopFab.setShowAnimation(AnimationUtils.loadAnimation(this, R.anim.show_from_bottom));
-        mReturnToTopFab.setHideAnimation(AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom));
+        mReturnToTopFab.setShowAnimation(
+                AnimationUtils.loadAnimation(this, R.anim.show_from_bottom));
+        mReturnToTopFab.setHideAnimation(
+                AnimationUtils.loadAnimation(this, R.anim.hide_to_bottom));
 
         mReturnToTopFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -467,7 +470,8 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
         final Intent intent = ProfileActivity.createIntent(mUser);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(R.id.drawer_user_portrait_image);
+        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(
+                R.id.drawer_user_portrait_image);
 
         if (Utils.hasLollipop()) {
             startActivityLollipop(image, intent, "photo_hero");

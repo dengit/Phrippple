@@ -3,6 +3,7 @@
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -61,21 +62,22 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ProgressBar
+    <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/initial_progress_bar"
-        style="@android:style/Widget.ProgressBar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:visibility="visible" />
+        android:visibility="visible"
+        wheel:matProg_barColor="#5588FF"
+        wheel:matProg_progressIndeterminate="true" />
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab_return_to_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="14dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/fab_return_to_top"
         app:fab_elevationCompat="4dp" />
 </android.support.design.widget.CoordinatorLayout>

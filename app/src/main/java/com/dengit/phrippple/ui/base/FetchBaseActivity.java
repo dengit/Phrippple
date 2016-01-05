@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dengit.phrippple.R;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import timber.log.Timber;
 public abstract class FetchBaseActivity<T> extends BaseActivity implements FetchBaseView<T>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.initial_progress_bar)
-    protected ProgressBar mInitialProgressBar;
+    protected ProgressWheel mInitialProgressBar;
 
     @Bind(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
@@ -32,7 +33,7 @@ public abstract class FetchBaseActivity<T> extends BaseActivity implements Fetch
     protected SwipeRefreshLayout mRefreshLayout;
 
     protected View mFooter;
-    protected ProgressBar mFooterProgressBar;
+    protected ProgressWheel mFooterProgressBar;
     protected TextView mLoadMoreTV;
     protected LinearLayout mFooterLayout;
 
@@ -110,7 +111,7 @@ public abstract class FetchBaseActivity<T> extends BaseActivity implements Fetch
     protected void setupBase() {
         mFooterLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.list_footer, null);
         mFooter = mFooterLayout.findViewById(R.id.footer);
-        mFooterProgressBar = (ProgressBar) mFooterLayout.findViewById(R.id.footer_progressbar);
+        mFooterProgressBar = (ProgressWheel) mFooterLayout.findViewById(R.id.footer_progressbar);
         mLoadMoreTV = (TextView) mFooterLayout.findViewById(R.id.footer_loadmore);
 
         mFooter.setOnClickListener(this);
