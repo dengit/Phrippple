@@ -39,6 +39,7 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
         initSetup();
@@ -60,7 +61,6 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
     }
 
     private void initSetup() {
-        setupComponent();
         mCommentPresenter.attachView(this);
         setupBase(mCommentPresenter);
 
@@ -73,10 +73,4 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
         mCommentPresenter.firstFetchItems();
     }
 
-    private void setupComponent() {
-        DaggerActivityComponent.builder()
-                .aPPComponent(APP.getInstance().getComponent())
-                .build()
-                .inject(this);
-    }
 }

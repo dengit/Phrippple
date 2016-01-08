@@ -41,6 +41,7 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fan);
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
         initSetup();
@@ -62,7 +63,6 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
     }
 
     private void initSetup() {
-        setupComponent();
         mFanPresenter.attachView(this);
         setupBase(mFanPresenter);
 
@@ -75,12 +75,4 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
 
         mFanPresenter.firstFetchItems();
     }
-
-    private void setupComponent() {
-        DaggerActivityComponent.builder()
-                .aPPComponent(APP.getInstance().getComponent())
-                .build()
-                .inject(this);
-    }
-
 }

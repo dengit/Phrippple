@@ -10,6 +10,8 @@ import com.dengit.phrippple.ui.fan.FanPresenterImpl;
 import com.dengit.phrippple.ui.main.MainPresenter;
 import com.dengit.phrippple.ui.main.MainPresenterImpl;
 import com.dengit.phrippple.ui.main.MainView;
+import com.dengit.phrippple.ui.shot.ShotPresenter;
+import com.dengit.phrippple.ui.shot.ShotPresenterImpl;
 import com.dengit.phrippple.ui.shotlist.ShotListPresenter;
 import com.dengit.phrippple.ui.shotlist.ShotListPresenterImpl;
 
@@ -46,4 +48,10 @@ public class ActivityModule {
     public ShotListPresenter provideShotListPresenter() {
         return new ShotListPresenterImpl();
     }
+
+    @Provides
+    public ShotPresenter provideShotPresenter() {
+        return new ShotPresenterImpl();
+    }
+
 }

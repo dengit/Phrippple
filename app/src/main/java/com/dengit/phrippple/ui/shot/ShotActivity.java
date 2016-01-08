@@ -28,6 +28,8 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,8 +69,10 @@ public class ShotActivity extends BaseTransitionDetailActivityL implements ShotV
     @Bind(R.id.shot_fab_menu)
     FloatingActionMenu mShotFabMenu;
 
+    @Inject
+    ShotPresenter mShotPresenter;
+
     private Shot mShot;
-    private ShotPresenter mShotPresenter;
     private boolean hasLiked;
 
     public static Intent createIntent(Shot shot) {
@@ -81,6 +85,7 @@ public class ShotActivity extends BaseTransitionDetailActivityL implements ShotV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shot);
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
         mShot = (Shot) getIntent().getSerializableExtra("shot");
@@ -160,7 +165,7 @@ public class ShotActivity extends BaseTransitionDetailActivityL implements ShotV
     }
 
     private void initSetup() {
-        mShotPresenter = new ShotPresenterImpl(this);
+        mShotPresenter.attachView(this);
         setupFab();
         setTitle(mShot.title);
         mAuthorPortrait.setImageURI(Uri.parse(mShot.user.avatar_url));

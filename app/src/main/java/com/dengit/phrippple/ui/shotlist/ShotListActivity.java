@@ -41,6 +41,7 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shotlist);
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
         initSetup();
@@ -82,20 +83,12 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     }
 
     private void initSetup() {
-        setupComponent();
         mShotListPresenter.attachView(this);
         setupBase(mShotListPresenter);
         parseArgs();
         setupTitle();
         setupRecyclerView();
         mShotListPresenter.firstFetchItems();
-    }
-
-    private void setupComponent() {
-        DaggerActivityComponent.builder()
-                .aPPComponent(APP.getInstance().getComponent())
-                .build()
-                .inject(this);
     }
 
     private void parseArgs() {

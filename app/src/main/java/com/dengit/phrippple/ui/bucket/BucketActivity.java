@@ -45,6 +45,7 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bucket);
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
         initSetup();
@@ -71,7 +72,6 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
     }
 
     private void initSetup() {
-        setupComponent();
         mBucketPresenter.attachView(this);
         setupBase(mBucketPresenter);
 
@@ -86,10 +86,4 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
         mBucketPresenter.firstFetchItems();
     }
 
-    private void setupComponent() {
-        DaggerActivityComponent.builder()
-                .aPPComponent(APP.getInstance().getComponent())
-                .build()
-                .inject(this);
-    }
 }

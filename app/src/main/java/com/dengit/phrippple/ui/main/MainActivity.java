@@ -104,6 +104,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getActivityComponent().inject(this);
         ButterKnife.bind(this);
 
         initSetup();
@@ -146,7 +147,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            startDrawerItemActivity(position);
+        startDrawerItemActivity(position);
     }
 
     private void startDrawerItemActivity(int position) {
@@ -361,7 +362,6 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     }
 
     private void initSetup() {
-        setupComponent();
         mMainPresenter.attachView(this);
         setupBase(mMainPresenter);
         setupToolbar();
@@ -370,13 +370,6 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
         setupReturnToFab();
         tryToStartLoginActivity();
         EventBusUtil.getInstance().register(this);
-    }
-
-    private void setupComponent() {
-        DaggerActivityComponent.builder()
-                .aPPComponent(APP.getInstance().getComponent())
-                .build()
-                .inject(this);
     }
 
     private void setupToolbar() {

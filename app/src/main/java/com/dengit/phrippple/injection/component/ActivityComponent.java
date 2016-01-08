@@ -6,6 +6,7 @@ import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.comment.CommentActivity;
 import com.dengit.phrippple.ui.fan.FanActivity;
 import com.dengit.phrippple.ui.main.MainActivity;
+import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 
 import dagger.Component;
@@ -30,4 +31,6 @@ public interface ActivityComponent {
     void inject(CommentActivity commentActivity);
 
     void inject(ShotListActivity shotListActivity);
+
+    void inject(ShotActivity shotActivity);
 }
