@@ -4,9 +4,6 @@ import com.dengit.phrippple.data.AuthorizeInfo;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
-import com.dengit.phrippple.ui.base.FetchBaseView;
-
-import java.util.List;
 
 /**
  * Created by dengit on 15/12/9.
@@ -15,28 +12,20 @@ public class MainPresenterImpl extends FetchBasePresenterImpl<Shot> implements M
     private MainView mMainView;
     private MainModel mMainModel;
 
-    public MainPresenterImpl(MainView mainView) {
-        super(mainView);
-        mMainView = mainView;
+    public MainPresenterImpl() {
         mMainModel = new MainModelImpl(this); //todo use DI?
-        setBaseModel(mMainModel);
-    }
-
-    @Override
-    public void detachView() {
-    }
-
-    @Override
-    public void attachView(FetchBaseView<Shot> view) {
+        attachBaseModel(mMainModel);
     }
 
     @Override
     public void requestToken(AuthorizeInfo info) {
+        checkAttached();
         mMainModel.requestToken(info);
     }
 
     @Override
     public void firstFetchItems() {
+        checkAttached();
         mMainModel.setCurrSort(mMainView.getCurrSort());
         mMainModel.setCurrList(mMainView.getCurrList());
         mMainModel.setCurrTimeFrame(mMainView.getCurrTimeFrame());
@@ -45,6 +34,7 @@ public class MainPresenterImpl extends FetchBasePresenterImpl<Shot> implements M
 
     @Override
     public void fetchUserInfo() {
+        checkAttached();
         mMainModel.fetchUserInfo();
     }
 
@@ -58,4 +48,20 @@ public class MainPresenterImpl extends FetchBasePresenterImpl<Shot> implements M
         mMainView.onFetchUserInfoError();
     }
 
+
+    @Override
+    public void attachView(MainView mainView) {
+        attachBaseView(mainView);
+        mMainView = mainView;
+    }
+
+    public boolean isViewAttached() {
+        return mMainView != null;
+    }
+
+    public void checkAttached() {
+        if (!isViewAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachView() before " +
+                        "requesting data to the Presenter");
+    }
 }

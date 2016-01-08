@@ -13,7 +13,7 @@ public interface FetchBaseView<T> {
 
     void switchRefresh(boolean isOpen);
 
-    void handleError();
-
     void switchLoading(boolean isLoading, boolean isEnd);
+
+    void handleError();
 }

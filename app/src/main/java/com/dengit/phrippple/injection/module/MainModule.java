@@ -13,14 +13,9 @@ import dagger.Provides;
  */
 @Module
 public class MainModule {
-    private MainView mMainView;
-
-    public MainModule(MainView mMainView) {
-        this.mMainView = mMainView;
-    }
 
     @Provides
     public MainPresenter providePresenter() {
-        return new MainPresenterImpl(mMainView);
+        return new MainPresenterImpl();
     }
 }

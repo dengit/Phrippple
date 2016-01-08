@@ -56,9 +56,9 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
     }
 
     private void initSetup() {
-        mCommentPresenter = new CommentPresenterImpl(this);
-        setBasePresenter(mCommentPresenter);
-        setupBase();
+        mCommentPresenter = new CommentPresenterImpl();
+        mCommentPresenter.attachView(this);
+        setupBase(mCommentPresenter);
 
         mShotId = getIntent().getIntExtra("shotId", 0);
         int commentCount = getIntent().getIntExtra("commentCount", 0);

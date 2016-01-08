@@ -10,19 +10,33 @@ public class ShotListPresenterImpl extends FetchBasePresenterImpl<Shot> implemen
     private ShotListView mShotListView;
     private ShotListModel mShotListModel;
 
-    public ShotListPresenterImpl(ShotListView shotListView) {
-        super(shotListView);
-        mShotListView = shotListView;
+    public ShotListPresenterImpl() {
         mShotListModel = new ShotListModelImpl(this);
-        setBaseModel(mShotListModel);
+        attachBaseModel(mShotListModel);
     }
 
     @Override
+    public void attachView(ShotListView shotListView) {
+        super.attachBaseView(shotListView);
+        mShotListView = shotListView;
+    }
+
+
+    @Override
     public void firstFetchItems() {
+        checkAttached();
         mShotListModel.setId(mShotListView.getId());
         mShotListModel.setShotListType(mShotListView.getShotListType());
         super.firstFetchItems();
     }
 
+    public boolean isViewAttached() {
+        return mShotListView != null;
+    }
 
+    public void checkAttached() {
+        if (!isViewAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachView() before " +
+                        "requesting data to the Presenter");
+    }
 }

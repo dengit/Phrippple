@@ -10,16 +10,31 @@ public class FanPresenterImpl extends FetchBasePresenterImpl<Fan> implements Fan
     private FanView mFanView;
     private FanModel mFanModel;
 
-    public FanPresenterImpl(FanView fanView) {
-        super(fanView);
-        mFanView = fanView;
+    public FanPresenterImpl() {
         mFanModel = new FanModelImpl(this);
-        setBaseModel(mFanModel);
+        attachBaseModel(mFanModel);
     }
 
     @Override
     public void firstFetchItems() {
+        checkAttached();
         mFanModel.setShotId(mFanView.getShotId());
         super.firstFetchItems();
+    }
+
+    @Override
+    public void attachView(FanView fanView) {
+        attachBaseView(fanView);
+        mFanView = fanView;
+    }
+
+    public boolean isViewAttached() {
+        return mFanView != null;
+    }
+
+    public void checkAttached() {
+        if (!isViewAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachView() before " +
+                        "requesting data to the Presenter");
     }
 }

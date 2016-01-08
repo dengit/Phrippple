@@ -10,16 +10,31 @@ public class CommentPresenterImpl extends FetchBasePresenterImpl<Comment> implem
     private CommentView mCommentView;
     private CommentModel mCommentModel;
 
-    public CommentPresenterImpl(CommentView commentView) {
-        super(commentView);
-        mCommentView = commentView;
+    public CommentPresenterImpl() {
         mCommentModel = new CommentModelImpl(this);
-        setBaseModel(mCommentModel);
+        attachBaseModel(mCommentModel);
     }
 
     @Override
     public void firstFetchItems() {
+        checkAttached();
         mCommentModel.setShotId(mCommentView.getShotId());
         super.firstFetchItems();
+    }
+
+    @Override
+    public void attachView(CommentView commentView) {
+        attachBaseView(commentView);
+        mCommentView = commentView;
+    }
+
+    public boolean isViewAttached() {
+        return mCommentView != null;
+    }
+
+    public void checkAttached() {
+        if (!isViewAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachView() before " +
+                        "requesting data to the Presenter");
     }
 }

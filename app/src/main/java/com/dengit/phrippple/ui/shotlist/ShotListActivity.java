@@ -2,7 +2,6 @@ package com.dengit.phrippple.ui.shotlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
@@ -12,7 +11,6 @@ import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -79,9 +77,9 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     }
 
     private void initSetup() {
-        mShotListPresenter = new ShotListPresenterImpl(this);
-        setBasePresenter(mShotListPresenter);
-        setupBase();
+        mShotListPresenter = new ShotListPresenterImpl();
+        mShotListPresenter.attachView(this);
+        setupBase(mShotListPresenter);
         parseArgs();
         setupTitle();
         setupRecyclerView();

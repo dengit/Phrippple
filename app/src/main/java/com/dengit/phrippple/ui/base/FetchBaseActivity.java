@@ -33,16 +33,14 @@ public abstract class FetchBaseActivity<T> extends BaseActivity implements Fetch
     @Bind(R.id.refresh_layout)
     protected SwipeRefreshLayout mRefreshLayout;
 
-    protected boolean mLoading = false;
-
-    private FetchBasePresenter<T> mFetchBasePresenter;
-    private LinearLayoutManager mLayoutManager;
     private boolean mEnd = false;
+    protected boolean mLoading = false;
+    private LinearLayoutManager mLayoutManager;
+    private FetchBasePresenter<T> mFetchBasePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //        mBasePresenter = new BasePresenterImpl<T>(this);
         mLayoutManager = new LinearLayoutManager(this);
     }
 
@@ -81,15 +79,12 @@ public abstract class FetchBaseActivity<T> extends BaseActivity implements Fetch
         appendAdapterData(newItems);
     }
 
-    protected void setBasePresenter(FetchBasePresenter<T> fetchBasePresenter) {
-        mFetchBasePresenter = fetchBasePresenter;
-    }
-
     protected abstract void setAdapterData(List<T> newItems);
 
     protected abstract void appendAdapterData(List<T> newItems);
 
-    protected void setupBase() {
+    protected void setupBase(FetchBasePresenter<T> fetchBasePresenter) {
+        mFetchBasePresenter = fetchBasePresenter;
         mRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -99,7 +94,7 @@ public abstract class FetchBaseActivity<T> extends BaseActivity implements Fetch
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
                 int totalCount = mLayoutManager.getItemCount();
-                if (!mEnd &&!mLoading && lastVisibleItemPosition + 1 == totalCount) {
+                if (!mEnd && !mLoading && lastVisibleItemPosition + 1 == totalCount) {
                     mLoading = true;
                     mFetchBasePresenter.onLoadMore();
                 }

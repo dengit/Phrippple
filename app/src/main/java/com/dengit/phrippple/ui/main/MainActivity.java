@@ -366,11 +366,10 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
 
     private void initSetup() {
         setupComponent();
-        setBasePresenter(mMainPresenter);
-        setupBase();
+        mMainPresenter.attachView(this);
+        setupBase(mMainPresenter);
         setupToolbar();
         setupDrawer();
-        //        setupResideMenu();
         setupRecyclerView();
         setupReturnToFab();
         tryToStartLoginActivity();
@@ -379,7 +378,6 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
 
     private void setupComponent() {
         DaggerActivityComponent.builder()
-                .mainModule(new MainModule(this))
                 .aPPComponent(APP.getInstance().getComponent())
                 .build()
                 .inject(this);

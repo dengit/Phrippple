@@ -67,9 +67,9 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
     }
 
     private void initSetup() {
-        mBucketPresenter = new BucketPresenterImpl(this);
-        setBasePresenter(mBucketPresenter);
-        setupBase();
+        mBucketPresenter = new BucketPresenterImpl();
+        mBucketPresenter.attachView(this);
+        setupBase(mBucketPresenter);
 
         mBucketType = (BucketType) getIntent().getSerializableExtra("type");
         mId = getIntent().getIntExtra("id", 0);
@@ -77,7 +77,6 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
         setTitle(bucketCount + " buckets");
 
         mBucketsAdapter = new BucketsAdapter(this);
-
         mRecyclerView.setAdapter(mBucketsAdapter);
 
         mBucketPresenter.firstFetchItems();

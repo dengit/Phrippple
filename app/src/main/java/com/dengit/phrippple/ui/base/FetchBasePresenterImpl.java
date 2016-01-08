@@ -14,13 +14,33 @@ public class FetchBasePresenterImpl<T> implements FetchBasePresenter<T> {
     private FetchBaseView<T> mFetchBaseView;
     private FetchBaseModel<T> mFetchBaseModel;
 
-    public FetchBasePresenterImpl(FetchBaseView<T> fetchBaseView) {
+    public FetchBasePresenterImpl() {
+    }
+
+    @Override
+    public void attachBaseView(FetchBaseView<T> fetchBaseView) {
         mFetchBaseView = fetchBaseView;
-//        mBaseModel = new BaseModelImpl<T>(this); //todo use DI?
+    }
+
+    @Override
+    public void detachBaseView() {
+        mFetchBaseView = null;
+    }
+
+
+    @Override
+    public void attachBaseModel(FetchBaseModel<T> mBaseModel) {
+        mFetchBaseModel = mBaseModel;
+    }
+
+    @Override
+    public void detachBaseModel() {
+        mFetchBaseModel = null;
     }
 
     @Override
     public void onLoadMore() {
+        checkBaseAttached();
         mFetchBaseModel.loadMore();
     }
 
@@ -44,11 +64,13 @@ public class FetchBasePresenterImpl<T> implements FetchBasePresenter<T> {
 
     @Override
     public void firstFetchItems() {
+        checkBaseAttached();
         fetchNewestItems(false);
     }
 
     @Override
     public void fetchNewestItems(boolean isRefresh) {
+        checkBaseAttached();
         if (isRefresh) {
             if (mFetchBaseModel.checkIfCanRefresh()) {
                 mFetchBaseView.switchRefresh(true);
@@ -61,12 +83,24 @@ public class FetchBasePresenterImpl<T> implements FetchBasePresenter<T> {
         }
     }
 
-    public void setBaseModel(FetchBaseModel<T> fetchBaseModel) {
-        mFetchBaseModel = fetchBaseModel;
-    }
-
     private boolean isEnd(List<T> newItems) {
         return newItems.size() < DribbbleAPI.LIMIT_PER_PAGE;
     }
 
+    public boolean isBaseViewAttached() {
+        return mFetchBaseView != null;
+    }
+    public boolean isBaseModelAttached() {
+        return mFetchBaseModel != null;
+    }
+
+    public void checkBaseAttached() {
+        if (!isBaseViewAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachBaseView() before " +
+                        "requesting data to the Presenter");
+
+        if (!isBaseModelAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachBaseModel() before " +
+                        "requesting data to the Presenter");
+    }
 }

@@ -10,9 +10,8 @@ import com.dengit.phrippple.ui.base.FetchBaseView;
  * Created by dengit on 15/12/9.
  */
 public interface MainPresenter extends FetchBasePresenter<Shot> {
-    void attachView(FetchBaseView<Shot> view);
 
-    void detachView();
+    void attachView(MainView mainView);
 
     void requestToken(AuthorizeInfo info);
 

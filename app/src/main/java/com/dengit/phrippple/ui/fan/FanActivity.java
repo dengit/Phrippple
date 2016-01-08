@@ -58,9 +58,9 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
     }
 
     private void initSetup() {
-        mFanPresenter = new FanPresenterImpl(this);
-        setBasePresenter(mFanPresenter);
-        setupBase();
+        mFanPresenter = new FanPresenterImpl();
+        mFanPresenter.attachView(this);
+        setupBase(mFanPresenter);
 
         mShotId = getIntent().getIntExtra("shotId", 0);
         int fanCount = getIntent().getIntExtra("fanCount", 0);

@@ -10,17 +10,32 @@ public class BucketPresenterImpl extends FetchBasePresenterImpl<Bucket> implemen
     private BucketView mBucketView;
     private BucketModel mBucketModel;
 
-    public BucketPresenterImpl(BucketView bucketView) {
-        super(bucketView);
-        mBucketView = bucketView;
+    public BucketPresenterImpl() {
         mBucketModel = new BucketModelImpl(this);
-        setBaseModel(mBucketModel);
+        attachBaseModel(mBucketModel);
     }
 
     @Override
     public void firstFetchItems() {
+        checkAttached();
         mBucketModel.setId(mBucketView.getId());
         mBucketModel.setBucketType(mBucketView.getBucketType());
         super.firstFetchItems();
+    }
+
+    @Override
+    public void attachView(BucketView bucketView) {
+        super.attachBaseView(bucketView);
+        mBucketView = bucketView;
+    }
+
+    public boolean isViewAttached() {
+        return mBucketView != null;
+    }
+
+    public void checkAttached() {
+        if (!isViewAttached()) throw new RuntimeException(
+                "Please call "+this.getClass().getSimpleName()+".attachView() before " +
+                        "requesting data to the Presenter");
     }
 }
