@@ -1,6 +1,5 @@
 package com.dengit.phrippple.adapter;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +12,15 @@ import java.util.List;
 /**
  * Created by dengit on 15/12/29.
  */
-public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
 
     protected List<T> mItems;
-    protected Activity mActivity;
+    protected OnItemClickListener mItemClickListener;
 
-    public RecyclerViewBaseAdapter(List<T> items, Activity activity) {
+    public RecyclerViewAdapter(List<T> items) {
         mItems = items;
-        mActivity = activity;
     }
 
     @Override
@@ -31,8 +29,8 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
             View view = LayoutInflater.from(APP.getInstance()).inflate(getItemLayoutResId(), parent, false);
             return createViewHolderItem(view);
         } else if (viewType == TYPE_FOOTER) {
-//            mFooter.setLayoutParams(parent.getLayoutParams());//todo why this do work
-//            return new VHFooterBase(mFooter);
+            //            mFooter.setLayoutParams(parent.getLayoutParams());//todo why this do work
+            //            return new VHFooterBase(mFooter);
         }
 
         throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
@@ -54,8 +52,8 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemViewType(int position) {
-//        if (isPositionFooter(position))
-//            return TYPE_FOOTER;
+        //        if (isPositionFooter(position))
+        //            return TYPE_FOOTER;
 
         return TYPE_ITEM;
     }
@@ -64,7 +62,7 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
         return position == mItems.size();
     }
 
-    protected Object getItem(int position) {
+    public Object getItem(int position) {
         return mItems.get(position);
     }
 
@@ -79,8 +77,18 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
     }
 
     protected abstract int getItemLayoutResId();
+
     protected abstract RecyclerView.ViewHolder createViewHolderItem(View itemView);
+
     protected abstract void setupItems(VHItemBase holder, int position);
+
+    public void setOnItemClickListener(final OnItemClickListener itemClickListener) {
+        mItemClickListener = itemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
     static class VHItemBase extends RecyclerView.ViewHolder {
         public VHItemBase(View view) {
@@ -89,9 +97,8 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
     }
 
     static class VHFooterBase extends RecyclerView.ViewHolder {
-        public VHFooterBase(View itemView) {
-            super(itemView);
+        public VHFooterBase(View view) {
+            super(view);
         }
     }
-
 }

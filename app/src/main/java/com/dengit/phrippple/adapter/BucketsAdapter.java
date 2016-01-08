@@ -1,20 +1,17 @@
 package com.dengit.phrippple.adapter;
 
-import android.app.Activity;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Bucket;
-import com.dengit.phrippple.data.ShotListType;
-import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,10 +19,11 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketsAdapter extends RecyclerViewBaseAdapter<Bucket> {
+public class BucketsAdapter extends RecyclerViewAdapter<Bucket> {
 
-    public BucketsAdapter(Activity activity) {
-        super(new ArrayList<Bucket>(), activity);
+    @Inject
+    public BucketsAdapter() {
+        super(new ArrayList<Bucket>());
     }
 
     @Override
@@ -56,24 +54,10 @@ public class BucketsAdapter extends RecyclerViewBaseAdapter<Bucket> {
         }
 
         itemHolder.bucketShotCount.setText(bucket.shots_count + " shots");
-
-
-        itemHolder.bucketItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bucket bucket = (Bucket) getItem(position);
-                Bundle args = new Bundle();
-                args.putInt("id", bucket.id);
-                args.putSerializable("type", ShotListType.ShotsOfBucket);
-                args.putInt("count", bucket.shots_count);
-
-                mActivity.startActivity(ShotListActivity.createIntent(args));
-            }
-        });
     }
 
 
-    static class BucketVHItem extends VHItemBase {
+    class BucketVHItem extends VHItemBase implements View.OnClickListener {
         View bucketItemView;
         @Bind(R.id.bucket_name)
         TextView bucketName;
@@ -88,6 +72,14 @@ public class BucketsAdapter extends RecyclerViewBaseAdapter<Bucket> {
             super(view);
             ButterKnife.bind(this, view);
             bucketItemView = view;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getAdapterPosition());
+            }
         }
     }
 }

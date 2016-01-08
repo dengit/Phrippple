@@ -19,6 +19,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -26,13 +28,11 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/8.
  */
-public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
+public class ShotsAdapter extends RecyclerViewAdapter<Shot> {
 
-    private User mUser;
-
-    public ShotsAdapter(User user, BaseTransitionFetchActivity<Shot> activity) {
-        super(new ArrayList<Shot>(), activity);
-        mUser = user;
+    @Inject
+    public ShotsAdapter() {
+        super(new ArrayList<Shot>());
     }
 
     @Override
@@ -57,15 +57,8 @@ public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
 
             itemHolder.authorNameTV.setText(String.valueOf(shot.user.name));
             itemHolder.authorImage.setImageURI(Uri.parse(shot.user.avatar_url));
-
-            //todo new listener every time
-            itemHolder.header.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startProfileDetailActivity(v, position);
-                }
-            });
         } else {
+            itemHolder.header.setVisibility(View.GONE);
             itemHolder.authorNameTV.setVisibility(View.GONE);
             itemHolder.authorImage.setVisibility(View.GONE);
             itemHolder.titleTV.setTextSize(TypedValue.COMPLEX_UNIT_PX,
@@ -83,36 +76,13 @@ public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
         } else {
             itemHolder.gifTag.setVisibility(View.GONE);
         }
-
-        itemHolder.shotItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startShotDetailActivity(v, position);
-            }
-        });
     }
 
-    private void startShotDetailActivity(View view, int position) {
-        Shot shot = (Shot) getItem(position);
-        setUser(shot); //shot.user is null when shots are users'
-        final Intent intent = ShotActivity.createIntent(shot);
-        startDetailActivity(view, intent, R.id.shot_item_image);
+    public interface OnShotItemClickListener extends OnItemClickListener {
+        void onHeaderClick(View view, int position);
     }
 
-    private void startProfileDetailActivity(View view, int position) {
-        Shot shot = (Shot) getItem(position);
-        final Intent intent = ProfileActivity.createIntent(shot.user);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startDetailActivity(view, intent, R.id.shot_item_author_image);
-    }
-
-    private void setUser(Shot shot) {
-        if (mUser != null && shot.user == null) {
-            shot.user = mUser;
-        }
-    }
-
-    static class ShotVHItem extends VHItemBase {
+    class ShotVHItem extends VHItemBase implements View.OnClickListener {
         View shotItemView;
 
         @Bind(R.id.shot_item_image)
@@ -138,6 +108,20 @@ public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
             super(view);
             ButterKnife.bind(this, view);
             shotItemView = view;
+            view.setOnClickListener(this);
+            header.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                if (shotItemView == v) {
+                    mItemClickListener.onItemClick(v, getAdapterPosition());
+                } else if (header == v) {
+                    ((OnShotItemClickListener)mItemClickListener)
+                            .onHeaderClick(v, getAdapterPosition());
+                }
+            }
         }
     }
 

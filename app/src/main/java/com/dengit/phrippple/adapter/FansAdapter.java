@@ -1,6 +1,5 @@
 package com.dengit.phrippple.adapter;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,12 +8,11 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
-import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,10 +20,11 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
+public class FansAdapter extends RecyclerViewAdapter<Fan> {
 
-    public FansAdapter(BaseTransitionFetchActivity<Fan> activity) {
-        super(new ArrayList<Fan>(),  activity);
+    @Inject
+    public FansAdapter() {
+        super(new ArrayList<Fan>());
     }
 
     @Override
@@ -64,22 +63,9 @@ public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
             itemHolder.fanLocation.setText(fan.user.location);
         }
 
-        itemHolder.fanItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startProfileDetailActivity(v, position);
-            }
-        });
     }
 
-    private void startProfileDetailActivity(View view, int position) {
-        Fan fan = (Fan) getItem(position);
-        final Intent intent = ProfileActivity.createIntent(fan.user);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startDetailActivity(view, intent, R.id.fan_portrait_image);
-    }
-
-    static class FanVHItem extends VHItemBase {
+    class FanVHItem extends VHItemBase implements View.OnClickListener {
         View fanItemView;
 
         @Bind(R.id.fan_portrait_image)
@@ -107,6 +93,14 @@ public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
             super(view);
             ButterKnife.bind(this, view);
             fanItemView = view;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getAdapterPosition());
+            }
         }
     }
 }

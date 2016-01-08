@@ -2,36 +2,36 @@ package com.dengit.phrippple.ui.bucket;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.BucketsAdapter;
-import com.dengit.phrippple.api.DribbbleAPI;
+import com.dengit.phrippple.adapter.RecyclerViewAdapter;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
-import com.dengit.phrippple.injection.component.DaggerActivityComponent;
+import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.ui.base.FetchBaseActivity;
+import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketView {
+public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketView, RecyclerViewAdapter.OnItemClickListener {
+    @Inject
+    BucketsAdapter mBucketsAdapter;
+
     @Inject
     BucketPresenter mBucketPresenter;
 
     private int mId;
     private BucketType mBucketType;
-    private BucketsAdapter mBucketsAdapter;
 
     public static Intent createIntent(BucketType bucketType, int id, int bucketCount) {
         Intent intent = new Intent(APP.getInstance(), BucketActivity.class);
@@ -71,6 +71,17 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
         return mBucketType;
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        Bucket bucket = (Bucket) mBucketsAdapter.getItem(position);
+        Bundle args = new Bundle();
+        args.putInt("id", bucket.id);
+        args.putSerializable("type", ShotListType.ShotsOfBucket);
+        args.putInt("count", bucket.shots_count);
+
+        startActivity(ShotListActivity.createIntent(args));
+    }
+
     private void initSetup() {
         mBucketPresenter.attachView(this);
         setupBase(mBucketPresenter);
@@ -80,7 +91,7 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
         int bucketCount = getIntent().getIntExtra("bucketCount", 0);
         setTitle(bucketCount + " buckets");
 
-        mBucketsAdapter = new BucketsAdapter(this);
+        mBucketsAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mBucketsAdapter);
 
         mBucketPresenter.firstFetchItems();

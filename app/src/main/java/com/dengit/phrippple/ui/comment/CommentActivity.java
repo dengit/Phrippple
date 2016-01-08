@@ -2,16 +2,16 @@ package com.dengit.phrippple.ui.comment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.CommentsAdapter;
+import com.dengit.phrippple.adapter.RecyclerViewAdapter;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,12 +21,14 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentActivity extends BaseTransitionFetchActivity<Comment> implements CommentView {
+public class CommentActivity extends BaseTransitionFetchActivity<Comment> implements CommentView, RecyclerViewAdapter.OnItemClickListener {
+    @Inject
+    CommentsAdapter mCommentsAdapter;
+
     @Inject
     CommentPresenter mCommentPresenter;
 
     private int mShotId;
-    private CommentsAdapter mCommentsAdapter;
 
     public static Intent createIntent(int shotId, int commentCount) {
         Intent intent = new Intent(APP.getInstance(), CommentActivity.class);
@@ -60,6 +62,19 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
         mCommentsAdapter.setData(newItems);
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        startProfileDetailActivity(view, position);
+    }
+
+    private void startProfileDetailActivity(View view, int position) {
+        Comment comment = (Comment) mCommentsAdapter.getItem(position);
+        final Intent intent = ProfileActivity.createIntent(comment.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startDetailActivity(view, intent, R.id.comment_user_portrait_image);
+    }
+
     private void initSetup() {
         mCommentPresenter.attachView(this);
         setupBase(mCommentPresenter);
@@ -68,7 +83,7 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
         int commentCount = getIntent().getIntExtra("commentCount", 0);
         setTitle(commentCount + " comments");
 
-        mCommentsAdapter = new CommentsAdapter(this);
+        mCommentsAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mCommentsAdapter);
         mCommentPresenter.firstFetchItems();
     }

@@ -2,33 +2,33 @@ package com.dengit.phrippple.ui.fan;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.FansAdapter;
+import com.dengit.phrippple.adapter.RecyclerViewAdapter;
 import com.dengit.phrippple.data.Fan;
-import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanActivity extends BaseTransitionFetchActivity<Fan> implements FanView {
+public class FanActivity extends BaseTransitionFetchActivity<Fan> implements FanView, RecyclerViewAdapter.OnItemClickListener {
+    @Inject
+    FansAdapter mFansAdapter;
+
     @Inject
     FanPresenter mFanPresenter;
 
     private int mShotId;
-    private FansAdapter mFansAdapter;
 
     public static Intent createIntent(int shotId, int fanCount) {
         Intent intent = new Intent(APP.getInstance(), FanActivity.class);
@@ -62,6 +62,18 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
         mFansAdapter.setData(newItems);
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        startProfileDetailActivity(view, position);
+    }
+
+    private void startProfileDetailActivity(View view, int position) {
+        Fan fan = (Fan) mFansAdapter.getItem(position);
+        final Intent intent = ProfileActivity.createIntent(fan.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startDetailActivity(view, intent, R.id.fan_portrait_image);
+    }
+
     private void initSetup() {
         mFanPresenter.attachView(this);
         setupBase(mFanPresenter);
@@ -70,7 +82,7 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
         int fanCount = getIntent().getIntExtra("fanCount", 0);
         setTitle(fanCount + " fans");
 
-        mFansAdapter = new FansAdapter(this);
+        mFansAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mFansAdapter);
 
         mFanPresenter.firstFetchItems();

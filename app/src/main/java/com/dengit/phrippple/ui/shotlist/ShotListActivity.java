@@ -2,6 +2,7 @@ package com.dengit.phrippple.ui.shotlist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
@@ -11,6 +12,8 @@ import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
+import com.dengit.phrippple.ui.profile.ProfileActivity;
+import com.dengit.phrippple.ui.shot.ShotActivity;
 
 import java.util.List;
 
@@ -21,15 +24,17 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implements ShotListView {
+public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implements ShotListView, ShotsAdapter.OnShotItemClickListener {
+
+    @Inject
+    ShotsAdapter mShotsAdapter;
 
     @Inject
     ShotListPresenter mShotListPresenter;
 
     private int mId;
-    private ShotListType mShotListType;
     private int mCount;
-    private ShotsAdapter mShotsAdapter;
+    private ShotListType mShotListType;
 
     public static Intent createIntent(Bundle args) {
         Intent intent = new Intent(APP.getInstance(), ShotListActivity.class);
@@ -82,6 +87,30 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
         mShotsAdapter.appendData(newItems);
     }
 
+    @Override
+    public void onHeaderClick(View view, int position) {
+        startProfileDetailActivity(view, position);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        startShotDetailActivity(view, position);
+    }
+
+    private void startShotDetailActivity(View view, int position) {
+        Shot shot = (Shot) mShotsAdapter.getItem(position);
+        setUser(shot); //shot.user is null when shots are users'
+        final Intent intent = ShotActivity.createIntent(shot);
+        startDetailActivity(view, intent, R.id.shot_item_image);
+    }
+
+    private void startProfileDetailActivity(View view, int position) {
+        Shot shot = (Shot) mShotsAdapter.getItem(position);
+        final Intent intent = ProfileActivity.createIntent(shot.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startDetailActivity(view, intent, R.id.shot_item_author_image);
+    }
+
     private void initSetup() {
         mShotListPresenter.attachView(this);
         setupBase(mShotListPresenter);
@@ -112,7 +141,7 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     }
 
     private void setupRecyclerView() {
-        mShotsAdapter = new ShotsAdapter(getUser(), this);
+        mShotsAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mShotsAdapter);
     }
 
@@ -124,6 +153,12 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
         }
 
         return null;
+    }
+
+    private void setUser(Shot shot) {
+        if (getUser() != null && shot.user == null) {
+            shot.user = getUser();
+        }
     }
 
 }

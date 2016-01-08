@@ -1,6 +1,5 @@
 package com.dengit.phrippple.adapter;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,13 +7,12 @@ import android.widget.TextView;
 
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.data.Comment;
-import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
-import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.util.Utils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,10 +20,11 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> {
+public class CommentsAdapter extends RecyclerViewAdapter<Comment> {
 
-    public CommentsAdapter(BaseTransitionFetchActivity<Comment> activity) {
-        super(new ArrayList<Comment>(), activity);
+    @Inject
+    public CommentsAdapter() {
+        super(new ArrayList<Comment>());
     }
 
     @Override
@@ -47,23 +46,10 @@ public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> 
         itemHolder.commentTime.setText(comment.updated_at);
         itemHolder.commentLikeCount.setText(String.valueOf(comment.likes_count));
 
-        itemHolder.commentItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startProfileDetailActivity(v, position);
-            }
-        });
     }
 
-    private void startProfileDetailActivity(View view, int position) {
-        Comment comment = (Comment) getItem(position);
-        final Intent intent = ProfileActivity.createIntent(comment.user);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        startDetailActivity(view, intent, R.id.comment_user_portrait_image);
-    }
-
-    static class CommentVHItem extends VHItemBase {
+    class CommentVHItem extends VHItemBase implements View.OnClickListener {
         View commentItemView;
 
         @Bind(R.id.comment_user_portrait_image)
@@ -81,6 +67,14 @@ public class CommentsAdapter extends RecyclerViewTransitionBaseAdapter<Comment> 
             super(view);
             ButterKnife.bind(this, view);
             commentItemView = view;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getAdapterPosition());
+            }
         }
     }
 }

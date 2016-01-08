@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.dengit.phrippple.ui.base.FetchBaseActivity;
+import com.dengit.phrippple.util.Utils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 /**
@@ -16,6 +18,15 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
  */
 //only transition beginning
 public abstract class BaseTransitionFetchActivity<T> extends FetchBaseActivity<T> {
+
+    protected void startDetailActivity(View view, Intent intent, int sharedElementResId) {
+        final SimpleDraweeView image = (SimpleDraweeView) view.findViewById(sharedElementResId);
+        if (Utils.hasLollipop()) {
+            startActivityLollipop(image, intent, "photo_hero");
+        } else {
+            startActivityGingerBread(image, intent);
+        }
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void startActivityLollipop(View view, Intent intent, String sharedElementName) {

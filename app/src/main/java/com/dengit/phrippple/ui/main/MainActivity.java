@@ -25,7 +25,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.ShotsAdapter;
 import com.dengit.phrippple.api.DribbbleAPI;
@@ -36,11 +35,11 @@ import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.data.User;
-import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
+import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.dengit.phrippple.util.EventBusUtil;
 import com.dengit.phrippple.util.Utils;
@@ -61,7 +60,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseTransitionFetchActivity<Shot> implements MainView, View.OnClickListener,  AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends BaseTransitionFetchActivity<Shot> implements MainView, View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener,
+        ShotsAdapter.OnShotItemClickListener {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -85,9 +85,11 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     FloatingActionButton mReturnToTopFab;
 
     @Inject
+    ShotsAdapter mShotsAdapter;
+
+    @Inject
     MainPresenter mMainPresenter;
 
-    private ShotsAdapter mShotsAdapter;
     private boolean mIsSortSpinnerFirst = true;
     private boolean mIsListSpinnerFirst = true;
     private String[] mSortSpinnerArray;
@@ -348,6 +350,29 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
         }
     }
 
+    @Override
+    public void onHeaderClick(View view, int position) {
+        startProfileDetailActivity(view, position);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        startShotDetailActivity(view, position);
+    }
+
+    private void startShotDetailActivity(View view, int position) {
+        Shot shot = (Shot) mShotsAdapter.getItem(position);
+        final Intent intent = ShotActivity.createIntent(shot);
+        startDetailActivity(view, intent, R.id.shot_item_image);
+    }
+
+    private void startProfileDetailActivity(View view, int position) {
+        Shot shot = (Shot) mShotsAdapter.getItem(position);
+        final Intent intent = ProfileActivity.createIntent(shot.user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startDetailActivity(view, intent, R.id.shot_item_author_image);
+    }
+
     @Subscribe
     public void firstFetchShots(TokenInfo tokenInfo) {
         DribbbleAPIHelper.getInstance().setAccessTokenInfo(tokenInfo);
@@ -409,7 +434,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     }
 
     private void setupRecyclerView() {
-        mShotsAdapter = new ShotsAdapter(null, this);
+        mShotsAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mShotsAdapter);
     }
 
