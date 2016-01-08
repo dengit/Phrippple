@@ -8,10 +8,13 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.CommentsAdapter;
 import com.dengit.phrippple.data.Comment;
+import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
@@ -19,10 +22,11 @@ import butterknife.ButterKnife;
  * Created by dengit on 15/12/14.
  */
 public class CommentActivity extends BaseTransitionFetchActivity<Comment> implements CommentView {
+    @Inject
+    CommentPresenter mCommentPresenter;
 
     private int mShotId;
     private CommentsAdapter mCommentsAdapter;
-    private CommentPresenter mCommentPresenter;
 
     public static Intent createIntent(int shotId, int commentCount) {
         Intent intent = new Intent(APP.getInstance(), CommentActivity.class);
@@ -56,7 +60,7 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
     }
 
     private void initSetup() {
-        mCommentPresenter = new CommentPresenterImpl();
+        setupComponent();
         mCommentPresenter.attachView(this);
         setupBase(mCommentPresenter);
 
@@ -69,4 +73,10 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
         mCommentPresenter.firstFetchItems();
     }
 
+    private void setupComponent() {
+        DaggerActivityComponent.builder()
+                .aPPComponent(APP.getInstance().getComponent())
+                .build()
+                .inject(this);
+    }
 }

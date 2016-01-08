@@ -11,10 +11,13 @@ import com.dengit.phrippple.adapter.BucketsAdapter;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.data.BucketType;
+import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.FetchBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -23,11 +26,12 @@ import timber.log.Timber;
  * Created by dengit on 15/12/14.
  */
 public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketView {
+    @Inject
+    BucketPresenter mBucketPresenter;
 
     private int mId;
     private BucketType mBucketType;
     private BucketsAdapter mBucketsAdapter;
-    private BucketPresenter mBucketPresenter;
 
     public static Intent createIntent(BucketType bucketType, int id, int bucketCount) {
         Intent intent = new Intent(APP.getInstance(), BucketActivity.class);
@@ -67,7 +71,7 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
     }
 
     private void initSetup() {
-        mBucketPresenter = new BucketPresenterImpl();
+        setupComponent();
         mBucketPresenter.attachView(this);
         setupBase(mBucketPresenter);
 
@@ -82,4 +86,10 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
         mBucketPresenter.firstFetchItems();
     }
 
+    private void setupComponent() {
+        DaggerActivityComponent.builder()
+                .aPPComponent(APP.getInstance().getComponent())
+                .build()
+                .inject(this);
+    }
 }

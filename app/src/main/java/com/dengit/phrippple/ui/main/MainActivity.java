@@ -11,7 +11,6 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -38,7 +37,6 @@ import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.TokenInfo;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.injection.component.DaggerActivityComponent;
-import com.dengit.phrippple.injection.module.MainModule;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.bucket.BucketActivity;
 import com.dengit.phrippple.ui.login.AuthorizeActivity;
@@ -56,14 +54,12 @@ import com.facebook.imagepipeline.request.Postprocessor;
 import com.github.clans.fab.FloatingActionButton;
 import com.squareup.otto.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends BaseTransitionFetchActivity<Shot> implements MainView, View.OnClickListener,  AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 

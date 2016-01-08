@@ -9,9 +9,12 @@ import com.dengit.phrippple.adapter.ShotsAdapter;
 import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.data.User;
+import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
@@ -20,11 +23,13 @@ import butterknife.ButterKnife;
  */
 public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implements ShotListView {
 
+    @Inject
+    ShotListPresenter mShotListPresenter;
+
     private int mId;
     private ShotListType mShotListType;
     private int mCount;
     private ShotsAdapter mShotsAdapter;
-    private ShotListPresenter mShotListPresenter;
 
     public static Intent createIntent(Bundle args) {
         Intent intent = new Intent(APP.getInstance(), ShotListActivity.class);
@@ -77,13 +82,20 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     }
 
     private void initSetup() {
-        mShotListPresenter = new ShotListPresenterImpl();
+        setupComponent();
         mShotListPresenter.attachView(this);
         setupBase(mShotListPresenter);
         parseArgs();
         setupTitle();
         setupRecyclerView();
         mShotListPresenter.firstFetchItems();
+    }
+
+    private void setupComponent() {
+        DaggerActivityComponent.builder()
+                .aPPComponent(APP.getInstance().getComponent())
+                .build()
+                .inject(this);
     }
 
     private void parseArgs() {

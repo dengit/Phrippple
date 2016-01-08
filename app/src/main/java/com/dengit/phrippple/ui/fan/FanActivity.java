@@ -9,10 +9,13 @@ import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
 import com.dengit.phrippple.adapter.FansAdapter;
 import com.dengit.phrippple.data.Fan;
+import com.dengit.phrippple.injection.component.DaggerActivityComponent;
 import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -21,10 +24,11 @@ import timber.log.Timber;
  * Created by dengit on 15/12/14.
  */
 public class FanActivity extends BaseTransitionFetchActivity<Fan> implements FanView {
+    @Inject
+    FanPresenter mFanPresenter;
 
     private int mShotId;
     private FansAdapter mFansAdapter;
-    private FanPresenter mFanPresenter;
 
     public static Intent createIntent(int shotId, int fanCount) {
         Intent intent = new Intent(APP.getInstance(), FanActivity.class);
@@ -58,7 +62,7 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
     }
 
     private void initSetup() {
-        mFanPresenter = new FanPresenterImpl();
+        setupComponent();
         mFanPresenter.attachView(this);
         setupBase(mFanPresenter);
 
@@ -71,4 +75,12 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
 
         mFanPresenter.firstFetchItems();
     }
+
+    private void setupComponent() {
+        DaggerActivityComponent.builder()
+                .aPPComponent(APP.getInstance().getComponent())
+                .build()
+                .inject(this);
+    }
+
 }
