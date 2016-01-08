@@ -19,13 +19,13 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ShotListModelImpl<T> extends FetchBaseModelImpl<T> implements ShotListModel<T> {
+public class ShotListModelImpl extends FetchBaseModelImpl<Shot> implements ShotListModel {
 
     private int mId;
     private ShotListType mShotListType;
-    private ShotListPresenter<T> mPresenter;
+    private ShotListPresenter mPresenter;
 
-    public ShotListModelImpl(ShotListPresenter<T> presenter) {
+    public ShotListModelImpl(ShotListPresenter presenter) {
         super(presenter);
         mPresenter = presenter;
     }
@@ -43,7 +43,7 @@ public class ShotListModelImpl<T> extends FetchBaseModelImpl<T> implements ShotL
     @Override
     protected void fetchItems(final int page) {
 
-        final ArrayList<T> newShots = new ArrayList<>();
+        final ArrayList<Shot> newShots = new ArrayList<>();
 
         Subscriber<Shot> subscriber = new Subscriber<Shot>() {
             @Override
@@ -67,9 +67,8 @@ public class ShotListModelImpl<T> extends FetchBaseModelImpl<T> implements ShotL
             }
 
             @Override
-            @SuppressWarnings("unchecked")
             public void onNext(Shot shot) {
-                newShots.add((T) shot);
+                newShots.add(shot);
             }
         };
 

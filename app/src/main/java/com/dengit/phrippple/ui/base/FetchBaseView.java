@@ -7,13 +7,13 @@ import java.util.List;
  */
 public interface FetchBaseView<T> {
 
-    void switchLoadMore(boolean isOpen, boolean isEnd);
-
-    void setItems(List<T> newItems, boolean isEnd);
+    void setItems(List<T> newItems);
 
     void appendItems(List<T> newItems);
 
     void switchRefresh(boolean isOpen);
 
     void handleError();
+
+    void switchLoading(boolean isLoading, boolean isEnd);
 }

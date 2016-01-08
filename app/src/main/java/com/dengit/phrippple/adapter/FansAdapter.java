@@ -13,6 +13,7 @@ import com.dengit.phrippple.ui.base.transition.BaseTransitionFetchActivity;
 import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,8 +24,8 @@ import butterknife.ButterKnife;
  */
 public class FansAdapter extends RecyclerViewTransitionBaseAdapter<Fan> {
 
-    public FansAdapter(List<Fan> fans, View footer, BaseTransitionFetchActivity<Fan> activity) {
-        super(fans, footer, activity);
+    public FansAdapter(BaseTransitionFetchActivity<Fan> activity) {
+        super(new ArrayList<Fan>(),  activity);
     }
 
     @Override

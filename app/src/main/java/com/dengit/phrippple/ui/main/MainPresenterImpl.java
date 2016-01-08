@@ -1,21 +1,24 @@
 package com.dengit.phrippple.ui.main;
 
 import com.dengit.phrippple.data.AuthorizeInfo;
+import com.dengit.phrippple.data.Shot;
 import com.dengit.phrippple.data.User;
 import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
 import com.dengit.phrippple.ui.base.FetchBaseView;
 
+import java.util.List;
+
 /**
  * Created by dengit on 15/12/9.
  */
-public class MainPresenterImpl<T> extends FetchBasePresenterImpl<T> implements MainPresenter<T> {
-    private MainView<T> mMainView;
-    private MainModel<T> mMainModel;
+public class MainPresenterImpl extends FetchBasePresenterImpl<Shot> implements MainPresenter {
+    private MainView mMainView;
+    private MainModel mMainModel;
 
-    public MainPresenterImpl(MainView<T> mainView) {
+    public MainPresenterImpl(MainView mainView) {
         super(mainView);
         mMainView = mainView;
-        mMainModel = new MainModelImpl<>(this); //todo use DI?
+        mMainModel = new MainModelImpl(this); //todo use DI?
         setBaseModel(mMainModel);
     }
 
@@ -24,7 +27,7 @@ public class MainPresenterImpl<T> extends FetchBasePresenterImpl<T> implements M
     }
 
     @Override
-    public void attachView(FetchBaseView<T> view) {
+    public void attachView(FetchBaseView<Shot> view) {
     }
 
     @Override
@@ -54,4 +57,5 @@ public class MainPresenterImpl<T> extends FetchBasePresenterImpl<T> implements M
     public void onFetchUserInfoError() {
         mMainView.onFetchUserInfoError();
     }
+
 }

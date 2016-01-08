@@ -1,18 +1,19 @@
 package com.dengit.phrippple.ui.bucket;
 
+import com.dengit.phrippple.data.Bucket;
 import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketPresenterImpl<T> extends FetchBasePresenterImpl<T> implements BucketPresenter<T> {
-    private BucketView<T> mBucketView;
-    private BucketModel<T> mBucketModel;
+public class BucketPresenterImpl extends FetchBasePresenterImpl<Bucket> implements BucketPresenter {
+    private BucketView mBucketView;
+    private BucketModel mBucketModel;
 
-    public BucketPresenterImpl(BucketView<T> bucketView) {
+    public BucketPresenterImpl(BucketView bucketView) {
         super(bucketView);
         mBucketView = bucketView;
-        mBucketModel = new BucketModelImpl<>(this);
+        mBucketModel = new BucketModelImpl(this);
         setBaseModel(mBucketModel);
     }
 

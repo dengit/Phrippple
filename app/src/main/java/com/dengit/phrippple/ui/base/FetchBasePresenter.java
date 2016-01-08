@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface FetchBasePresenter<T>  {
 
-    void onFooterClick();
+    void onLoadMore();
 
     void onLoadNewestFinished(List<T> newItems);
 

@@ -20,13 +20,13 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implements ShotListView<Shot> {
+public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implements ShotListView {
 
     private int mId;
     private ShotListType mShotListType;
     private int mCount;
     private ShotsAdapter mShotsAdapter;
-    private ShotListPresenter<Shot> mShotListPresenter;
+    private ShotListPresenter mShotListPresenter;
 
     public static Intent createIntent(Bundle args) {
         Intent intent = new Intent(APP.getInstance(), ShotListActivity.class);
@@ -79,7 +79,7 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     }
 
     private void initSetup() {
-        mShotListPresenter = new ShotListPresenterImpl<>(this);
+        mShotListPresenter = new ShotListPresenterImpl(this);
         setBasePresenter(mShotListPresenter);
         setupBase();
         parseArgs();
@@ -109,12 +109,7 @@ public class ShotListActivity extends BaseTransitionFetchActivity<Shot> implemen
     }
 
     private void setupRecyclerView() {
-        if (mFooterLayout == null) {
-            throw new RuntimeException("must call setupBase() before this method!");
-        }
-
-        mShotsAdapter = new ShotsAdapter(getUser(), new ArrayList<Shot>(), mFooterLayout, this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mShotsAdapter = new ShotsAdapter(getUser(), this);
         mRecyclerView.setAdapter(mShotsAdapter);
     }
 

@@ -1,18 +1,19 @@
 package com.dengit.phrippple.ui.comment;
 
+import com.dengit.phrippple.data.Comment;
 import com.dengit.phrippple.ui.base.FetchBasePresenterImpl;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentPresenterImpl<T> extends FetchBasePresenterImpl<T> implements CommentPresenter<T> {
-    private CommentView<T> mCommentView;
-    private CommentModel<T> mCommentModel;
+public class CommentPresenterImpl extends FetchBasePresenterImpl<Comment> implements CommentPresenter {
+    private CommentView mCommentView;
+    private CommentModel mCommentModel;
 
-    public CommentPresenterImpl(CommentView<T> commentView) {
+    public CommentPresenterImpl(CommentView commentView) {
         super(commentView);
         mCommentView = commentView;
-        mCommentModel = new CommentModelImpl<>(this);
+        mCommentModel = new CommentModelImpl(this);
         setBaseModel(mCommentModel);
     }
 

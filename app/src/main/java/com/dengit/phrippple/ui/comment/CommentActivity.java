@@ -18,11 +18,11 @@ import butterknife.ButterKnife;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentActivity extends BaseTransitionFetchActivity<Comment> implements CommentView<Comment> {
+public class CommentActivity extends BaseTransitionFetchActivity<Comment> implements CommentView {
 
     private int mShotId;
     private CommentsAdapter mCommentsAdapter;
-    private CommentPresenter<Comment> mCommentPresenter;
+    private CommentPresenter mCommentPresenter;
 
     public static Intent createIntent(int shotId, int commentCount) {
         Intent intent = new Intent(APP.getInstance(), CommentActivity.class);
@@ -56,7 +56,7 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
     }
 
     private void initSetup() {
-        mCommentPresenter = new CommentPresenterImpl<>(this);
+        mCommentPresenter = new CommentPresenterImpl(this);
         setBasePresenter(mCommentPresenter);
         setupBase();
 
@@ -64,8 +64,7 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
         int commentCount = getIntent().getIntExtra("commentCount", 0);
         setTitle(commentCount + " comments");
 
-        mCommentsAdapter = new CommentsAdapter(new ArrayList<Comment>(), mFooterLayout, this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mCommentsAdapter = new CommentsAdapter(this);
         mRecyclerView.setAdapter(mCommentsAdapter);
         mCommentPresenter.firstFetchItems();
     }

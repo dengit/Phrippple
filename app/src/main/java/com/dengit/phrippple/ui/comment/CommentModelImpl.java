@@ -15,12 +15,12 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class CommentModelImpl<T> extends FetchBaseModelImpl<T> implements CommentModel<T> {
+public class CommentModelImpl extends FetchBaseModelImpl<Comment> implements CommentModel {
 
     private int mShotId;
-    private CommentPresenter<T> mPresenter;
+    private CommentPresenter mPresenter;
 
-    public CommentModelImpl(CommentPresenter<T> presenter) {
+    public CommentModelImpl(CommentPresenter presenter) {
         super(presenter);
         mPresenter = presenter;
     }
@@ -34,7 +34,7 @@ public class CommentModelImpl<T> extends FetchBaseModelImpl<T> implements Commen
     @Override
     protected void fetchItems(final int page) {
 
-        final ArrayList<T> newItems = new ArrayList<>();
+        final ArrayList<Comment> newItems = new ArrayList<>();
 
         mDribbbleAPI.getComments(mShotId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
@@ -61,10 +61,9 @@ public class CommentModelImpl<T> extends FetchBaseModelImpl<T> implements Commen
                     }
 
                     @Override
-                    @SuppressWarnings("unchecked")
                     public void onNext(List<Comment> comments) {
                         Timber.d("**comments.size(): %d", comments.size());
-                        newItems.addAll((List<T>)comments);
+                        newItems.addAll(comments);
                     }
                 });
     }

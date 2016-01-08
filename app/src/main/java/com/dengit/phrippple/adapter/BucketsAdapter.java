@@ -13,6 +13,7 @@ import com.dengit.phrippple.data.ShotListType;
 import com.dengit.phrippple.ui.shotlist.ShotListActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,8 +24,8 @@ import butterknife.ButterKnife;
  */
 public class BucketsAdapter extends RecyclerViewBaseAdapter<Bucket> {
 
-    public BucketsAdapter(List<Bucket> buckets, View footer, Activity activity) {
-        super(buckets, footer, activity);
+    public BucketsAdapter(Activity activity) {
+        super(new ArrayList<Bucket>(), activity);
     }
 
     @Override

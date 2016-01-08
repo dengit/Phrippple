@@ -20,20 +20,20 @@ public class FetchBasePresenterImpl<T> implements FetchBasePresenter<T> {
     }
 
     @Override
-    public void onFooterClick() {
-        mFetchBaseView.switchLoadMore(true, false);
+    public void onLoadMore() {
         mFetchBaseModel.loadMore();
     }
 
     @Override
     public void onLoadNewestFinished(List<T> newItems) {
         mFetchBaseView.switchRefresh(false);
-        mFetchBaseView.setItems(newItems, isEnd(newItems));
+        mFetchBaseView.switchLoading(false, isEnd(newItems));
+        mFetchBaseView.setItems(newItems);
     }
 
     @Override
     public void onLoadMoreFinished(List<T> newItems) {
-        mFetchBaseView.switchLoadMore(false, isEnd(newItems));
+        mFetchBaseView.switchLoading(false, isEnd(newItems));
         mFetchBaseView.appendItems(newItems);
     }
 

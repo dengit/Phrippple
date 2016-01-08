@@ -15,12 +15,12 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanModelImpl<T> extends FetchBaseModelImpl<T> implements FanModel<T> {
+public class FanModelImpl extends FetchBaseModelImpl<Fan> implements FanModel {
 
     private int mShotId;
-    private FanPresenter<T> mPresenter;
+    private FanPresenter mPresenter;
 
-    public FanModelImpl(FanPresenter<T> presenter) {
+    public FanModelImpl(FanPresenter presenter) {
         super(presenter);
         mPresenter = presenter;
     }
@@ -32,7 +32,7 @@ public class FanModelImpl<T> extends FetchBaseModelImpl<T> implements FanModel<T
 
     @Override
     protected void fetchItems(final int page) {
-        final ArrayList<T> newItems = new ArrayList<>();
+        final ArrayList<Fan> newItems = new ArrayList<>();
         mDribbbleAPI.getFans(mShotId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -58,10 +58,9 @@ public class FanModelImpl<T> extends FetchBaseModelImpl<T> implements FanModel<T
                     }
 
                     @Override
-                    @SuppressWarnings("unchecked")
                     public void onNext(List<Fan> fans) {
                         Timber.d("**fans.size(): %d", fans.size());
-                        newItems.addAll((List<T>) fans);
+                        newItems.addAll(fans);
                     }
                 });
 

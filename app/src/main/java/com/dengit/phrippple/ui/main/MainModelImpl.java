@@ -23,13 +23,13 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/9.
  */
-public class MainModelImpl<T> extends FetchBaseModelImpl<T> implements MainModel<T> {
-    private MainPresenter<T> mMainPresenter;
+public class MainModelImpl extends FetchBaseModelImpl<Shot> implements MainModel {
+    private MainPresenter mMainPresenter;
     private String mCurrSort;
     private String mCurrList;
     private String mCurrTimeFrame;
 
-    public MainModelImpl(MainPresenter<T> mainPresenter) {
+    public MainModelImpl(MainPresenter mainPresenter) {
         super(mainPresenter);
         mMainPresenter = mainPresenter;
     }
@@ -59,7 +59,7 @@ public class MainModelImpl<T> extends FetchBaseModelImpl<T> implements MainModel
             return;
         }
 
-        final ArrayList<T> newItems = new ArrayList<>();
+        final ArrayList<Shot> newItems = new ArrayList<>();
         mDribbbleAPI.getShots(mCurrSort, mCurrList, mCurrTimeFrame, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .retryWhen(new RetryWithDelay(5, 1000))
                 .subscribeOn(Schedulers.io())
@@ -86,10 +86,9 @@ public class MainModelImpl<T> extends FetchBaseModelImpl<T> implements MainModel
                     }
 
                     @Override
-                    @SuppressWarnings("unchecked")
                     public void onNext(List<Shot> shots) {
                         Timber.d("**Shots.size(): %d", shots.size());
-                        newItems.addAll((List<T>) shots);
+                        newItems.addAll(shots);
                     }
                 });
     }

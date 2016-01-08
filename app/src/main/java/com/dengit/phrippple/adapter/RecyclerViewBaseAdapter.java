@@ -17,12 +17,10 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
 
-    private View mFooter;
     protected List<T> mItems;
     protected Activity mActivity;
 
-    public RecyclerViewBaseAdapter(List<T> items, View footer, Activity activity) {
-        mFooter = footer;
+    public RecyclerViewBaseAdapter(List<T> items, Activity activity) {
         mItems = items;
         mActivity = activity;
     }
@@ -33,8 +31,8 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
             View view = LayoutInflater.from(APP.getInstance()).inflate(getItemLayoutResId(), parent, false);
             return createViewHolderItem(view);
         } else if (viewType == TYPE_FOOTER) {
-            mFooter.setLayoutParams(parent.getLayoutParams());//todo why this do work
-            return new VHFooterBase(mFooter);
+//            mFooter.setLayoutParams(parent.getLayoutParams());//todo why this do work
+//            return new VHFooterBase(mFooter);
         }
 
         throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
@@ -51,13 +49,13 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter<Re
 
     @Override
     public int getItemCount() {
-        return mItems.size() == 0 ? 0 : mItems.size() + 1;
+        return mItems.size()/* == 0 ? 0 : mItems.size() + 1*/;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (isPositionFooter(position))
-            return TYPE_FOOTER;
+//        if (isPositionFooter(position))
+//            return TYPE_FOOTER;
 
         return TYPE_ITEM;
     }

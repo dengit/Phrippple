@@ -16,6 +16,7 @@ import com.dengit.phrippple.ui.profile.ProfileActivity;
 import com.dengit.phrippple.ui.shot.ShotActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -29,8 +30,8 @@ public class ShotsAdapter extends RecyclerViewTransitionBaseAdapter<Shot> {
 
     private User mUser;
 
-    public ShotsAdapter(User user, List<Shot> shots, View footer, BaseTransitionFetchActivity<Shot> activity) {
-        super(shots, footer, activity);
+    public ShotsAdapter(User user, BaseTransitionFetchActivity<Shot> activity) {
+        super(new ArrayList<Shot>(), activity);
         mUser = user;
     }
 

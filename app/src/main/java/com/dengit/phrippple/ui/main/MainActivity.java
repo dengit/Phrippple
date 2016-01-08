@@ -65,7 +65,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class MainActivity extends BaseTransitionFetchActivity<Shot> implements MainView<Shot>, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends BaseTransitionFetchActivity<Shot> implements MainView, View.OnClickListener,  AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -89,7 +89,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     FloatingActionButton mReturnToTopFab;
 
     @Inject
-    MainPresenter<Shot> mMainPresenter;
+    MainPresenter mMainPresenter;
 
     private ShotsAdapter mShotsAdapter;
     private boolean mIsSortSpinnerFirst = true;
@@ -204,7 +204,6 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         if (v == mDrawerHeader) {
             if (mUser == null) {
                 Toast.makeText(this, "mUser is null!", Toast.LENGTH_SHORT).show();
@@ -423,12 +422,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     }
 
     private void setupRecyclerView() {
-        if (mFooterLayout == null) {
-            throw new RuntimeException("must call setupBase() before this method!");
-        }
-
-        mShotsAdapter = new ShotsAdapter(null, new ArrayList<Shot>(), mFooterLayout, this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mShotsAdapter = new ShotsAdapter(null, this);
         mRecyclerView.setAdapter(mShotsAdapter);
     }
 
@@ -447,6 +441,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
         });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);

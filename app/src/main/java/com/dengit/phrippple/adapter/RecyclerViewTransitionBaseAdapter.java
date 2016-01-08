@@ -14,8 +14,8 @@ import java.util.List;
  */
 public abstract class RecyclerViewTransitionBaseAdapter<T> extends RecyclerViewBaseAdapter<T> {
 
-    public RecyclerViewTransitionBaseAdapter(List<T> items, View footer, BaseTransitionFetchActivity<T> transitionActivity) {
-        super(items, footer, transitionActivity);
+    public RecyclerViewTransitionBaseAdapter(List<T> items, BaseTransitionFetchActivity<T> transitionActivity) {
+        super(items, transitionActivity);
     }
 
     protected void startDetailActivity(View view, Intent intent, int sharedElementResId) {

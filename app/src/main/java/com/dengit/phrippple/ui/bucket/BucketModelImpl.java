@@ -17,13 +17,13 @@ import timber.log.Timber;
 /**
  * Created by dengit on 15/12/14.
  */
-public class BucketModelImpl<T> extends FetchBaseModelImpl<T> implements BucketModel<T> {
+public class BucketModelImpl extends FetchBaseModelImpl<Bucket> implements BucketModel {
 
     private int mId;
     private BucketType mBucketType;
-    private BucketPresenter<T> mPresenter;
+    private BucketPresenter mPresenter;
 
-    public BucketModelImpl(BucketPresenter<T> presenter) {
+    public BucketModelImpl(BucketPresenter presenter) {
         super(presenter);
         mPresenter = presenter;
     }
@@ -40,7 +40,7 @@ public class BucketModelImpl<T> extends FetchBaseModelImpl<T> implements BucketM
 
     @Override
     protected void fetchItems(final int page) {
-        final ArrayList<T> newItems = new ArrayList<>();
+        final ArrayList<Bucket> newItems = new ArrayList<>();
 
         Observable<List<Bucket>> observable;
         if (mBucketType == BucketType.BucketsOfSelf) {
@@ -74,10 +74,9 @@ public class BucketModelImpl<T> extends FetchBaseModelImpl<T> implements BucketM
 
 
                     @Override
-                    @SuppressWarnings("unchecked")
                     public void onNext(List<Bucket> buckets) {
                         Timber.d("**buckets.size(): %d", buckets.size());
-                        newItems.addAll((List<T>)buckets);
+                        newItems.addAll(buckets);
                     }
                 });
 

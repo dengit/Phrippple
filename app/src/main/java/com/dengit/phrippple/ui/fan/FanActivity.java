@@ -3,6 +3,7 @@ package com.dengit.phrippple.ui.fan;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.dengit.phrippple.APP;
 import com.dengit.phrippple.R;
@@ -14,15 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * Created by dengit on 15/12/14.
  */
-public class FanActivity extends BaseTransitionFetchActivity<Fan> implements FanView<Fan> {
+public class FanActivity extends BaseTransitionFetchActivity<Fan> implements FanView {
 
     private int mShotId;
     private FansAdapter mFansAdapter;
-    private FanPresenter<Fan> mFanPresenter;
+    private FanPresenter mFanPresenter;
 
     public static Intent createIntent(int shotId, int fanCount) {
         Intent intent = new Intent(APP.getInstance(), FanActivity.class);
@@ -56,7 +58,7 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
     }
 
     private void initSetup() {
-        mFanPresenter = new FanPresenterImpl<>(this);
+        mFanPresenter = new FanPresenterImpl(this);
         setBasePresenter(mFanPresenter);
         setupBase();
 
@@ -64,9 +66,9 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
         int fanCount = getIntent().getIntExtra("fanCount", 0);
         setTitle(fanCount + " fans");
 
-        mFansAdapter = new FansAdapter(new ArrayList<Fan>(), mFooterLayout, this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mFansAdapter = new FansAdapter(this);
         mRecyclerView.setAdapter(mFansAdapter);
+
         mFanPresenter.firstFetchItems();
     }
 }
