@@ -48,6 +48,12 @@ public class CommentActivity extends BaseTransitionFetchActivity<Comment> implem
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCommentPresenter.detachView();
+    }
+
+    @Override
     public int getShotId() {
         return mShotId;
     }

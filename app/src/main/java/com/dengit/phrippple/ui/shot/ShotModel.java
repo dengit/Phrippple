@@ -11,4 +11,6 @@ public interface ShotModel {
     void setLikeStatus(boolean status);
 
     void fetchAco();
+
+    void onDetach();
 }

@@ -28,6 +28,13 @@ public class FanPresenterImpl extends FetchBasePresenterImpl<Fan> implements Fan
         mFanView = fanView;
     }
 
+    @Override
+    public void detachView() {
+        detachBaseView();
+        mFanView = null;
+        mFanModel.onDetach();
+    }
+
     public boolean isViewAttached() {
         return mFanView != null;
     }

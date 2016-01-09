@@ -55,6 +55,13 @@ public class MainPresenterImpl extends FetchBasePresenterImpl<Shot> implements M
         mMainView = mainView;
     }
 
+    @Override
+    public void detachView() {
+        detachBaseView();
+        mMainView = null;
+        mMainModel.onDetach();
+    }
+
     public boolean isViewAttached() {
         return mMainView != null;
     }

@@ -8,4 +8,6 @@ import com.dengit.phrippple.ui.base.FetchBasePresenter;
  */
 public interface BucketPresenter extends FetchBasePresenter<Bucket> {
     void attachView(BucketView bucketView);
+
+    void detachView();
 }

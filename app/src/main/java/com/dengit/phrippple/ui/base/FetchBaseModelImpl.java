@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.dengit.phrippple.api.DribbbleAPI;
 import com.dengit.phrippple.api.DribbbleAPIHelper;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by dengit on 15/12/16.
  */
@@ -14,11 +16,18 @@ public abstract class FetchBaseModelImpl<T> implements FetchBaseModel<T> {
     protected DribbbleAPI mDribbbleAPI;
     protected String mAccessToken;
     private FetchBasePresenter<T> mFetchBasePresenter;
+    protected CompositeSubscription mSubscriptions;
 
     public FetchBaseModelImpl(FetchBasePresenter<T> fetchBasePresenter) {
         mFetchBasePresenter = fetchBasePresenter;
         mDribbbleAPI = DribbbleAPIHelper.getInstance().getDribbbleAPI();
         mAccessToken = DribbbleAPIHelper.getInstance().getAccessToken();
+        mSubscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    public void onDetach() {
+        mSubscriptions.unsubscribe();
     }
 
     @Override

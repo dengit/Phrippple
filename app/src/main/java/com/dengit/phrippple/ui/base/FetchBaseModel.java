@@ -9,4 +9,6 @@ public interface FetchBaseModel<T> {
     boolean checkIfCanRefresh();
 
     void loadNewest();
+
+    void onDetach();
 }

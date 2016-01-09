@@ -10,6 +10,7 @@ import java.util.List;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
@@ -33,7 +34,7 @@ public class FanModelImpl extends FetchBaseModelImpl<Fan> implements FanModel {
     @Override
     protected void fetchItems(final int page) {
         final ArrayList<Fan> newItems = new ArrayList<>();
-        mDribbbleAPI.getFans(mShotId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.getFans(mShotId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Fan>>() {
@@ -62,7 +63,8 @@ public class FanModelImpl extends FetchBaseModelImpl<Fan> implements FanModel {
                         Timber.d("**fans.size(): %d", fans.size());
                         newItems.addAll(fans);
                     }
-                });
+                })
+        );
 
     }
 }

@@ -25,8 +25,15 @@ public class BucketPresenterImpl extends FetchBasePresenterImpl<Bucket> implemen
 
     @Override
     public void attachView(BucketView bucketView) {
-        super.attachBaseView(bucketView);
+        attachBaseView(bucketView);
         mBucketView = bucketView;
+    }
+
+    @Override
+    public void detachView() {
+        detachBaseView();
+        mBucketView = null;
+        mBucketModel.onDetach();
     }
 
     public boolean isViewAttached() {

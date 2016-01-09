@@ -9,6 +9,8 @@ import java.util.List;
 public interface ShotPresenter {
     void attachView(ShotView shotView);
 
+    void detachView();
+
     void checkLikeStatus();
 
     void setLikeStatus(boolean status);

@@ -12,8 +12,10 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
@@ -21,15 +23,22 @@ import timber.log.Timber;
  */
 public class ShotModelImpl implements ShotModel {
 
-    private ShotPresenter mPresenter;
     private int mShotId;
-    protected DribbbleAPI mDribbbleAPI;
+    private ShotPresenter mPresenter;
     protected String mAccessToken;
+    protected DribbbleAPI mDribbbleAPI;
+    private CompositeSubscription mSubscriptions;
 
     public ShotModelImpl(ShotPresenter presenter) {
         mPresenter = presenter;
         mDribbbleAPI = DribbbleAPIHelper.getInstance().getDribbbleAPI();
         mAccessToken = DribbbleAPIHelper.getInstance().getAccessToken();
+        mSubscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    public void onDetach() {
+        mSubscriptions.unsubscribe();
     }
 
     @Override
@@ -39,7 +48,7 @@ public class ShotModelImpl implements ShotModel {
 
     @Override
     public void checkLikeStatus() {
-        mDribbbleAPI.checkLikeShot(mShotId, mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.checkLikeShot(mShotId, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LikeShotResponse>() {
@@ -58,7 +67,8 @@ public class ShotModelImpl implements ShotModel {
                     public void onNext(LikeShotResponse response) {
                         Timber.d("**response.id: %d", response.id);
                     }
-                });
+                })
+        );
     }
 
     @Override
@@ -71,7 +81,7 @@ public class ShotModelImpl implements ShotModel {
     }
 
     private void doLikeShot() {
-        mDribbbleAPI.likeShot(mShotId, mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.likeShot(mShotId, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LikeShotResponse>() {
@@ -91,11 +101,12 @@ public class ShotModelImpl implements ShotModel {
                     public void onNext(LikeShotResponse response) {
                         Timber.d("**response.id: %d", response.id);
                     }
-                });
+                })
+        );
     }
 
     private void undoLikeShot() {
-        mDribbbleAPI.unlikeShot(mShotId, mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.unlikeShot(mShotId, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Void>() {
@@ -113,15 +124,15 @@ public class ShotModelImpl implements ShotModel {
                     public void onNext(Void response) {
                         Timber.d("**Void response onNext");
                     }
-                });
-
+                })
+        );
     }
 
     @Override
     public void fetchAco() {
 
         final ArrayList<String> shotColors = new ArrayList<>();
-        Observable.create(new Observable.OnSubscribe<List<String>>() {
+        mSubscriptions.add(Observable.create(new Observable.OnSubscribe<List<String>>() {
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
                 try {
@@ -152,7 +163,8 @@ public class ShotModelImpl implements ShotModel {
             public void onNext(List<String> colors) {
                 shotColors.addAll(colors);
             }
-        });
+        })
+        );
     }
 
     private List<String> parseAco(byte[] acoBytes) {
@@ -184,4 +196,5 @@ public class ShotModelImpl implements ShotModel {
 
         return colors;
     }
+
 }

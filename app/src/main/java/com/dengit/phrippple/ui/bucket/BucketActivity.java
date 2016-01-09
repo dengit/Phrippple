@@ -52,6 +52,12 @@ public class BucketActivity extends FetchBaseActivity<Bucket> implements BucketV
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBucketPresenter.detachView();
+    }
+
+    @Override
     protected void appendAdapterData(List<Bucket> newItems) {
         mBucketsAdapter.appendData(newItems);
     }

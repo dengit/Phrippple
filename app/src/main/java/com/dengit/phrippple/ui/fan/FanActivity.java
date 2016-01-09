@@ -48,6 +48,12 @@ public class FanActivity extends BaseTransitionFetchActivity<Fan> implements Fan
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFanPresenter.detachView();
+    }
+
+    @Override
     public int getShotId() {
         return mShotId;
     }

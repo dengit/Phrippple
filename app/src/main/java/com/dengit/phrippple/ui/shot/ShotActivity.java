@@ -106,6 +106,7 @@ public class ShotActivity extends BaseTransitionDetailActivityL implements ShotV
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mShotPresenter.detachView();
     }
 
     @OnClick(R.id.shot_comment)

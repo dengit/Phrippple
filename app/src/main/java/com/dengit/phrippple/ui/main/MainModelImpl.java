@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
@@ -60,7 +62,7 @@ public class MainModelImpl extends FetchBaseModelImpl<Shot> implements MainModel
         }
 
         final ArrayList<Shot> newItems = new ArrayList<>();
-        mDribbbleAPI.getShots(mCurrSort, mCurrList, mCurrTimeFrame, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.getShots(mCurrSort, mCurrList, mCurrTimeFrame, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .retryWhen(new RetryWithDelay(5, 1000))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -90,13 +92,14 @@ public class MainModelImpl extends FetchBaseModelImpl<Shot> implements MainModel
                         Timber.d("**Shots.size(): %d", shots.size());
                         newItems.addAll(shots);
                     }
-                });
+                })
+        );
     }
 
     @Override
     public void requestToken(AuthorizeInfo info) {
 
-        mDribbbleAPI.getToken(new RequestTokenBody(info.getCode()))
+        mSubscriptions.add(mDribbbleAPI.getToken(new RequestTokenBody(info.getCode()))
                 .retryWhen(new RetryWithDelay(5, 1000))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -116,12 +119,13 @@ public class MainModelImpl extends FetchBaseModelImpl<Shot> implements MainModel
                         Timber.d("**token:%s", tokenInfo.access_token);
                         EventBusUtil.getInstance().post(tokenInfo);
                     }
-                });
+                })
+        );
     }
 
     @Override
     public void fetchUserInfo() {
-        mDribbbleAPI.getUserInfo(mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.getUserInfo(mAccessToken)
                 .retryWhen(new RetryWithDelay(5, 1000))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -141,6 +145,7 @@ public class MainModelImpl extends FetchBaseModelImpl<Shot> implements MainModel
                         Timber.d("**user.name:%s", userInfo.name);
                         mMainPresenter.onFetchUserInfoFinished(userInfo);
                     }
-                });
+                })
+        );
     }
 }

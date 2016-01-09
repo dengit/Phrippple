@@ -8,4 +8,6 @@ import com.dengit.phrippple.ui.base.FetchBasePresenter;
  */
 public interface FanPresenter extends FetchBasePresenter<Fan> {
     void attachView(FanView fanView);
+
+    void detachView();
 }

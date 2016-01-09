@@ -115,6 +115,7 @@ public class MainActivity extends BaseTransitionFetchActivity<Shot> implements M
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mMainPresenter.detachView();
         EventBusUtil.getInstance().unregister(this);
     }
 

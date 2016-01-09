@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
@@ -36,7 +38,7 @@ public class CommentModelImpl extends FetchBaseModelImpl<Comment> implements Com
 
         final ArrayList<Comment> newItems = new ArrayList<>();
 
-        mDribbbleAPI.getComments(mShotId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
+        mSubscriptions.add(mDribbbleAPI.getComments(mShotId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Comment>>() {
@@ -65,6 +67,7 @@ public class CommentModelImpl extends FetchBaseModelImpl<Comment> implements Com
                         Timber.d("**comments.size(): %d", comments.size());
                         newItems.addAll(comments);
                     }
-                });
+                })
+        );
     }
 }

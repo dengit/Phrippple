@@ -10,8 +10,10 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
@@ -49,7 +51,7 @@ public class BucketModelImpl extends FetchBaseModelImpl<Bucket> implements Bucke
             observable = mDribbbleAPI.getOthersBuckets(mId, page, DribbbleAPI.LIMIT_PER_PAGE, mAccessToken);
         }
 
-        observable.subscribeOn(Schedulers.io())
+        mSubscriptions.add(observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Bucket>>() {
                     @Override
@@ -78,7 +80,7 @@ public class BucketModelImpl extends FetchBaseModelImpl<Bucket> implements Bucke
                         Timber.d("**buckets.size(): %d", buckets.size());
                         newItems.addAll(buckets);
                     }
-                });
-
+                })
+        );
     }
 }

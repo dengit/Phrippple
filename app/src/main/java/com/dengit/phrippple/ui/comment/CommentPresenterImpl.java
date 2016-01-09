@@ -28,6 +28,13 @@ public class CommentPresenterImpl extends FetchBasePresenterImpl<Comment> implem
         mCommentView = commentView;
     }
 
+    @Override
+    public void detachView() {
+        detachBaseView();
+        mCommentView = null;
+        mCommentModel.onDetach();
+    }
+
     public boolean isViewAttached() {
         return mCommentView != null;
     }

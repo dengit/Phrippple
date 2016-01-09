@@ -47,6 +47,12 @@ public class ShotPresenterImpl implements ShotPresenter {
         mShotView = shotView;
     }
 
+    @Override
+    public void detachView() {
+        mShotView = null;
+        mShotModel.onDetach();
+    }
+
     public boolean isViewAttached() {
         return mShotView != null;
     }

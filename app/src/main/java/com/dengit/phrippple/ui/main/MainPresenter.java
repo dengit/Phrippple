@@ -13,6 +13,8 @@ public interface MainPresenter extends FetchBasePresenter<Shot> {
 
     void attachView(MainView mainView);
 
+    void detachView();
+
     void requestToken(AuthorizeInfo info);
 
     void fetchUserInfo();
