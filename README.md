@@ -3,6 +3,10 @@
 
 Another Dribbble Client for Android
 
+![gif](https://cloud.githubusercontent.com/assets/11329773/12214325/9905114c-b6ca-11e5-8b78-3a6e5d815e8b.gif)
+
+![enframe](https://cloud.githubusercontent.com/assets/11329773/12214198/b51377de-b6c5-11e5-889c-48645f11f2f3.png)
+
 ## Technology Stack
 - MVP
 - Dagger2
@@ -19,7 +23,6 @@ Another Dribbble Client for Android
 - Espresso
 - Roboletric
 
-![enframe_2](https://cloud.githubusercontent.com/assets/11329773/12214198/b51377de-b6c5-11e5-889c-48645f11f2f3.png)
 
 ## License
     Copyright 2015 dengit
