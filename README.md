@@ -3,8 +3,10 @@
 
 Another Dribbble Client for Android
 
+## Gif
 ![gif](https://cloud.githubusercontent.com/assets/11329773/12214325/9905114c-b6ca-11e5-8b78-3a6e5d815e8b.gif)
 
+## Screenshots
 ![enframe](https://cloud.githubusercontent.com/assets/11329773/12214198/b51377de-b6c5-11e5-889c-48645f11f2f3.png)
 
 ## Technology Stack
