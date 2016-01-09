@@ -1,10 +1,12 @@
 # Phrippple
 [![Build Status](https://travis-ci.org/dengit/Phrippple.svg?branch=master)](https://travis-ci.org/dengit/Phrippple) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-Another Dribbble Client for Android
+Another Dribbble Client for Android, using MVP, RxJava, Dagger2, Retrofit, etc.
 
+## GIF
 ![gif](https://cloud.githubusercontent.com/assets/11329773/12214325/9905114c-b6ca-11e5-8b78-3a6e5d815e8b.gif)
 
+## Screenshots
 ![enframe](https://cloud.githubusercontent.com/assets/11329773/12214198/b51377de-b6c5-11e5-889c-48645f11f2f3.png)
 
 ## Technology Stack
