@@ -3,7 +3,7 @@
 
 Another Dribbble Client for Android
 
-## Gif
+## GIF
 ![gif](https://cloud.githubusercontent.com/assets/11329773/12214325/9905114c-b6ca-11e5-8b78-3a6e5d815e8b.gif)
 
 ## Screenshots
