@@ -3,6 +3,8 @@
 
 Another Dribbble Client for Android, using MVP, RxJava, Dagger2, Retrofit, etc.
 
+[![Download Phrippple from Google Play](http://www.android.com/images/brand/android_app_on_play_large.png)](https://play.google.com/store/apps/details?id=com.dengit.phrippple)
+
 ## GIF
 ![gif](https://cloud.githubusercontent.com/assets/11329773/12214325/9905114c-b6ca-11e5-8b78-3a6e5d815e8b.gif)
 
